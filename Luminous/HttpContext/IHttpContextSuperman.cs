@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     对 HttpContext 的常见操作

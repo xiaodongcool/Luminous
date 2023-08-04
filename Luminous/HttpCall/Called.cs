@@ -1,4 +1,4 @@
-﻿namespace LangM.AspNetCore
+﻿namespace Luminous
 {
     public class Called<T> : ICalled<T>
     {

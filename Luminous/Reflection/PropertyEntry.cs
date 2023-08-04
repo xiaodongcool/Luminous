@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     属性信息

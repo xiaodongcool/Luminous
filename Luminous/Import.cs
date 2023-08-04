@@ -1,6 +1,6 @@
 ﻿//  全局引用
 
-global using LangM.AspNetCore;
+global using Luminous;
 global using Newtonsoft.Json;
 global using System;
 global using System.Linq;
@@ -12,5 +12,5 @@ global using Microsoft.AspNetCore.Mvc;
 global using System.IO;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;
-global using static LangM.AspNetCore.ParseUtil;
-global using static LangM.AspNetCore.EmptyUtil;
+global using static Luminous.ParseUtil;
+global using static Luminous.EmptyUtil;

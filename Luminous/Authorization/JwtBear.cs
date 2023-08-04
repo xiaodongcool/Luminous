@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public class JwtBear : IJwtBear
     {

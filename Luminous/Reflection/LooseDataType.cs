@@ -1,4 +1,4 @@
-﻿namespace LangM.AspNetCore
+﻿namespace Luminous
 {
     /// <summary>
     ///     宽松的数据类型

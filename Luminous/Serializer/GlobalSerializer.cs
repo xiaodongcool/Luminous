@@ -1,4 +1,4 @@
-﻿namespace LangM.AspNetCore
+﻿namespace Luminous
 {
     /// <summary>
     ///     aspnet 入参出参序列化方式

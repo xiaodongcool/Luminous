@@ -1,6 +1,6 @@
 ﻿using NewLife.Caching;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     <see cref="FullRedis"/> 代理接口

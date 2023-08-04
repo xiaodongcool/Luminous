@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     系统配置列表

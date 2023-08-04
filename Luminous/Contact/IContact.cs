@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Converters;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     WebApi 接口标准约定

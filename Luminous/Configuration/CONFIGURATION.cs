@@ -1,4 +1,4 @@
-﻿namespace LangM.AspNetCore
+﻿namespace Luminous
 {
     /// <summary>
     ///     内部配置接口

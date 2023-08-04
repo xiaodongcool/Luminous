@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public class ExceptionMiddleware
     {

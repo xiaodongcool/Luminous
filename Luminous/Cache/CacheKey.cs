@@ -1,4 +1,4 @@
-﻿namespace LangM.AspNetCore.Cache
+﻿namespace Luminous.Cache
 {
     /// <summary>
     ///     缓存key

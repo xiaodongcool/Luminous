@@ -6,7 +6,7 @@ using Serilog.Sinks.MariaDB.Extensions;
 using Serilog.Sinks.MSSqlServer;
 using System.Data;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     internal static class LoggerConfigurationExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public class UserPrincipal : IUserPrincipal
     {

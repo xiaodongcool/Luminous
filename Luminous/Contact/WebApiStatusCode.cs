@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     WebApi 响应报文状态码

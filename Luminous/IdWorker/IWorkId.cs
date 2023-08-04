@@ -1,6 +1,6 @@
 ﻿using SqlSugar.DistributedSystem.Snowflake;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     雪花id

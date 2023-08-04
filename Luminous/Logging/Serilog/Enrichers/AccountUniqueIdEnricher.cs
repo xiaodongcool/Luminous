@@ -1,6 +1,6 @@
 ﻿using Serilog.Events;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///      账户唯一标识符 (属性名:es_AccountUniqueId)

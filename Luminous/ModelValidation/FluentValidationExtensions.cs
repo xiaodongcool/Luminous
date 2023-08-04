@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public static class FluentValidationExtensions
     {

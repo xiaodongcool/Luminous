@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     第三方日志框架

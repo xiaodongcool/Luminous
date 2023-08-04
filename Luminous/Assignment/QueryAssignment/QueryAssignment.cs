@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Primitives;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public class QueryAssignment : Assignment, IQueryAssignment
     {

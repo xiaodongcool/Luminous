@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using System.Text;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public class HttpContextAccessorSuper : HttpContextAccessor, IHttpContextAccessorSuper
     {

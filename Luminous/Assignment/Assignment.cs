@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public abstract class Assignment : IAssignment
     {

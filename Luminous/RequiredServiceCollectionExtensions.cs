@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public static class RequiredServiceCollectionExtensions
     {

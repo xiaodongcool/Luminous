@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     模型验证基类

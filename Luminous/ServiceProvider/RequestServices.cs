@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     静态容器

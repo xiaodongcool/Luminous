@@ -1,4 +1,4 @@
-﻿namespace LangM.AspNetCore.Model
+﻿namespace Luminous.Model
 {
     public interface IPage<T>
     {

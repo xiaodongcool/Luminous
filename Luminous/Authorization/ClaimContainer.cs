@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     维护 <see cref="Claim"/> 的容器

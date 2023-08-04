@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Converters;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     日志选项

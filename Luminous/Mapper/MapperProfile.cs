@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using LangM.AspNetCore.Enumeration;
+using Luminous.Enumeration;
 using System.Reflection;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     对所有标记 <see cref="MapFromAttribute"/> <see cref="MapToAttribute"/> 的模型注册 AutoMapper

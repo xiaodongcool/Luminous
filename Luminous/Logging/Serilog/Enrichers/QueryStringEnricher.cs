@@ -1,6 +1,6 @@
 ﻿using Serilog.Events;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     查询字符串 (属性名:es_QueryString)

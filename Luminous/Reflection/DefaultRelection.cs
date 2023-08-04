@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     default implement for <see cref="IRelection"/>

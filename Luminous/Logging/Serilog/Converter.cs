@@ -2,7 +2,7 @@
 using Serilog;
 using Serilog.Events;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     配置转换

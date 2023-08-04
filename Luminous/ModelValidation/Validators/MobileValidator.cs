@@ -2,7 +2,7 @@
 using FluentValidation.Validators;
 using System.Text.RegularExpressions;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     手机号码

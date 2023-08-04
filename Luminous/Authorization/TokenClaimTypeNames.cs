@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     token 声明类型

@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Serilog.Configuration;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     public static class LoggerConfigurationExtensions2
     {

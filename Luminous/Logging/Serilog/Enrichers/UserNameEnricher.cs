@@ -1,6 +1,6 @@
 ﻿using Serilog.Events;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///      用户名

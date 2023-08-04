@@ -4,7 +4,7 @@ using Serilog;
 using Serilog.Configuration;
 using Serilog.Events;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     Serilog

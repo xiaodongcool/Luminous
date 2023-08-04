@@ -7,7 +7,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 
-namespace LangM.AspNetCore
+namespace Luminous
 {
     /// <summary>
     ///     重写响应报文的JSON格式

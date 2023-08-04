@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace LangM.AspNetCore.Enumeration
+namespace Luminous.Enumeration
 {
     public static class EnumExtensions
     {
