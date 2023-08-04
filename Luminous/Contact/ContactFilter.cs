@@ -27,7 +27,7 @@ namespace Luminous
             Old(context);
         }
 
-        private void NewMethod(ActionExecutedContext context)
+        private void Old(ActionExecutedContext context)
         {
             if (context.Exception != null || !context.ModelState.IsValid)
             {
