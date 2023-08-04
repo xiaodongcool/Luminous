@@ -27,14 +27,16 @@ namespace Example.WebApi.Controllers
                 Name = "Example.WebApi",
                 DateTime = DateTime.Now,
                 DayOfWeek = DateTime.Now.DayOfWeek,
+                Greetings = "ÄãºÃ"
             };
         }
     }
 
     public class ServiceInfo
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         public DateTime DateTime { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
+        public string? Greetings { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json.Linq;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -74,23 +75,15 @@ namespace Luminous
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
             };
 
-            //context.Result = new ContentResult
-            //{
-            //    Content = SerializeAndAddEnumDescription(convention),
-            //    ContentType = "application/json",
-            //};
-
-
             context.Result = new JsonResult(SerializeAndAddEnumDescriptionReturnObj(convention))
             {
                 ContentType = "application/json",
-                 
             };
         }
 
         public void OnActionExecuting(ActionExecutingContext context) { }
 
-        public object SerializeAndAddEnumDescriptionReturnObj(IContact<object?>? input)
+        public object? SerializeAndAddEnumDescriptionReturnObj(IContact<object?>? input)
         {
             if (input == null)
             {
@@ -100,7 +93,7 @@ namespace Luminous
             JToken jsonObject = JToken.FromObject(input);
             RecursivelyAddEnumDescriptions(jsonObject, input.Data?.GetType());
 
-            return jsonObject;
+            return jsonObject.ToObject<ExpandoObject>();
         }
 
         public string SerializeAndAddEnumDescription(IContact<object?>? input)
@@ -140,11 +133,10 @@ namespace Luminous
                     PropertyInfo propertyInfo = GetPropertyInfoFromPath(inputType, parentProperty.Path);
                     if (propertyInfo != null && propertyInfo.PropertyType.IsEnum)
                     {
-                        object enumValue = Enum.ToObject(propertyInfo.PropertyType, (int)token);
-                        string enumDescription = GetEnumDescription(enumValue);
-                        var d = new JProperty(parentProperty.Name + "Description", enumDescription);
+                        var enumValue = Enum.ToObject(propertyInfo.PropertyType, (int)token);
+                        var enumDescription = GetEnumDescription(enumValue);
                         //parentProperty.Parent.AddAfterSelf(d);
-                        parentProperty.Parent.Add(d);
+                        parentProperty.Parent.Add(new JProperty(parentProperty.Name + "Description", enumDescription));
                     }
                 }
             }
