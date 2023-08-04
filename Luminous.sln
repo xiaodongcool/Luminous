@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luminous", "Luminous\Luminous.csproj", "{8DCF9FC5-3EFD-4E62-ACDB-F9314B466A81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luminous", "Luminous\Luminous.csproj", "{8DCF9FC5-3EFD-4E62-ACDB-F9314B466A81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.WebApi", "Example.WebApi\Example.WebApi.csproj", "{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8DCF9FC5-3EFD-4E62-ACDB-F9314B466A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DCF9FC5-3EFD-4E62-ACDB-F9314B466A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DCF9FC5-3EFD-4E62-ACDB-F9314B466A81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
