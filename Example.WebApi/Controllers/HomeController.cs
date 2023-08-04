@@ -7,11 +7,6 @@ namespace Example.WebApi.Controllers
     [Route("[controller]")]
     public class HomeController : ApiController
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -29,6 +24,44 @@ namespace Example.WebApi.Controllers
                 DayOfWeek = DateTime.Now.DayOfWeek,
                 Greetings = "ÄãºÃ"
             };
+        }
+    }
+
+    [ApiController]
+    [Route("[controller]/[action]")]
+    public class JsonController : ApiController
+    {
+        private readonly ILogger<HomeController> _logger;
+        private readonly IContactProvider _contactProvider;
+
+        public JsonController(ILogger<HomeController> logger, IContactProvider contactProvider)
+        {
+            _logger = logger;
+            _contactProvider = contactProvider;
+        }
+
+        [HttpGet]
+        public async Task<ServiceInfo> Get1()
+        {
+            return new ServiceInfo
+            {
+                Name = "Example.WebApi",
+                DateTime = DateTime.Now,
+                DayOfWeek = DateTime.Now.DayOfWeek,
+                Greetings = "ÄãºÃ"
+            };
+        }
+
+        [HttpGet]
+        public async Task<IContact<ServiceInfo>> Get2()
+        {
+            return _contactProvider.Create(WebApiStatusCode.Success, new ServiceInfo
+            {
+                Name = "Example.WebApi",
+                DateTime = DateTime.Now,
+                DayOfWeek = DateTime.Now.DayOfWeek,
+                Greetings = "ÄãºÃ"
+            });
         }
     }
 
