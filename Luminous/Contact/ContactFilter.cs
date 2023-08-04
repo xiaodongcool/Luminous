@@ -24,6 +24,11 @@ namespace Luminous
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            Old(context);
+        }
+
+        private void NewMethod(ActionExecutedContext context)
+        {
             if (context.Exception != null || !context.ModelState.IsValid)
             {
                 return;
