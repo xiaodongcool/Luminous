@@ -26,9 +26,10 @@ namespace Luminous
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
+            context.HttpContext.GetContact(out var statusCode, out var message);
+
             if (context.Result is ObjectResult objectResult)
             {
-                context.HttpContext.GetContact(out var statusCode, out var message);
 
                 var payload = objectResult.Value;
 
@@ -81,7 +82,7 @@ namespace Luminous
             }
             else if (context.Result is EmptyResult emptyResult)
             {
-                var result = _contactProvider.Create<object>(WebApiStatusCode.Success, null, null);
+                var result = _contactProvider.Create<object>(statusCode, null, message);
 
                 context.Result = new JsonResult(result)
                 {

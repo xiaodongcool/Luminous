@@ -3,6 +3,7 @@ using Luminous;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.ComponentModel;
+using System.IO;
 
 namespace Example.WebApi.Controllers
 {
@@ -161,6 +162,15 @@ namespace Example.WebApi.Controllers
         public void Get20()
         {
             SetResultStatusAndMessage(WebApiStatusCode.Fail, "发生了一些错误");
+        }
+
+        [HttpGet]
+        public IActionResult Get21()
+        {
+            var filepath = @"D:\1.txt";
+
+             var file = new FileStream(filepath, FileMode.Open);
+            return File(file, "application/octet-stream", "1.txt");
         }
     }
 

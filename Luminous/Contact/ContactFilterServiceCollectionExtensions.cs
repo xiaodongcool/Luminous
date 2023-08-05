@@ -10,7 +10,6 @@
             services.AddContactProvider();
             services.AddControllers(mvc =>
             {
-                //mvc.Filters.TryAdd<ContactFilter>();
                 mvc.Filters.TryAdd<AppendContactAndEnumMeaningFilter>();
                 mvc.Filters.TryAdd<ModelBindFailFilter>();
             })

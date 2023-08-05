@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Luminous", "Luminous\Lumino
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.WebApi", "Example.WebApi\Example.WebApi.csproj", "{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{0CDB62F8-50E2-463F-A9C8-2257EFF6219A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5C2A0FB-22F6-48A3-A22B-29FD9572E364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CDB62F8-50E2-463F-A9C8-2257EFF6219A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CDB62F8-50E2-463F-A9C8-2257EFF6219A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CDB62F8-50E2-463F-A9C8-2257EFF6219A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CDB62F8-50E2-463F-A9C8-2257EFF6219A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
