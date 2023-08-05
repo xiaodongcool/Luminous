@@ -41,7 +41,7 @@
             return new DefaultContact<T>
             {
                 Status = WebApiStatusCode.Success,
-                Data = data,
+                Payload = data,
                 Message = message ?? "请求成功"
             };
         }
@@ -88,7 +88,7 @@
                 Message = message,
                 Error = error,
                 Exception = exception,
-                Data = data
+                Payload = data
             };
         }
     }

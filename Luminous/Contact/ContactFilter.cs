@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json.Linq;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Reflection;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
+using System.Text.RegularExpressions;
 
 namespace Luminous
 {
@@ -29,123 +27,402 @@ namespace Luminous
             {
                 context.HttpContext.GetContact(out var statusCode, out var message);
 
-                var model = objectResult.Value;
+                var payload = objectResult.Value;
 
-                if (model != null)
+                if (payload != null)
                 {
-                    var type = model.GetType();
+                    var type = payload.GetType();
 
                     if (type == typeof(DefaultContact))
                     {
                         return;
                     }
 
+                    object result;
+                    Type payloadType;
+
                     if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(DefaultContact<>).GetGenericTypeDefinition())
                     {
-                        var resultAddEnumDescription2 = SerializeAndAddEnumDescriptionReturnObj(model, model.GetType().GetProperty("Data").PropertyType);
+                        result = payload;
 
-                        context.Result = new JsonResult(resultAddEnumDescription2)
-                        {
-                            ContentType = "application/json",
-                        };
+                        var property = payload.GetType().GetProperty(nameof(DefaultContact.Payload));
 
-                        return;
+                        Debug.Assert(property != null);
+
+                        payloadType = property.PropertyType;
                     }
+                    else
+                    {
+                        result = _contactProvider.Create(statusCode, payload, message);
+                        payloadType = payload.GetType();
+                    }
+
+                    result = SerializeAndAddEnumDescriptionReturnObj(result, payloadType);
+
+                    context.Result = new JsonResult(result)
+                    {
+                        ContentType = "application/json",
+                    };
+
+                    return;
                 }
-
-                if (model == null && statusCode == WebApiStatusCode.Success)
+                else
                 {
-                    statusCode = WebApiStatusCode.Fail;
+                    var result = _contactProvider.Create(statusCode, payload, message);
+
+                    context.Result = new JsonResult(result)
+                    {
+                        ContentType = "application/json",
+                    };
                 }
-
-                var result = _contactProvider.Create(statusCode, (context.Result as ObjectResult)?.Value, message);
-
-                var resultAddEnumDescription = SerializeAndAddEnumDescriptionReturnObj(result,result.Data.GetType());
-
-                context.Result = new JsonResult(resultAddEnumDescription)
-                {
-                    ContentType = "application/json",
-                };
             }
         }
 
         public void OnActionExecuting(ActionExecutingContext context) { }
 
-        public object? SerializeAndAddEnumDescriptionReturnObj(object input, Type dataType)
+        public object SerializeAndAddEnumDescriptionReturnObj(object result, Type payloadType)
         {
-            if (input == null)
-            {
-                return null;
-            }
+            var jObject = JToken.FromObject(result);
 
-            JToken jsonObject = JToken.FromObject(input);
-            RecursivelyAddEnumDescriptions(jsonObject, dataType);
+            RecursivelyAddEnumMeaning(jObject, payloadType);
 
-            return jsonObject.ToObject<ExpandoObject>();
+            return jObject.ToObject<ExpandoObject>() ?? new ExpandoObject();
         }
 
-        private void RecursivelyAddEnumDescriptions(JToken token, Type inputType)
+        private void RecursivelyAddEnumMeaning(JToken token, Type inputType)
         {
             if (token.Type == JTokenType.Object)
             {
                 foreach (JProperty property in token.Children<JProperty>().ToList())
                 {
-                    RecursivelyAddEnumDescriptions(property.Value, inputType);
+                    RecursivelyAddEnumMeaning(property.Value, inputType);
                 }
             }
             else if (token.Type == JTokenType.Array)
             {
                 foreach (JToken childToken in token.Children())
                 {
-                    RecursivelyAddEnumDescriptions(childToken, inputType);
+                    RecursivelyAddEnumMeaning(childToken, inputType);
                 }
             }
             else if (token.Type == JTokenType.Integer)
             {
-                var parentProperty = token.Parent as JProperty;
-                if (parentProperty != null)
+                if (token.Parent is JProperty parentProperty)
                 {
-                    var propertyInfo = GetPropertyInfoFromPath(inputType, parentProperty.Path);
-                    if (propertyInfo != null && propertyInfo.PropertyType.IsEnum)
+                    if (parentProperty != null && parentProperty.Parent != null)
                     {
-                        var enumValue = Enum.ToObject(propertyInfo.PropertyType, (int)token);
-                        var enumDescription = GetEnumDescription(enumValue);
-                        //parentProperty.Parent.AddAfterSelf(d);
-                        parentProperty.Parent.Add(new JProperty(parentProperty.Name + "Description", enumDescription));
+                        var path = parentProperty.Path;
+
+                        if (path.StartsWith("Payload."))
+                        {
+                            path = path.Substring(8);
+                        }
+
+                        var propertyInfo = FindPropertyByPath(inputType, path);
+
+                        if (propertyInfo != null && propertyInfo.PropertyType.IsEnum)
+                        {
+                            var enumValue = Enum.ToObject(propertyInfo.PropertyType, (int)token);
+                            var enumDescription = GetEnumMean(enumValue);
+                            parentProperty.Parent.Add(new JProperty(parentProperty.Name + "Meaning", enumDescription));
+                        }
                     }
                 }
             }
         }
 
-        private string? GetEnumDescription(object enumValue)
+        private string GetEnumMean(object enumValue)
         {
-            var fieldInfo = enumValue.GetType().GetField(enumValue.ToString());
-            var attributes = fieldInfo?.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
+            var value = enumValue.ToString();
 
-            if (attributes != null && attributes.Length > 0)
+            Debug.Assert(value != null);
+
+            var fieldInfo = enumValue.GetType().GetField(value);
+
+            if (fieldInfo == null)
             {
-                return attributes[0].Description;
+                return value;
             }
 
-            return enumValue.ToString(); // Fallback to enum value if no description found
+            var mean = fieldInfo.GetCustomAttribute<MeaningAttribute>()?.Mean
+                ?? fieldInfo.GetCustomAttribute<DescriptionAttribute>()?.Description
+                ?? fieldInfo.GetCustomAttribute<DisplayAttribute>()?.Name;
+
+            return mean ?? value;
         }
 
-        public PropertyInfo? GetPropertyInfoFromPath(Type objectType, string propertyPath)
+        public PropertyInfo? FindPropertyByPath(Type targetType, string path)
         {
-            PropertyInfo? propertyInfo = null;
-            var pathParts = propertyPath.Split('.').Skip(1).ToArray();
+            var segments = path.Split('.');
 
-            foreach (string part in pathParts)
+            PropertyInfo? propertyInfo = null;
+            Type currentType = targetType;
+
+            foreach (string segment in segments)
             {
-                propertyInfo = objectType.GetProperty(part);
-                if (propertyInfo == null)
+                var ienumerableInterface = currentType.GetInterface("IEnumerable`1");
+
+                if (ienumerableInterface != null)
                 {
-                    return null;
+                    currentType = ienumerableInterface.GetGenericArguments()[0];
                 }
-                objectType = propertyInfo.PropertyType;
+                else
+                {
+                    if (Regex.IsMatch(segment, @"\[\d+\]$"))
+                    {
+                        var temp = Regex.Replace(segment, @"\[\d+\]$", "");
+
+                        propertyInfo = currentType.GetProperty(temp);
+
+                        if (propertyInfo != null)
+                        {
+                            currentType = propertyInfo.PropertyType.GetGenericArguments()[0];
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        propertyInfo = currentType.GetProperty(segment);
+
+                        if (propertyInfo != null)
+                        {
+                            currentType = propertyInfo.PropertyType;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
             }
 
             return propertyInfo;
         }
+
+    }
+
+    /// <summary>
+    ///     重写响应报文的JSON格式
+    /// </summary>
+    public class AppendEnumMeaningFilter : IActionFilter
+    {
+        private readonly IContactProvider _contactProvider;
+
+        public AppendEnumMeaningFilter(IContactProvider contactProvider)
+        {
+            _contactProvider = contactProvider;
+        }
+
+        public void OnActionExecuted(ActionExecutedContext context)
+        {
+            if (context.Result is ObjectResult objectResult)
+            {
+                context.HttpContext.GetContact(out var statusCode, out var message);
+
+                var payload = objectResult.Value;
+
+                if (payload != null)
+                {
+                    var type = payload.GetType();
+
+                    if (type == typeof(DefaultContact))
+                    {
+                        return;
+                    }
+
+                    object result;
+                    Type payloadType;
+
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(DefaultContact<>).GetGenericTypeDefinition())
+                    {
+                        result = payload;
+
+                        var property = payload.GetType().GetProperty(nameof(DefaultContact.Payload));
+
+                        Debug.Assert(property != null);
+
+                        payloadType = property.PropertyType;
+                    }
+                    else
+                    {
+                        result = _contactProvider.Create(statusCode, payload, message);
+                        payloadType = payload.GetType();
+                    }
+
+                    result = SerializeAndAddEnumDescriptionReturnObj(result, payloadType);
+
+                    context.Result = new JsonResult(result)
+                    {
+                        ContentType = "application/json",
+                    };
+
+                    return;
+                }
+                else
+                {
+                    var result = _contactProvider.Create(statusCode, payload, message);
+
+                    context.Result = new JsonResult(result)
+                    {
+                        ContentType = "application/json",
+                    };
+                }
+            }
+        }
+
+        public void OnActionExecuting(ActionExecutingContext context) { }
+
+        public object SerializeAndAddEnumDescriptionReturnObj(object result, Type payloadType)
+        {
+            var jObject = JToken.FromObject(result);
+
+            RecursivelyAddEnumMeaning(jObject, payloadType);
+
+            return jObject.ToObject<ExpandoObject>() ?? new ExpandoObject();
+        }
+
+        private void RecursivelyAddEnumMeaning(JToken token, Type inputType)
+        {
+            if (token.Type == JTokenType.Object)
+            {
+                foreach (JProperty property in token.Children<JProperty>().ToList())
+                {
+                    RecursivelyAddEnumMeaning(property.Value, inputType);
+                }
+            }
+            else if (token.Type == JTokenType.Array)
+            {
+                foreach (JToken childToken in token.Children())
+                {
+                    RecursivelyAddEnumMeaning(childToken, inputType);
+                }
+            }
+            else if (token.Type == JTokenType.Integer)
+            {
+                if (token.Parent is JProperty parentProperty)
+                {
+                    if (parentProperty != null && parentProperty.Parent != null)
+                    {
+                        var path = parentProperty.Path;
+
+                        if (path.StartsWith("Payload."))
+                        {
+                            path = path.Substring(8);
+                        }
+
+                        var propertyInfo = FindPropertyByPath(inputType, path);
+
+                        if (propertyInfo != null && propertyInfo.PropertyType.IsEnum)
+                        {
+                            var enumValue = Enum.ToObject(propertyInfo.PropertyType, (int)token);
+                            var enumDescription = GetEnumMean(enumValue);
+                            parentProperty.Parent.Add(new JProperty(parentProperty.Name + "Meaning", enumDescription));
+                        }
+                    }
+                }
+            }
+        }
+
+        private string GetEnumMean(object enumValue)
+        {
+            var value = enumValue.ToString();
+
+            Debug.Assert(value != null);
+
+            var fieldInfo = enumValue.GetType().GetField(value);
+
+            if (fieldInfo == null)
+            {
+                return value;
+            }
+
+            var mean = fieldInfo.GetCustomAttribute<MeaningAttribute>()?.Mean
+                ?? fieldInfo.GetCustomAttribute<DescriptionAttribute>()?.Description
+                ?? fieldInfo.GetCustomAttribute<DisplayAttribute>()?.Name;
+
+            return mean ?? value;
+        }
+
+        public PropertyInfo? FindPropertyByPath(Type targetType, string path)
+        {
+            var segments = path.Split('.');
+
+            PropertyInfo? propertyInfo = null;
+            Type currentType = targetType;
+
+            foreach (string segment in segments)
+            {
+                var ienumerableInterface = currentType.GetInterface("IEnumerable`1");
+
+                if (ienumerableInterface != null)
+                {
+                    currentType = ienumerableInterface.GetGenericArguments()[0];
+                }
+                else
+                {
+                    if (Regex.IsMatch(segment, @"\[\d+\]$"))
+                    {
+                        var temp = Regex.Replace(segment, @"\[\d+\]$", "");
+
+                        propertyInfo = currentType.GetProperty(temp);
+
+                        if (propertyInfo != null)
+                        {
+                            currentType = propertyInfo.PropertyType.GetGenericArguments()[0];
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        propertyInfo = currentType.GetProperty(segment);
+
+                        if (propertyInfo != null)
+                        {
+                            currentType = propertyInfo.PropertyType;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+
+            return propertyInfo;
+        }
+
+    }
+
+    public class MeaningAttribute : Attribute
+    {
+        public MeaningAttribute(string mean)
+        {
+            Mean = mean;
+        }
+
+        public string Mean { get; }
+    }
+    public class PageInfo<T>
+    {
+        public PageInfo(int total, List<T> data)
+        {
+            Total = total;
+            Data = data;
+        }
+
+        public PageInfo(int total, T[] data)
+        {
+            Total = total;
+            Data = data;
+        }
+
+        public int Total { get; set; }
+        public IEnumerable<T> Data { get; set; }
     }
 }
