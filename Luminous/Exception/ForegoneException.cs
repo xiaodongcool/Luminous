@@ -41,4 +41,9 @@
             Exception = exception;
         }
     }
+
+    public class NotFoundException : Exception
+    {
+
+    }
 }

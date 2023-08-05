@@ -146,7 +146,7 @@ namespace Luminous
                         if (propertyInfo != null && propertyInfo.PropertyType.IsEnum)
                         {
                             var enumValue = Enum.ToObject(propertyInfo.PropertyType, (int)token);
-                            var enumDescription = GetEnumMean(enumValue);
+                            var enumDescription = GetEnumMeaning(enumValue);
                             parentProperty.Parent.Add(new JProperty(parentProperty.Name + "Meaning", enumDescription));
                         }
                     }
@@ -154,7 +154,7 @@ namespace Luminous
             }
         }
 
-        private string GetEnumMean(object enumValue)
+        private string GetEnumMeaning(object enumValue)
         {
             var value = enumValue.ToString();
 
