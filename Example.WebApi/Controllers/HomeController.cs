@@ -101,6 +101,67 @@ namespace Example.WebApi.Controllers
         {
             return new PageInfo<int>(10, new[] { 1, 2, 3 });
         }
+
+        [HttpGet]
+        public async Task<PageInfo<int>> Get11()
+        {
+            return null;
+        }
+
+        [HttpGet]
+        public async Task Get12()
+        {
+        }
+
+        [HttpGet]
+        public async Task Get13()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        public async Task Get14()
+        {
+            throw new ForegoneException("订单状态异常");
+        }
+
+
+        [HttpGet]
+        public async Task<string> Get15()
+        {
+            throw new ForegoneException("订单状态异常");
+        }
+
+        [HttpGet]
+        public async Task<string> Get16()
+        {
+            return "hello world!";
+        }
+
+        [HttpGet]
+        public async Task<string> Get17()
+        {
+            SetResultStatusAndMessage(WebApiStatusCode.Fail, "发生了一些错误");
+            return "hello world!";
+        }
+
+        [HttpGet]
+        public void Get18()
+        {
+
+        }
+
+        [HttpGet]
+        public void Get19()
+        {
+            throw new ForegoneException("");
+        }
+
+        [HttpGet]
+        public void Get20()
+        {
+            SetResultStatusAndMessage(WebApiStatusCode.Fail, "发生了一些错误");
+        }
     }
 
     public class UserResponse

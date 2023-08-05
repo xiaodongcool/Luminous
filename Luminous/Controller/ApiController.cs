@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Luminous
 {
@@ -21,20 +22,20 @@ namespace Luminous
 
         public ApiController() { }
 
-        /// <summary>
-        ///     设置响应报文的 <see cref="IContact{T}.Message"/> 字段
-        /// </summary>
-        //protected string Message
-        //{
-        //    set => HttpContext.SetMessage(value);
-        //}
+        protected void SetResultStatus(WebApiStatusCode statusCode)
+        {
+            HttpContext.SetCode(statusCode);
+        }
 
-        /// <summary>
-        ///     设置响应报文的 <see cref="IContact{T}.Status"/> 字段
-        /// </summary>
-        //protected WebApiStatusCode Status
-        //{
-        //    set => HttpContext.SetCode(value);
-        //}
+        protected void SetResultMessage(string message)
+        {
+            HttpContext.SetMessage(message);
+        }
+
+        protected void SetResultStatusAndMessage(WebApiStatusCode statusCode, string message)
+        {
+            HttpContext.SetCode(statusCode);
+            HttpContext.SetMessage(message);
+        }
     }
 }

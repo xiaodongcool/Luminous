@@ -21,8 +21,8 @@
         public static void GetContact(this HttpContext httpContext, out WebApiStatusCode code, out string message)
         {
             var variables = httpContext.Items;
-            message = variables["convention-message"]?.ToString() ?? "";
-            code = (WebApiStatusCode)(variables["convention-statuscode"] ?? WebApiStatusCode.Success);
+            message = variables["contact-msg"]?.ToString() ?? "";
+            code = (WebApiStatusCode)(variables["contact-code"] ?? WebApiStatusCode.Success);
         }
     }
 }
