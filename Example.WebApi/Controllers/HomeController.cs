@@ -172,6 +172,16 @@ namespace Example.WebApi.Controllers
              var file = new FileStream(filepath, FileMode.Open);
             return File(file, "application/octet-stream", "1.txt");
         }
+
+        [HttpGet]
+        public object Get22()
+        {
+            return new
+            {
+                Name = "уехЩ",
+                Gender = Gender.Male,
+            };
+        }
     }
 
     public class UserResponse
