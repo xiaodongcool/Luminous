@@ -35,7 +35,7 @@ namespace Luminous
 
             var errors = GetErrors();
 
-            var response = _conventionProvider.Create<object>(WebApiStatusCode.ParameterError, null, errors.SelectMany(_ => _.Errors).FirstOrDefault(_ => !string.IsNullOrEmpty(_.Message)).Message, errors);
+            var response = _conventionProvider.Create<object>(ResultStatus.ParameterError, null, errors.SelectMany(_ => _.Errors).FirstOrDefault(_ => !string.IsNullOrEmpty(_.Message)).Message, errors);
 
             context.Result = new JsonResult(response);
         }

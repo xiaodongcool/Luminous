@@ -35,7 +35,7 @@ namespace Luminous
             //  不加这行代码会报 StatusCode cannot be set because the response has already started.
             context.HandleResponse();
 
-            var response = _convention.Create<string>(WebApiStatusCode.UnAuthorized, error: new { context.Error, context.ErrorDescription });
+            var response = _convention.Create<string>(ResultStatus.UnAuthorized, error: new { context.Error, context.ErrorDescription });
             await WriteResponse(context.Response, HttpStatusCode.Unauthorized, response);
         }
 
@@ -58,7 +58,7 @@ namespace Luminous
             //  非法访问,记录日志
             _logger.LogWarning($"403Forbidden,url:{_accessor.GetHttpRequestFeature().Path}{Environment.NewLine}header:{Serializer(context.HttpContext.Request.Headers)}{Environment.NewLine}body:{await _accessor.GetBody()}");
 
-            var response = _convention.Create<string>(WebApiStatusCode.Forbidden);
+            var response = _convention.Create<string>(ResultStatus.Forbidden);
             await WriteResponse(context.Response, HttpStatusCode.Forbidden, response);
         }
 

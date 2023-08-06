@@ -124,7 +124,7 @@ namespace Luminous
             }
             else
             {
-                convention = _contactProvider.Create<object>(WebApiStatusCode.InternalServerError, null, "抱歉，服务器刚刚开小差了，请稍后再试。");
+                convention = _contactProvider.Create<object>(ResultStatus.InternalServerError, null, "抱歉，服务器刚刚开小差了，请稍后再试。");
 
                 if (_env.IsDevelopment() || _configuration["env"] != "product")
                 {

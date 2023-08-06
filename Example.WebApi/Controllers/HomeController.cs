@@ -142,7 +142,7 @@ namespace Example.WebApi.Controllers
         [HttpGet]
         public async Task<string> Get17()
         {
-            SetResultStatusAndMessage(WebApiStatusCode.Fail, "发生了一些错误");
+            SetResultStatusAndMessage(ResultStatus.Fail, "发生了一些错误");
             return "hello world!";
         }
 
@@ -161,7 +161,7 @@ namespace Example.WebApi.Controllers
         [HttpGet]
         public void Get20()
         {
-            SetResultStatusAndMessage(WebApiStatusCode.Fail, "发生了一些错误");
+            SetResultStatusAndMessage(ResultStatus.Fail, "发生了一些错误");
         }
 
         [HttpGet]

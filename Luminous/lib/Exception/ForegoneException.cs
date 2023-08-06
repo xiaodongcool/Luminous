@@ -13,7 +13,7 @@
         /// <summary>
         ///     状态码
         /// </summary>
-        public WebApiStatusCode StatusCode { get; set; }
+        public ResultStatus StatusCode { get; set; }
 
         /// <summary>
         ///     是否被全局异常捕捉
@@ -27,13 +27,13 @@
 
         public ForegoneException(string message, Exception exception = null, bool catchGlobalException = false) : base(message, exception)
         {
-            StatusCode = WebApiStatusCode.Fail;
+            StatusCode = ResultStatus.Fail;
             ApiMessage = message;
             CatchGlobalException = catchGlobalException;
             Exception = exception;
         }
 
-        public ForegoneException(WebApiStatusCode code, string message, Exception exception = null, bool catchGlobalException = false) : base(message, exception)
+        public ForegoneException(ResultStatus code, string message, Exception exception = null, bool catchGlobalException = false) : base(message, exception)
         {
             StatusCode = code;
             ApiMessage = message;

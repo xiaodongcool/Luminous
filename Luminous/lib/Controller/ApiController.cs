@@ -22,7 +22,7 @@ namespace Luminous
 
         public ApiController() { }
 
-        protected void SetResultStatus(WebApiStatusCode statusCode)
+        protected void SetResultStatus(ResultStatus statusCode)
         {
             HttpContext.SetCode(statusCode);
         }
@@ -32,7 +32,7 @@ namespace Luminous
             HttpContext.SetMessage(message);
         }
 
-        protected void SetResultStatusAndMessage(WebApiStatusCode statusCode, string message)
+        protected void SetResultStatusAndMessage(ResultStatus statusCode, string message)
         {
             HttpContext.SetCode(statusCode);
             HttpContext.SetMessage(message);
