@@ -2,7 +2,7 @@
 {
     public class DefaultResultFactory : IResultFactory
     {
-        public IResult<T> Success<T>(T data = default, string message = default)
+        public IResult<T> Success<T>(T? data = default, string? message = default)
         {
             return new DefaultResult<T>
             {
@@ -12,7 +12,7 @@
             };
         }
 
-        public IResult<T> Fail<T>(string message = default, object error = default, Exception exception = default)
+        public IResult<T> Fail<T>(string? message = default, object? error = default, Exception? exception = default)
         {
             return new DefaultResult<T>
             {
@@ -23,7 +23,7 @@
             };
         }
 
-        public IResult<T> ParameterError<T>(string message)
+        public IResult<T> ParameterError<T>(string? message)
         {
             return new DefaultResult<T>
             {
@@ -32,7 +32,7 @@
             };
         }
 
-        public IResult<T> Create<T>(ResultStatus webApiStatusCode, T data = default, string message = default, object error = default, Exception exception = default)
+        public IResult<T> Create<T>(ResultStatus webApiStatusCode, T? data = default, string? message = default, object? error = default, Exception? exception = default)
         {
             if (string.IsNullOrEmpty(message))
             {
@@ -58,4 +58,9 @@
             };
         }
     }
+
+    //public class DebugResultFactory : IResultFactory
+    //{
+
+    //}
 }

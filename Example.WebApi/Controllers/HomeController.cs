@@ -86,9 +86,9 @@ namespace Example.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<PageInfo<UserResponse>> Get8()
+        public async Task<Page<UserResponse>> Get8()
         {
-            return new PageInfo<UserResponse>(10, ServiceInfos);
+            return new Page<UserResponse>(10, ServiceInfos);
         }
 
         [HttpGet]
@@ -98,13 +98,13 @@ namespace Example.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<PageInfo<int>> Get10()
+        public async Task<Page<int>> Get10()
         {
-            return new PageInfo<int>(10, new[] { 1, 2, 3 });
+            return new Page<int>(10, new[] { 1, 2, 3 });
         }
 
         [HttpGet]
-        public async Task<PageInfo<int>> Get11()
+        public async Task<Page<int>> Get11()
         {
             return null;
         }

@@ -14,4 +14,9 @@ namespace Luminous
         public object? Error { get; set; }
         public Exception? Exception { get; set; }
     }
+
+    public class DebugResult<T> : DefaultResult<T>, IResult<T>, IDebugResult<T>
+    {
+        public string[]? ErrorCodeLocation { get; set; }
+    }
 }

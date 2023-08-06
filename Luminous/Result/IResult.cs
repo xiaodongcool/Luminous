@@ -30,5 +30,15 @@
         ///     异常信息(生产环境关闭)
         /// </summary>
         Exception? Exception { get; set; }
+
+        /// <summary>
+        ///     请求 id
+        /// </summary>
+        //string RqeuestId { get; set; }
+    }
+
+    public interface IDebugResult<T> : IResult<T>
+    {
+        string[]? ErrorCodeLocation { get; set; }
     }
 }
