@@ -12,9 +12,9 @@ namespace Luminous
     {
         private ActionExecutingContext _context;
         private readonly IWebHostEnvironment _env;
-        private readonly IContactProvider _conventionProvider;
+        private readonly IResultFactory _conventionProvider;
 
-        public ModelBindFailFilter(IWebHostEnvironment env, IContactProvider conventionProvider)
+        public ModelBindFailFilter(IWebHostEnvironment env, IResultFactory conventionProvider)
         {
             _env = env;
             _conventionProvider = conventionProvider;

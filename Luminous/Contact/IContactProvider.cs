@@ -1,13 +1,13 @@
 ﻿namespace Luminous
 {
-    public interface IContactProvider
+    public interface IResultFactory
     {
         /// <summary>
         ///     返回一个成功的响应报文
         /// </summary>
         /// <param name="data">响应数据</param>
         /// <param name="message">提示消息</param>
-        IContact<T> Success<T>(T data = default, string message = default);
+        IResult<T> Success<T>(T data = default, string message = default);
 
         /// <summary>
         ///     返回一个失败的响应报文
@@ -15,13 +15,13 @@
         /// <param name="message">提示消息</param>
         /// <param name="error">错误信息</param>
         /// <param name="exception">异常</param>
-        IContact<T> Fail<T>(string message = default, object error = default, Exception exception = default);
+        IResult<T> Fail<T>(string message = default, object error = default, Exception exception = default);
 
         /// <summary>
         ///     返回一个失败的响应报文(入参错误)
         /// </summary>
         /// <param name="message">提示消息</param>
-        IContact<T> ParameterError<T>(string message);
+        IResult<T> ParameterError<T>(string message);
 
         /// <summary>
         ///     创建一个响应报文
@@ -31,14 +31,14 @@
         /// <param name="message">提示消息</param>
         /// <param name="error">错误信息</param>
         /// <param name="exception">异常</param>
-        IContact<T> Create<T>(WebApiStatusCode webApiStatusCode, T data = default, string message = default, object error = default, Exception exception = default);
+        IResult<T> Create<T>(WebApiStatusCode webApiStatusCode, T data = default, string message = default, object error = default, Exception exception = default);
     }
 
-    public class DefaultContactProvider : IContactProvider
+    public class DefaultResultFactory : IResultFactory
     {
-        public IContact<T> Success<T>(T data = default, string message = default)
+        public IResult<T> Success<T>(T data = default, string message = default)
         {
-            return new DefaultContact<T>
+            return new DefaultResult<T>
             {
                 Status = WebApiStatusCode.Success,
                 Payload = data,
@@ -46,9 +46,9 @@
             };
         }
 
-        public IContact<T> Fail<T>(string message = default, object error = default, Exception exception = default)
+        public IResult<T> Fail<T>(string message = default, object error = default, Exception exception = default)
         {
-            return new DefaultContact<T>
+            return new DefaultResult<T>
             {
                 Status = WebApiStatusCode.Fail,
                 Message = message ?? "请求失败",
@@ -57,16 +57,16 @@
             };
         }
 
-        public IContact<T> ParameterError<T>(string message)
+        public IResult<T> ParameterError<T>(string message)
         {
-            return new DefaultContact<T>
+            return new DefaultResult<T>
             {
                 Status = WebApiStatusCode.ParameterError,
                 Message = message
             };
         }
 
-        public IContact<T> Create<T>(WebApiStatusCode webApiStatusCode, T data = default, string message = default, object error = default, Exception exception = default)
+        public IResult<T> Create<T>(WebApiStatusCode webApiStatusCode, T data = default, string message = default, object error = default, Exception exception = default)
         {
             if (string.IsNullOrEmpty(message))
             {
@@ -82,7 +82,7 @@
                 };
             }
 
-            return new DefaultContact<T>
+            return new DefaultResult<T>
             {
                 Status = webApiStatusCode,
                 Message = message,

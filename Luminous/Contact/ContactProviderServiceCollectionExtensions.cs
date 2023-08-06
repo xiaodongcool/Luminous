@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static void AddContactProvider(this IServiceCollection services)
         {
-            services.TryAddSingleton<IContactProvider, DefaultContactProvider>();
+            services.TryAddSingleton<IResultFactory, DefaultResultFactory>();
         }
     }
 }

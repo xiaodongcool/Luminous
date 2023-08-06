@@ -12,7 +12,7 @@ namespace Luminous
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
         private readonly IWebHostEnvironment _env;
-        private readonly IContactProvider _contactProvider;
+        private readonly IResultFactory _contactProvider;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessorSuper _httpContextAccessorSuper;
         private readonly IGlobalSerializer _globalSerializer;
@@ -21,7 +21,7 @@ namespace Luminous
             RequestDelegate next,
             ILogger<ExceptionMiddleware> logger,
             IWebHostEnvironment env,
-            IContactProvider contactProvider,
+            IResultFactory contactProvider,
             IConfiguration configuration,
             IHttpContextAccessorSuper httpContextAccessorSuper,
             IGlobalSerializer globalSerializer)
@@ -109,9 +109,9 @@ namespace Luminous
         /// <summary>
         ///     创建响应报文
         /// </summary>
-        protected IContact<object> CreateResponseModel(Exception exception)
+        protected IResult<object> CreateResponseModel(Exception exception)
         {
-            IContact<object> convention;
+            IResult<object> convention;
 
             if (exception is ForegoneException interrupException)
             {

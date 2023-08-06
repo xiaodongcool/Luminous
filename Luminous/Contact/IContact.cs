@@ -5,7 +5,7 @@ namespace Luminous
     /// <summary>
     ///     WebApi 接口标准约定
     /// </summary>
-    public interface IContact<T>
+    public interface IResult<T>
     {
         /// <summary>
         ///     响应状态码
@@ -34,19 +34,9 @@ namespace Luminous
         Exception? Exception { get; set; }
     }
 
-    public interface IContact : IContact<object> { }
+    public interface IResult : IResult<object> { }
 
-    public class DefaultContact : IContact
-    {
-        [JsonConverter(typeof(StringEnumConverter))]
-        public WebApiStatusCode Status { get; set; }
-        public string? Message { get; set; }
-        public object? Payload { get; set; }
-        public object? Error { get; set; }
-        public Exception? Exception { get; set; }
-    }
-
-    public class DefaultContact<T> : IContact<T>
+    public class DefaultResult<T> : IResult<T>
     {
         [JsonConverter(typeof(StringEnumConverter))]
         public WebApiStatusCode Status { get; set; }
@@ -56,7 +46,11 @@ namespace Luminous
         public Exception? Exception { get; set; }
     }
 
-    public class DeserializeContact<T> : IContact<T>
+    public class DefaultResult : DefaultResult<object>
+    {
+    }
+
+    public class DeserializeContact<T> : IResult<T>
     {
         [JsonConverter(typeof(StringEnumConverter))]
         public WebApiStatusCode Status { get; set; }

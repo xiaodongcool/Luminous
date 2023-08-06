@@ -14,9 +14,9 @@ namespace Luminous
     /// </summary>
     public class ContactFilter : IActionFilter
     {
-        private readonly IContactProvider _contactProvider;
+        private readonly IResultFactory _contactProvider;
 
-        public ContactFilter(IContactProvider contactProvider)
+        public ContactFilter(IResultFactory contactProvider)
         {
             _contactProvider = contactProvider;
         }
@@ -33,18 +33,18 @@ namespace Luminous
                 {
                     var type = payload.GetType();
 
-                    if (type == typeof(DefaultContact))
+                    if (type == typeof(DefaultResult))
                     {
                         return;
                     }
 
                     object result;
 
-                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(DefaultContact<>).GetGenericTypeDefinition())
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(DefaultResult<>).GetGenericTypeDefinition())
                     {
                         result = payload;
 
-                        var property = payload.GetType().GetProperty(nameof(DefaultContact.Payload));
+                        var property = payload.GetType().GetProperty(nameof(DefaultResult.Payload));
 
                         Debug.Assert(property != null);
 

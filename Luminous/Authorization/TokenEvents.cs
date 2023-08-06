@@ -11,7 +11,7 @@ namespace Luminous
     public class TokenEvents : JwtBearerEvents
     {
         private ILogger<TokenEvents> _logger;
-        private IContactProvider _convention;
+        private IResultFactory _convention;
         private IHttpContextAccessorSuper _accessor;
         private IGlobalSerializer _globalSerializer;
 
@@ -19,7 +19,7 @@ namespace Luminous
         private void Initialization(HttpContext httpContext)
         {
             _logger = httpContext.RequestServices.GetService<ILogger<TokenEvents>>();
-            _convention = httpContext.RequestServices.GetService<IContactProvider>();
+            _convention = httpContext.RequestServices.GetService<IResultFactory>();
             _accessor = httpContext.RequestServices.GetService<IHttpContextAccessorSuper>();
             _globalSerializer = httpContext.RequestServices.GetService<IGlobalSerializer>();
         }
@@ -65,7 +65,7 @@ namespace Luminous
         /// <summary>
         ///     向响应报文写入 http 状态码和报文
         /// </summary>
-        private async Task WriteResponse<T>(HttpResponse httpResponse, HttpStatusCode httpStatusCode, IContact<T> response)
+        private async Task WriteResponse<T>(HttpResponse httpResponse, HttpStatusCode httpStatusCode, IResult<T> response)
         {
             httpResponse.ContentType = "application/json; charset=utf-8";
             httpResponse.StatusCode = (int)httpStatusCode;

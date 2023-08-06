@@ -15,10 +15,10 @@ namespace Luminous
     /// </summary>
     public class AppendContactAndEnumMeaningFilter : IActionFilter
     {
-        private readonly IContactProvider _contactProvider;
+        private readonly IResultFactory _contactProvider;
         private readonly IConfiguration _configuration;
 
-        public AppendContactAndEnumMeaningFilter(IContactProvider contactProvider, IConfiguration configuration)
+        public AppendContactAndEnumMeaningFilter(IResultFactory contactProvider, IConfiguration configuration)
         {
             _contactProvider = contactProvider;
             _configuration = configuration;
@@ -37,7 +37,7 @@ namespace Luminous
                 {
                     var type = payload.GetType();
 
-                    if (type == typeof(DefaultContact))
+                    if (type == typeof(DefaultResult))
                     {
                         return;
                     }
@@ -45,11 +45,11 @@ namespace Luminous
                     object result;
                     Type payloadType;
 
-                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(DefaultContact<>).GetGenericTypeDefinition())
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(DefaultResult<>).GetGenericTypeDefinition())
                     {
                         result = payload;
 
-                        var property = payload.GetType().GetProperty(nameof(DefaultContact.Payload));
+                        var property = payload.GetType().GetProperty(nameof(DefaultResult.Payload));
 
                         Debug.Assert(property != null);
 
@@ -91,6 +91,8 @@ namespace Luminous
             }
         }
 
+        public void OnActionExecuting(ActionExecutingContext context) { }
+
         private object AppendEnumMeaningIfEnableConfiguration(object result, Type payloadType)
         {
             if (_configuration["Luminous:AppendEnumMeaning"] == "True")
@@ -100,8 +102,6 @@ namespace Luminous
 
             return result;
         }
-
-        public void OnActionExecuting(ActionExecutingContext context) { }
 
         public object SerializeAndAddEnumDescriptionReturnObj(object result, Type payloadType)
         {
@@ -167,11 +167,11 @@ namespace Luminous
                 return value;
             }
 
-            var mean = fieldInfo.GetCustomAttribute<MeaningAttribute>()?.Mean
+            var meaning = fieldInfo.GetCustomAttribute<MeaningAttribute>()?.Mean
                 ?? fieldInfo.GetCustomAttribute<DescriptionAttribute>()?.Description
                 ?? fieldInfo.GetCustomAttribute<DisplayAttribute>()?.Name;
 
-            return mean ?? value;
+            return meaning ?? value;
         }
 
         public PropertyInfo? FindPropertyByPath(Type targetType, string path)
