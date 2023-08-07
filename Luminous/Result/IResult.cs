@@ -22,16 +22,6 @@
         T? Payload { get; set; }
 
         /// <summary>
-        ///     错误信息(生产环境关闭)
-        /// </summary>
-        object? Error { get; set; }
-
-        /// <summary>
-        ///     异常信息(生产环境关闭)
-        /// </summary>
-        Exception? Exception { get; set; }
-
-        /// <summary>
         ///     请求 id
         /// </summary>
         //string RqeuestId { get; set; }
@@ -40,5 +30,15 @@
     public interface IDebugResult<T> : IResult<T>
     {
         string[]? ErrorCodeLocation { get; set; }
+
+        /// <summary>
+        ///     错误信息(生产环境关闭)
+        /// </summary>
+        object? Error { get; set; }
+
+        /// <summary>
+        ///     异常信息(生产环境关闭)
+        /// </summary>
+        Exception? Exception { get; set; }
     }
 }

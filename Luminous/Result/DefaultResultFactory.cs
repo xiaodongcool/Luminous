@@ -12,18 +12,16 @@
             };
         }
 
-        public IResult<T> Fail<T>(string? message = default, object? error = default, Exception? exception = default)
+        public IResult<T> Fail<T>(string? message = default)
         {
             return new DefaultResult<T>
             {
                 Status = ResultStatus.Fail,
                 Message = message ?? "请求失败",
-                Error = error,
-                Exception = exception
             };
         }
 
-        public IResult<T> ParameterError<T>(string? message)
+        public IResult<T> ParameterError<T>(string? message = default)
         {
             return new DefaultResult<T>
             {
@@ -32,11 +30,11 @@
             };
         }
 
-        public IResult<T> Create<T>(ResultStatus webApiStatusCode, T? data = default, string? message = default, object? error = default, Exception? exception = default)
+        public IResult<T> Create<T>(ResultStatus status, T? data = default, string? message = default)
         {
             if (string.IsNullOrEmpty(message))
             {
-                message = webApiStatusCode switch
+                message = status switch
                 {
                     ResultStatus.Success => "请求成功",
                     ResultStatus.Fail => "请求失败",
@@ -50,17 +48,10 @@
 
             return new DefaultResult<T>
             {
-                Status = webApiStatusCode,
+                Status = status,
                 Message = message,
-                Error = error,
-                Exception = exception,
                 Payload = data
             };
         }
     }
-
-    //public class DebugResultFactory : IResultFactory
-    //{
-
-    //}
 }

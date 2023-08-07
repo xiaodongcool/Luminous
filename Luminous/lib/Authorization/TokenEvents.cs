@@ -35,7 +35,7 @@ namespace Luminous
             //  不加这行代码会报 StatusCode cannot be set because the response has already started.
             context.HandleResponse();
 
-            var response = _convention.Create<string>(ResultStatus.UnAuthorized, error: new { context.Error, context.ErrorDescription });
+            var response = _convention.Create<string>(ResultStatus.UnAuthorized, message: $"{context.Error}（{context.ErrorDescription}）");
             await WriteResponse(context.Response, HttpStatusCode.Unauthorized, response);
         }
 
