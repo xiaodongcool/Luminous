@@ -11,7 +11,6 @@ namespace Luminous
     public class TokenEvents : JwtBearerEvents
     {
         private ILogger<TokenEvents> _logger;
-        private IResultFactory _convention;
         private IHttpContextAccessorSuper _accessor;
         private IGlobalSerializer _globalSerializer;
 
@@ -19,7 +18,6 @@ namespace Luminous
         private void Initialization(HttpContext httpContext)
         {
             _logger = httpContext.RequestServices.GetService<ILogger<TokenEvents>>();
-            _convention = httpContext.RequestServices.GetService<IResultFactory>();
             _accessor = httpContext.RequestServices.GetService<IHttpContextAccessorSuper>();
             _globalSerializer = httpContext.RequestServices.GetService<IGlobalSerializer>();
         }
@@ -35,8 +33,9 @@ namespace Luminous
             //  不加这行代码会报 StatusCode cannot be set because the response has already started.
             context.HandleResponse();
 
-            var response = _convention.Create<string>(ResultStatus.UnAuthorized, message: $"{context.Error}（{context.ErrorDescription}）");
-            await WriteResponse(context.Response, HttpStatusCode.Unauthorized, response);
+            var result = new Result<object>(ResultStatus.UnAuthorized, null, $"{context.Error}（{context.ErrorDescription}）");
+
+            await WriteResponse(context.Response, HttpStatusCode.Unauthorized, result);
         }
 
         /// <summary>
@@ -58,8 +57,9 @@ namespace Luminous
             //  非法访问,记录日志
             _logger.LogWarning($"403Forbidden,url:{_accessor.GetHttpRequestFeature().Path}{Environment.NewLine}header:{Serializer(context.HttpContext.Request.Headers)}{Environment.NewLine}body:{await _accessor.GetBody()}");
 
-            var response = _convention.Create<string>(ResultStatus.Forbidden);
-            await WriteResponse(context.Response, HttpStatusCode.Forbidden, response);
+            var result = new Result<object>(ResultStatus.Forbidden, null, null);
+
+            await WriteResponse(context.Response, HttpStatusCode.Forbidden, result);
         }
 
         /// <summary>

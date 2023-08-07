@@ -12,7 +12,6 @@ namespace Luminous
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionMiddleware> _logger;
         private readonly IWebHostEnvironment _env;
-        private readonly IResultFactory _contactProvider;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessorSuper _httpContextAccessorSuper;
         private readonly IGlobalSerializer _globalSerializer;
@@ -21,7 +20,6 @@ namespace Luminous
             RequestDelegate next,
             ILogger<ExceptionMiddleware> logger,
             IWebHostEnvironment env,
-            IResultFactory contactProvider,
             IConfiguration configuration,
             IHttpContextAccessorSuper httpContextAccessorSuper,
             IGlobalSerializer globalSerializer)
@@ -29,7 +27,6 @@ namespace Luminous
             _next = next;
             _logger = logger;
             _env = env;
-            _contactProvider = contactProvider;
             _configuration = configuration;
             _httpContextAccessorSuper = httpContextAccessorSuper;
             _globalSerializer = globalSerializer;
@@ -115,21 +112,20 @@ namespace Luminous
 
             if (exception is ForegoneException interrupException)
             {
-                convention = _contactProvider.Create<object>(interrupException.StatusCode, null, interrupException.ApiMessage);
+                convention = new Result<object>(interrupException.StatusCode, null, interrupException.ApiMessage);
 
                 if (_env.IsDevelopment() || _configuration["env"] != "product")
                 {
-                    convention.Exception = interrupException;
+                    convention = new DebugResult<object>(interrupException.StatusCode, null, interrupException.ApiMessage, interrupException, null);
                 }
             }
             else
             {
-                convention = _contactProvider.Create<object>(ResultStatus.InternalServerError, null, "抱歉，服务器刚刚开小差了，请稍后再试。");
+                convention = new Result<object>(ResultStatus.InternalServerError, null, "抱歉，服务器刚刚开小差了，请稍后再试。");
 
                 if (_env.IsDevelopment() || _configuration["env"] != "product")
                 {
-                    convention.Error = exception.Message;
-                    convention.Exception = exception;
+                    convention = new DebugResult<object>(ResultStatus.InternalServerError, null, null, exception, exception.Message);
                 }
             }
 

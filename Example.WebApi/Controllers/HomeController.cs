@@ -30,7 +30,6 @@ namespace Example.WebApi.Controllers
     public class JsonController : ApiController
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IResultFactory _contactProvider;
         private readonly UserResponse[] ServiceInfos = new[]
         {
             new UserResponse("ÕÅÈý", Gender.Male, Role.Admin),
@@ -43,10 +42,9 @@ namespace Example.WebApi.Controllers
             new UserResponse("Iven", Role.User),
         };
 
-        public JsonController(ILogger<HomeController> logger, IResultFactory contactProvider)
+        public JsonController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _contactProvider = contactProvider;
         }
 
         [HttpGet]

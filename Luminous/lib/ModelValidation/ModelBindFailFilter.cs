@@ -12,12 +12,10 @@ namespace Luminous
     {
         private ActionExecutingContext _context;
         private readonly IWebHostEnvironment _env;
-        private readonly IResultFactory _conventionProvider;
 
-        public ModelBindFailFilter(IWebHostEnvironment env, IResultFactory conventionProvider)
+        public ModelBindFailFilter(IWebHostEnvironment env)
         {
             _env = env;
-            _conventionProvider = conventionProvider;
         }
 
         public void OnActionExecuted(ActionExecutedContext context) { }
@@ -35,9 +33,11 @@ namespace Luminous
 
             var errors = GetErrors();
 
-            var response = _conventionProvider.Create<object>(ResultStatus.ParameterError, null, errors.SelectMany(_ => _.Errors).FirstOrDefault(_ => !string.IsNullOrEmpty(_.Message)).Message, errors);
+            IResult<object> result = new Result<object>(ResultStatus.ParameterError, null, errors.SelectMany(_ => _.Errors).Single(_ => !string.IsNullOrEmpty(_.Message)).Message);
 
-            context.Result = new JsonResult(response);
+            result = new DebugResult<object>(ResultStatus.ParameterError, null, errors.SelectMany(_ => _.Errors).Single(_ => !string.IsNullOrEmpty(_.Message)).Message, null, errors);
+
+            context.Result = new JsonResult(result);
         }
 
         /// <summary>

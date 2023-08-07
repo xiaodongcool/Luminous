@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static void AddContactProvider(this IServiceCollection services)
         {
-            services.TryAddSingleton<IResultFactory, DefaultResultFactory>();
+            //services.TryAddSingleton<IResultFactory, DefaultResultFactory>();
         }
     }
 }

@@ -12,12 +12,10 @@ namespace Luminous
 {
     public class AppendContactAndEnumMeaningFilter : IActionFilter
     {
-        private readonly IResultFactory _contactProvider;
         private readonly IConfiguration _configuration;
 
-        public AppendContactAndEnumMeaningFilter(IResultFactory contactProvider, IConfiguration configuration)
+        public AppendContactAndEnumMeaningFilter(IConfiguration configuration)
         {
-            _contactProvider = contactProvider;
             _configuration = configuration;
         }
 
@@ -37,11 +35,11 @@ namespace Luminous
                     object result;
                     Type payloadType;
 
-                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(DefaultResult<>).GetGenericTypeDefinition())
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Result<>).GetGenericTypeDefinition())
                     {
                         result = payload;
 
-                        var property = payload.GetType().GetProperty(nameof(DefaultResult<int>.Payload));
+                        var property = payload.GetType().GetProperty(nameof(Result<int>.Payload));
 
                         Debug.Assert(property != null);
 
@@ -49,7 +47,7 @@ namespace Luminous
                     }
                     else
                     {
-                        result = _contactProvider.Create(statusCode, payload, message);
+                        result = new Result<object>(statusCode, payload, message);
                         payloadType = payload.GetType();
                     }
 
@@ -64,7 +62,7 @@ namespace Luminous
                 }
                 else
                 {
-                    var result = _contactProvider.Create(statusCode, payload, message);
+                    var result = new Result<object>(statusCode, payload, message);
 
                     context.Result = new JsonResult(result)
                     {
@@ -74,7 +72,7 @@ namespace Luminous
             }
             else if (context.Result is EmptyResult emptyResult)
             {
-                var result = _contactProvider.Create<object>(statusCode, null, message);
+                var result = new Result<object>(statusCode, null, message);
 
                 context.Result = new JsonResult(result)
                 {

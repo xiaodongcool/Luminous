@@ -7,7 +7,6 @@
         /// </summary>
         public static void AddContactFilter(this IServiceCollection services)
         {
-            services.AddContactProvider();
             services.AddControllers(mvc =>
             {
                 mvc.Filters.TryAdd<AppendContactAndEnumMeaningFilter>();
