@@ -23,13 +23,16 @@ namespace Luminous
     {
         public DebugResult(ResultStatus status, T? payload, string? message, Exception? exception, object? error) : base(status, payload, message)
         {
-            Exception = exception;
+            if (exception != null)
+            {
+                Exception = new ConciseExceptionInfo(exception);
+            }
+
             Error = error;
         }
 
-        public string[]? ErrorCodeLocation { get; set; }
         public object? Error { get; set; }
-        public Exception? Exception { get; set; }
+        public ConciseExceptionInfo? Exception { get; set; }
     }
 
     public class ExceptionUtil
@@ -139,19 +142,19 @@ namespace Luminous
             StackTrace = ExceptionUtil.GetOrderedStackTrace(exception);
         }
 
-        public string Type { get; set; }
-        public string Message { get; set; }
-        public string Source { get; set; }
+        public string? Type { get; set; }
+        public string? Message { get; set; }
+        public string? Source { get; set; }
         public IDictionary Data { get; set; }
-        public ConciseExceptionInfo InnerException { get; set; }
+        public ConciseExceptionInfo? InnerException { get; set; }
         public StackFrameInfo[] StackTrace { get; set; }
     }
 
     public class StackFrameInfo
     {
-        public string FilePath { get; set; }
+        public string FilePath { get; set; } = null!;
         public int LineNumber { get; set; }
-        public string MethodName { get; set; }
-        public string TypeName { get; set; }
+        public string MethodName { get; set; } = null!;
+        public string TypeName { get; set; } = null!;
     }
 }

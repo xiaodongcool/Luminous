@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text;
@@ -129,7 +130,31 @@ namespace Luminous
                 }
             }
 
+
             return convention;
         }
+    }
+
+    public interface IApplication
+    {
+        Environment Environment { get; }
+    }
+
+    public class Application : IApplication
+    {
+        public Application()
+        {
+
+        }
+
+        public Environment Environment => throw new NotImplementedException();
+    }
+
+    public enum Environment
+    {
+        Development,
+        Testing,
+        Uat,
+        Production
     }
 }

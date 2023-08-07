@@ -29,8 +29,6 @@
 
     public interface IDebugResult<T> : IResult<T>
     {
-        string[]? ErrorCodeLocation { get; set; }
-
         /// <summary>
         ///     错误信息(生产环境关闭)
         /// </summary>
@@ -39,6 +37,6 @@
         /// <summary>
         ///     异常信息(生产环境关闭)
         /// </summary>
-        Exception? Exception { get; set; }
+        ConciseExceptionInfo? Exception { get; set; }
     }
 }
