@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Converters;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Luminous
 {
