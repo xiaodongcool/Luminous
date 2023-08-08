@@ -181,7 +181,6 @@ namespace Example.WebApi.Controllers
             };
         }
     }
-
     public class UserResponse
     {
         public UserResponse(string name, Gender gender, Role role)

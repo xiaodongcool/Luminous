@@ -175,7 +175,11 @@ namespace Luminous
             {
                 var ienumerableInterface = currentType.GetInterface("IEnumerable`1");
 
-                if (ienumerableInterface != null)
+                if (currentType.Name == "IEnumerable`1")
+                {
+                    currentType = currentType.GetGenericArguments()[0];
+                }
+                else if (ienumerableInterface != null)
                 {
                     currentType = ienumerableInterface.GetGenericArguments()[0];
                 }
