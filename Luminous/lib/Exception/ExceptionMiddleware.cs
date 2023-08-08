@@ -57,7 +57,7 @@ namespace Luminous
         /// </summary>
         protected virtual async Task HandleExceptionMessageAsync(HttpContext context, Exception exception)
         {
-            if (exception is not ForegoneException interrupException || interrupException.CatchGlobalException)
+            if (exception is not FailException interrupException || interrupException.LogOnGlobalException)
             {
                 var request = context.Request;
 
@@ -67,19 +67,16 @@ namespace Luminous
 
                 //  日志
                 _logger.LogError(exception, $"500InternalServerError,url:{requestFeature.RawTarget}{Environment.NewLine}header:{GetHeader(requestFeature.Headers)}{Environment.NewLine}body:{body}");
-
             }
 
             //  响应报文
-            var response = CreateResponseModel(exception);
-
-            //  序列化
-            var responseString = _globalSerializer.SerializeObject(response);
+            var result = GetResult(exception);
 
             //  写入 Response
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            await context.Response.WriteAsync(responseString);
+
+            await context.Response.WriteAsync(_globalSerializer.SerializeObject(result));
         }
 
         /// <summary>
@@ -107,50 +104,61 @@ namespace Luminous
         /// <summary>
         ///     创建响应报文
         /// </summary>
-        protected IResult<object> CreateResponseModel(Exception exception)
+        protected IResult<object> GetResult(Exception exception)
         {
-            IResult<object> convention;
+            IResult<object> result;
 
-            if (exception is ForegoneException interrupException)
+            if (exception is FailException failException)
             {
-                convention = new Result<object>(interrupException.StatusCode, null, interrupException.ApiMessage);
-
-                if (_env.IsDevelopment() || _configuration["env"] != "product")
+                if (_env.IsProduction())
                 {
-                    convention = new DebugResult<object>(interrupException.StatusCode, null, interrupException.ApiMessage, interrupException, null);
+                    result = new Result<object>(failException.StatusCode, null, failException.ResultMessage);
+                }
+                else
+                {
+                    result = new DebugResult<object>(failException.StatusCode, null, failException.ResultMessage, failException, null);
                 }
             }
             else
             {
-                convention = new Result<object>(ResultStatus.InternalServerError, null, "抱歉，服务器刚刚开小差了，请稍后再试。");
-
-                if (_env.IsDevelopment() || _configuration["env"] != "product")
+                if (_env.IsProduction())
                 {
-                    convention = new DebugResult<object>(ResultStatus.InternalServerError, null, null, exception, exception.Message);
+                    result = new Result<object>(ResultStatus.InternalServerError, null, "抱歉，服务器刚刚开小差了，请稍后再试。");
+                }
+                else
+                {
+                    result = new DebugResult<object>(ResultStatus.InternalServerError, null, null, exception, exception.Message);
                 }
             }
 
-
-            return convention;
+            return result;
         }
     }
 
     public interface IApplication
     {
-        Environment Environment { get; }
+        Env Env { get; }
     }
 
     public class Application : IApplication
     {
-        public Application()
-        {
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
+        public Application(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
         }
 
-        public Environment Environment => throw new NotImplementedException();
+        public Env Env
+        {
+            get
+            {
+                return Env.Development;
+            }
+        }
     }
 
-    public enum Environment
+    public enum Env
     {
         Development,
         Testing,

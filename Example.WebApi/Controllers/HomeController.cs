@@ -121,14 +121,14 @@ namespace Example.WebApi.Controllers
         [HttpGet]
         public async Task Get14()
         {
-            throw new ForegoneException("隆等袨怓祑都");
+            throw new FailException("隆等袨怓祑都");
         }
 
 
         [HttpGet]
         public async Task<string> Get15()
         {
-            throw new ForegoneException("隆等袨怓祑都");
+            throw new FailException("隆等袨怓祑都");
         }
 
         [HttpGet]
@@ -153,7 +153,7 @@ namespace Example.WebApi.Controllers
         [HttpGet]
         public void Get19()
         {
-            throw new ForegoneException("");
+            throw new FailException("12");
         }
 
         [HttpGet]
