@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text;
@@ -45,9 +44,9 @@ namespace Luminous
                 {
                     await HandleExceptionMessageAsync(context, ex).ConfigureAwait(false);
                 }
-                catch (Exception e)
+                catch (Exception e2)
                 {
-                    _logger.LogError(ex, nameof(ExceptionMiddleware) + e);
+                    _logger.LogError(ex, $"处理全局异常时发生了未处理异常:{JsonConvert.SerializeObject(e2)}");
                 }
             }
         }
@@ -66,39 +65,34 @@ namespace Luminous
                 var body = await _httpContextAccessorSuper.GetBody();
 
                 //  日志
-                _logger.LogError(exception, $"500InternalServerError,url:{requestFeature.RawTarget}{Environment.NewLine}header:{GetHeader(requestFeature.Headers)}{Environment.NewLine}body:{body}");
+                _logger.LogError(exception, $"GlobalException{Environment.NewLine}URL:{requestFeature?.RawTarget}{Environment.NewLine}HEADER:{Environment.NewLine}{GetHeader(requestFeature.Headers)}{Environment.NewLine}BODY:{body}");
             }
-
-            //  响应报文
-            var result = GetResult(exception);
 
             //  写入 Response
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            await context.Response.WriteAsync(_globalSerializer.SerializeObject(result));
+            await context.Response.WriteAsync(_globalSerializer.SerializeObject(GetResult(exception)));
         }
 
         /// <summary>
         ///     获取请求头内容
         /// </summary>
-        protected string GetHeader(IHeaderDictionary headerDictionary)
+        protected static string? GetHeader(IHeaderDictionary headerDictionary)
         {
             if (headerDictionary == null)
             {
                 return null;
             }
 
-            var sb = new StringBuilder();
-
-            sb.AppendLine();
+            var result = new StringBuilder();
 
             foreach (var (name, value) in headerDictionary)
             {
-                sb.AppendLine($"{name}:{value}");
+                result.AppendLine($"{name}:{value}");
             }
 
-            return sb.ToString();
+            return result.ToString();
         }
 
         /// <summary>
