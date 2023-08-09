@@ -4,11 +4,11 @@ namespace Luminous
 {
     public abstract class Assignment : IAssignment
     {
-        private readonly IHttpContextAccessorSuper _feature;
+        private readonly IHttpContexter _feature;
 
         protected HttpContext HttpContext { get; }
 
-        protected Assignment(IHttpContextAccessorSuper feature)
+        protected Assignment(IHttpContexter feature)
         {
             _feature = feature;
 

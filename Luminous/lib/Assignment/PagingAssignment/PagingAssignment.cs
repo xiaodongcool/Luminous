@@ -35,7 +35,7 @@
             }
         }
 
-        public PagingAssignment(PagingAssignmentOptions options, IHttpContextAccessorSuper contextAccessor) : base(contextAccessor)
+        public PagingAssignment(PagingAssignmentOptions options, IHttpContexter contextAccessor) : base(contextAccessor)
         {
             _options = options;
         }

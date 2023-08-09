@@ -40,11 +40,8 @@ namespace Microsoft.Extensions.DependencyInjection
                         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                     }
 
-                    //  全局序列化配置
-                    GlobalSerializer.Default = options.SerializerSettings;
+                    Global.JsonSerializerSettings = options.SerializerSettings;
                 });
-
-            services.AddSingleton<IGlobalSerializer, GlobalSerializer>();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Luminous
         private bool _isInit;
         private IQueryCollection _condition;
 
-        public QueryAssignment(QueryAssignmentOptions options, IHttpContextAccessorSuper contextAccessor) : base(contextAccessor)
+        public QueryAssignment(QueryAssignmentOptions options, IHttpContexter contextAccessor) : base(contextAccessor)
         {
             _options = options;
         }

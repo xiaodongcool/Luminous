@@ -13,23 +13,20 @@ namespace Luminous
         private readonly ILogger<ExceptionMiddleware> _logger;
         private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessorSuper _httpContextAccessorSuper;
-        private readonly IGlobalSerializer _globalSerializer;
+        private readonly IHttpContexter _httpContexter;
 
         public ExceptionMiddleware(
             RequestDelegate next,
             ILogger<ExceptionMiddleware> logger,
             IWebHostEnvironment env,
             IConfiguration configuration,
-            IHttpContextAccessorSuper httpContextAccessorSuper,
-            IGlobalSerializer globalSerializer)
+            IHttpContexter httpContexter)
         {
             _next = next;
             _logger = logger;
             _env = env;
             _configuration = configuration;
-            _httpContextAccessorSuper = httpContextAccessorSuper;
-            _globalSerializer = globalSerializer;
+            _httpContexter = httpContexter;
         }
 
         public async Task Invoke(HttpContext context)
@@ -62,7 +59,7 @@ namespace Luminous
 
                 var requestFeature = request.HttpContext.Features.Get<IHttpRequestFeature>();
 
-                var body = await _httpContextAccessorSuper.GetBody();
+                var body = await _httpContexter.GetBody();
 
                 //  日志
                 _logger.LogError(exception, $"GlobalException{Environment.NewLine}URL:{requestFeature?.RawTarget}{Environment.NewLine}HEADER:{Environment.NewLine}{GetHeader(requestFeature.Headers)}{Environment.NewLine}BODY:{body}");
@@ -72,7 +69,7 @@ namespace Luminous
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            await context.Response.WriteAsync(_globalSerializer.SerializeObject(GetResult(exception)));
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(GetResult(exception), Global.JsonSerializerSettings));
         }
 
         /// <summary>
@@ -127,36 +124,5 @@ namespace Luminous
 
             return result;
         }
-    }
-
-    public interface IApplication
-    {
-        Env Env { get; }
-    }
-
-    public class Application : IApplication
-    {
-        private readonly IWebHostEnvironment _webHostEnvironment;
-
-        public Application(IWebHostEnvironment webHostEnvironment)
-        {
-            _webHostEnvironment = webHostEnvironment;
-        }
-
-        public Env Env
-        {
-            get
-            {
-                return Env.Development;
-            }
-        }
-    }
-
-    public enum Env
-    {
-        Development,
-        Testing,
-        Uat,
-        Production
     }
 }

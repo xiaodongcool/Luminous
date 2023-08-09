@@ -10,20 +10,17 @@ namespace Luminous
     /// </summary>
     public class ModelBindFailFilter : IActionFilter
     {
-        private ActionExecutingContext _context;
-        private readonly IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ModelBindFailFilter(IWebHostEnvironment env)
+        public ModelBindFailFilter(IWebHostEnvironment webHostEnvironment)
         {
-            _env = env;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public void OnActionExecuted(ActionExecutedContext context) { }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            _context = context;
-
             if (context.ModelState.IsValid)
             {
                 return;
@@ -31,11 +28,20 @@ namespace Luminous
 
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
 
-            var errors = GetErrors();
+            var errors = GetErrors(context);
 
-            IResult<object> result = new Result<object>(ResultStatus.ParameterError, null, errors.SelectMany(_ => _.Errors).Single(_ => !string.IsNullOrEmpty(_.Message)).Message);
+            IResult<object> result;
 
-            result = new DebugResult<object>(ResultStatus.ParameterError, null, errors.SelectMany(_ => _.Errors).Single(_ => !string.IsNullOrEmpty(_.Message)).Message, null, errors);
+            var message = errors.SelectMany(x => x.Errors).FirstOrDefault(x => !string.IsNullOrEmpty(x.Message))?.Message;
+
+            if (_webHostEnvironment.IsProduction())
+            {
+                result = new Result<object>(ResultStatus.ParameterError, null, message);
+            }
+            else
+            {
+                result = new DebugResult<object>(ResultStatus.ParameterError, null, message, null, errors);
+            }
 
             context.Result = new JsonResult(result);
         }
@@ -43,23 +49,23 @@ namespace Luminous
         /// <summary>
         ///     获取所有绑定失败的字段及原因
         /// </summary>
-        protected IList<ModelBindFailEntry> GetErrors()
+        protected List<ModelBindFail> GetErrors(ActionExecutingContext context)
         {
-            var errors = new List<ModelBindFailEntry>();
+            var errors = new List<ModelBindFail>();
 
-            foreach (var (key, value) in _context.ModelState)
+            foreach (var (key, value) in context.ModelState)
             {
                 if (value.Errors.Any())
                 {
-                    errors.Add(new ModelBindFailEntry
+                    errors.Add(new ModelBindFail
                     {
-                        PropertyName = key,
-                        RawValue = value.RawValue,
-                        Errors = value.Errors.Select(_ => new ModelBindFailEntry.ErrorItem
+                        Name = key,
+                        Value = value.RawValue,
+                        Errors = value.Errors.Select(x => new ModelBindFailDetail
                         {
-                            Exception = _env.IsDevelopment() ? _.Exception : null,
-                            Message = _.ErrorMessage
-                        }).ToList()
+                            Exception = x.Exception,
+                            Message = x.ErrorMessage
+                        }).ToArray()
                     });
                 }
             }

@@ -85,7 +85,7 @@ namespace Luminous
 
         private object AppendEnumMeaningIfEnableConfiguration(object result, Type payloadType)
         {
-            if (_configuration["Luminous:AppendEnumMeaning"] == "True")
+            if (_configuration.GetValue<bool>("Luminous:AppendEnumMeaning"))
             {
                 result = SerializeAndAddEnumDescriptionReturnObj(result, payloadType);
             }

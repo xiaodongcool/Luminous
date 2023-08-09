@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void AddHttpContextSuperman(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            services.TryAddTransient<IHttpContextAccessorSuper, HttpContextAccessorSuper>();
+            services.TryAddTransient<IHttpContexter, HttpContextAccessorSuper>();
         }
     }
 }

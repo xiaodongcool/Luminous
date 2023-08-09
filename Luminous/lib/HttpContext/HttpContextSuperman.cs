@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Luminous
 {
-    public class HttpContextAccessorSuper : HttpContextAccessor, IHttpContextAccessorSuper
+    public class HttpContextAccessorSuper : HttpContextAccessor, IHttpContexter
     {
         private readonly ILogger<HttpContextAccessorSuper> _logger;
 

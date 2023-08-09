@@ -10,16 +10,13 @@ namespace Luminous
     /// </summary>
     public class TokenEvents : JwtBearerEvents
     {
-        private ILogger<TokenEvents> _logger;
-        private IHttpContextAccessorSuper _accessor;
-        private IGlobalSerializer _globalSerializer;
-
+        private ILogger<TokenEvents> _logger = null!;
+        private IHttpContexter _httpContexter = null!;
 
         private void Initialization(HttpContext httpContext)
         {
-            _logger = httpContext.RequestServices.GetService<ILogger<TokenEvents>>();
-            _accessor = httpContext.RequestServices.GetService<IHttpContextAccessorSuper>();
-            _globalSerializer = httpContext.RequestServices.GetService<IGlobalSerializer>();
+            _logger = httpContext.RequestServices.GetRequiredService<ILogger<TokenEvents>>();
+            _httpContexter = httpContext.RequestServices.GetRequiredService<IHttpContexter>();
         }
 
         /// <summary>
@@ -55,7 +52,7 @@ namespace Luminous
             Initialization(context.HttpContext);
 
             //  非法访问,记录日志
-            _logger.LogWarning($"403Forbidden,url:{_accessor.GetHttpRequestFeature().Path}{Environment.NewLine}header:{Serializer(context.HttpContext.Request.Headers)}{Environment.NewLine}body:{await _accessor.GetBody()}");
+            _logger.LogWarning($"403Forbidden,url:{_httpContexter.GetHttpRequestFeature().Path}{Environment.NewLine}header:{JsonConvert.SerializeObject(context.HttpContext.Request.Headers)}{Environment.NewLine}body:{await _httpContexter.GetBody()}");
 
             var result = new Result<object>(ResultStatus.Forbidden, null, null);
 
@@ -69,12 +66,7 @@ namespace Luminous
         {
             httpResponse.ContentType = "application/json; charset=utf-8";
             httpResponse.StatusCode = (int)httpStatusCode;
-            await httpResponse.WriteAsync(Serializer(response));
+            await httpResponse.WriteAsync(JsonConvert.SerializeObject(response, Global.JsonSerializerSettings));
         }
-
-        /// <summary>
-        ///     使用默认的方式序列化
-        /// </summary>
-        private string Serializer<T>(T response) => _globalSerializer.SerializeObject(response);
     }
 }
