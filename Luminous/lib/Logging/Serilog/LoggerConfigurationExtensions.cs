@@ -46,7 +46,7 @@ namespace Luminous
             var mariadb = new MariaDBSinkOptions();
             var columns = mariadb.PropertiesToColumnsMapping;
 
-            columns.Add("ClientIp", "ClientIp");
+            columns.Add("ClientIpAddress", "ClientIpAddress");
 
             columns.Add("ThreadId", "ThreadId");
 
@@ -106,7 +106,7 @@ namespace Luminous
 
             var columns = new List<SqlColumn>();
 
-            columns.Add(Create("ClientIp", "ClientIp", SqlDbType.NVarChar));
+            columns.Add(Create("ClientIpAddress", "ClientIpAddress", SqlDbType.NVarChar));
 
             columns.Add(Create("ThreadId", "ThreadId", SqlDbType.Int));
 
@@ -162,8 +162,13 @@ namespace Luminous
             configuration.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(options.Urls.Select(_ => new Uri(_)))
             {
                 AutoRegisterTemplate = true,
-                AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,
-                IndexFormat = options.IndexFormat
+                AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
+                IndexFormat = options.IndexFormat,
+                 EmitEventFailure = EmitEventFailureHandling.RaiseCallback,
+                 FailureCallback = (x) => 
+                 {
+
+                 }
             });
 
             return configuration;

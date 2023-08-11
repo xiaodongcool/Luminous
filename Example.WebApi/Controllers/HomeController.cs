@@ -8,7 +8,7 @@ using System.IO;
 namespace Example.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class HomeController : ApiController
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,8 +19,9 @@ namespace Example.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<UserResponse> Get()
+        public async Task<UserResponse> Get1()
         {
+            _logger.LogInformation("hello world");
             return new UserResponse("ÕÅÈý", Gender.Male, Role.Admin);
         }
     }
@@ -167,7 +168,7 @@ namespace Example.WebApi.Controllers
         {
             var filepath = @"D:\1.txt";
 
-             var file = new FileStream(filepath, FileMode.Open);
+            var file = new FileStream(filepath, FileMode.Open);
             return File(file, "application/octet-stream", "1.txt");
         }
 

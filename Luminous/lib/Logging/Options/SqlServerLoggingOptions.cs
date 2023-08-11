@@ -10,7 +10,7 @@
     /// 	[Level] [nvarchar](max) NULL,
     /// 	[TimeStamp] [datetime] NULL,
     /// 	[Exception] [nvarchar](max) NULL,
-    /// 	[ClientIp] [nvarchar](max) NULL,
+    /// 	[ClientIpAddress] [nvarchar](max) NULL,
     /// 	[ClientAgent] [nvarchar](max) NULL,
     /// 	[ThreadId] [int] NULL,
     /// 	[AccountUniqueId] [nvarchar](max) NULL,

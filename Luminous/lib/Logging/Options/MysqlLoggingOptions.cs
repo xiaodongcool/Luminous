@@ -10,7 +10,7 @@
     ///     `LogLevel` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
     ///     `Message` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
     ///     `Timestamp` DATETIME DEFAULT NULL,
-    ///     `ClientIp` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+    ///     `ClientIpAddress` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
     ///     `ClientAgent` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
     ///     `ThreadId` int NULL,
     ///     `AccountUniqueId` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,

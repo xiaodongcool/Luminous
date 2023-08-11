@@ -10,7 +10,7 @@ namespace Luminous
         /// <summary>
         ///     获取所有类型
         /// </summary>
-        public static IList<Type> FindAll() => Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load).Union(AppDomain.CurrentDomain.GetAssemblies()).SelectMany(x => x.DefinedTypes).Select(_ => _.AsType()).ToList();
+        public static IList<Type> FindAll() => Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load).Union(AppDomain.CurrentDomain.GetAssemblies()).Where(x => !x?.FullName?.StartsWith("NPOI.Core") == true).SelectMany(x => x.DefinedTypes).Select(_ => _.AsType()).ToList();
 
         /// <summary>
         ///     查询 <see cref="T"/> 的所有子类
