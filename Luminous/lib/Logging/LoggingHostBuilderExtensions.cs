@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Extensions.Hosting
+﻿using Microsoft.AspNetCore.Hosting;
+
+namespace Microsoft.Extensions.Hosting
 {
     public static class LoggingHostBuilderExtensions
     {
@@ -7,11 +9,18 @@
         /// <summary>
         ///     添加日志
         /// </summary>
-        public static IHostBuilder AddLogging(this WebApplicationBuilder builder, LoggingOptions? defaultOptions = null)
+        public static IHostBuilder AddLogging(this WebApplicationBuilder webApplication, LoggingOptions? defaultOptions = null)
         {
-            defaultOptions ??= builder.Configuration.GetSection("Luminous:Log").Get<LoggingOptions>();
+            defaultOptions ??= webApplication.Configuration.GetSection("Luminous:Log").Get<LoggingOptions>();
 
-            return LoggingFramework.Configure(builder.Host, defaultOptions ?? CONFIGS.Log);
+            return LoggingFramework.Configure(webApplication.Host, defaultOptions ?? CONFIGS.Log);
         }
+
+        //public static IHostBuilder AddLogging(this IWebHostBuilder webHostBuilder, LoggingOptions? defaultOptions = null)
+        //{
+        //    defaultOptions ??= builder.Configuration.GetSection("Luminous:Log").Get<LoggingOptions>();
+
+        //    return LoggingFramework.Configure(webHostBuilder, defaultOptions ?? CONFIGS.Log);
+        //}
     }
 }
