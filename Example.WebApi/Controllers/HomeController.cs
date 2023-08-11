@@ -21,7 +21,7 @@ namespace Example.WebApi.Controllers
         [HttpGet]
         public async Task<UserResponse> Get1()
         {
-            _logger.LogInformation("hello world");
+            _logger.LogInformation("hello world 123456789");
             return new UserResponse("уехЩ", Gender.Male, Role.Admin);
         }
     }

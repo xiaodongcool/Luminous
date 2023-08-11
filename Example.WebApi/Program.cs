@@ -8,7 +8,10 @@ namespace Example.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
             //builder.AddConfiguration();
-            builder.AddLogging();
+            
+            //builder.AddLogging();
+            builder.Host.AddLogging();
+
 
             ConfigureServices(builder.Services);
             Configure(builder.Build());

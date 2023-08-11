@@ -7,9 +7,6 @@ namespace Microsoft.Extensions.Hosting
     {
         private static readonly ILoggingFramework LoggingFramework = new SerilogLoggingFramework();
 
-        /// <summary>
-        ///     添加日志
-        /// </summary>
         public static IHostBuilder AddLogging(this WebApplicationBuilder webApplication, LoggingOptions? defaultOptions = null)
         {
             return LoggingFramework.Configure(webApplication.Host, GetLoggingOptions(webApplication.Configuration, defaultOptions));
