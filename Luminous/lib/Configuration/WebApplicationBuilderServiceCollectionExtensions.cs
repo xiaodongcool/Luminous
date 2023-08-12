@@ -12,12 +12,12 @@ namespace Microsoft.Extensions.DependencyInjection
             try
             {
                 builder.Configuration
-                    .AddApollo((builder.Configuration as IConfigurationBuilder).Build().GetSection("apollo"))
+                    .AddApollo((builder.Configuration as IConfigurationBuilder).Build().GetSection("Luminous:Apollo"))
                     .AddDefault();
             }
-            catch
+            catch (Exception e)
             {
-                //  阿波罗配置中心初始化失败，使用 appsettings.json
+                Serilog.Log.Warning(e, "Apollo 阿波罗配置中心初始化失败，配置信息从 appsettings.json 中读取");
             }
 
             var configuration = (builder.Configuration as IConfigurationBuilder).Build();

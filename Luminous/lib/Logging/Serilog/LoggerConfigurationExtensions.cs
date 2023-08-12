@@ -24,7 +24,7 @@ namespace Luminous
             var logggingLevel = Converter.Level(level);
             var interval = Converter.Interval(options.Interval);
 
-            configuration.WriteTo.File(Path.Combine(PathUtil.GetBinPath(), "langm-logs", options.File), rollingInterval: interval, restrictedToMinimumLevel: logggingLevel);
+            configuration.WriteTo.File(Path.Combine(PathUtil.GetBinPath(), "Luminous.Log", options.File), rollingInterval: interval, restrictedToMinimumLevel: logggingLevel);
 
             return configuration;
         }
@@ -155,6 +155,7 @@ namespace Luminous
         /// <param name="options">elasticsearch 日志选项</param>
         public static LoggerConfiguration Configure(this LoggerConfiguration configuration, ElasticSearchLoggingOptions options, LogLevel level)
         {
+
             ArgumentChecker.ThrowIfNull(configuration, nameof(configuration));
             ArgumentChecker.ThrowIfNull(options, nameof(options.Urls));
             ArgumentChecker.ThrowIfNull(options.IndexFormat, nameof(options.IndexFormat));
@@ -164,11 +165,11 @@ namespace Luminous
                 AutoRegisterTemplate = true,
                 AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
                 IndexFormat = options.IndexFormat,
-                 EmitEventFailure = EmitEventFailureHandling.RaiseCallback,
-                 FailureCallback = (x) => 
-                 {
+                EmitEventFailure = EmitEventFailureHandling.WriteToSelfLog,
+                FailureCallback = (x) =>
+                {
 
-                 }
+                }
             });
 
             return configuration;

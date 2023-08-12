@@ -17,21 +17,21 @@ namespace Luminous
         /// <summary>
         ///     文件日志选项
         /// </summary>
-        public FileLoggingOptions File { get; set; }
+        public FileLoggingOptions? File { get; set; }
 
         /// <summary>
         /// /   mysql 日志选项
         /// </summary>
-        public MySqlLoggingOptions Mysql { get; set; }
+        public MySqlLoggingOptions? Mysql { get; set; }
 
         /// <summary>
         /// /   sqlserver 日志选项
         /// </summary>
-        public SqlServerLoggingOptions SqlServer { get; set; }
+        public SqlServerLoggingOptions? SqlServer { get; set; }
 
         /// <summary>
         ///     elasticsearch 日志选项
         /// </summary>
-        public ElasticSearchLoggingOptions ElasticSearch { get; set; }
+        public ElasticSearchLoggingOptions? ElasticSearch { get; set; }
     }
 }

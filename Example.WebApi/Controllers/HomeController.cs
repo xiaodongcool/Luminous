@@ -1,9 +1,6 @@
-using AutoMapper.Configuration.Conventions;
 using Luminous;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
-using System.ComponentModel;
-using System.IO;
+using Newtonsoft.Json;
 
 namespace Example.WebApi.Controllers
 {
@@ -12,17 +9,41 @@ namespace Example.WebApi.Controllers
     public class HomeController : ApiController
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IRedis _redis;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IRedis redis, IConfiguration configuration)
         {
             _logger = logger;
+            _redis = redis;
+            _configuration = configuration;
         }
 
         [HttpGet]
-        public async Task<UserResponse> Get1()
+        public async Task<object> Index()
         {
-            _logger.LogInformation("hello world 123456789");
-            return new UserResponse("张三", Gender.Male, Role.Admin);
+            var redis = false;
+
+            try
+            {
+                await _redis.SetAsync("test", "hello world!", 10);
+                redis = await _redis.GetAsync("test") == "hello world!";
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "redis 启动连接失败");
+            }
+
+            var apollo = _configuration.GetValue<bool>("Luminous:_apollo_");
+            var appsettings = _configuration.GetValue<bool>("Luminous:_appsettings_");
+            var preferential = _configuration.GetValue<string>("Luminous:_source_");
+            var internalConfiguration = CONFIGURATION.Get("Luminous:_source_");
+
+            var result = new { redis, apollo, appsettings, preferential, internalConfiguration };
+
+            _logger.LogInformation($"Home/Index：{JsonConvert.SerializeObject(result)}");
+
+            return result;
         }
     }
 

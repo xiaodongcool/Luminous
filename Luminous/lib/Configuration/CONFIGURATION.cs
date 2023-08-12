@@ -3,7 +3,7 @@
     /// <summary>
     ///     内部配置接口
     /// </summary>
-    internal static class CONFIGURATION
+    public static class CONFIGURATION
     {
         private static IConfiguration configurationCenter;
         private static IConfiguration appsettings;
@@ -11,7 +11,7 @@
         /// <summary>
         ///     appsettings.json
         /// </summary>
-        internal static IConfiguration AppSettings
+        public static IConfiguration AppSettings
         {
             get
             {
@@ -26,7 +26,7 @@
         /// <summary>
         ///     配置中心
         /// </summary>
-        internal static IConfiguration ConfigurationCenter
+        public static IConfiguration ConfigurationCenter
         {
             get
             {
@@ -45,7 +45,7 @@
         /// <summary>
         ///     读取配置
         /// </summary>
-        internal static T Get<T>(string key)
+        public static T Get<T>(string key)
         {
             ArgumentChecker.ThrowIfNull(key, nameof(key));
 
@@ -73,7 +73,7 @@
         /// <summary>
         ///     读取配置
         /// </summary>
-        internal static string Get(string key)
+        public static string Get(string key)
         {
             return (configurationCenter ?? AppSettings)[key];
         }

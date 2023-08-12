@@ -7,11 +7,9 @@ namespace Example.WebApi
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            //builder.AddConfiguration();
-            
-            //builder.AddLogging();
-            builder.Host.AddLogging();
 
+            builder.AddLogging();
+            builder.AddConfiguration();
 
             ConfigureServices(builder.Services);
             Configure(builder.Build());
@@ -26,7 +24,7 @@ namespace Example.WebApi
             //  token
             //services.AddJwtBearToken();
             //  redis 缓存
-            //services.AddFullRedis();
+            services.AddFullRedis();
             //  mvc
             services.AddControllers();
             //  响应报文契约

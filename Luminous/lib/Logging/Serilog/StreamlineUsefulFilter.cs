@@ -12,6 +12,11 @@ namespace Luminous
 
         public bool IsEnabled(LogEvent logEvent)
         {
+            if (!logEvent.Properties.ContainsKey("SourceContext"))
+            {
+                return true;
+            }
+
             var namespaces = logEvent.Properties["SourceContext"].ToString().Trim('"');
 
             if (namespaces.StartsWith("Microsoft."))
