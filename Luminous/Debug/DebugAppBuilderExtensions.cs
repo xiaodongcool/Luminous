@@ -143,10 +143,6 @@ namespace Microsoft.AspNetCore.Builder
             return app;
         }
 
-        private static IResult<T> GetResult<T>(Func<HttpContext, IResult<T>> getResultFunc)
-        {
-            return new Result<T>();
-        }
 
         private static void PrintConfiguration(IConfiguration configuration, ref int index, StringBuilder result, string parentKey = "")
         {
