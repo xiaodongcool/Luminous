@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -142,11 +143,9 @@ namespace Microsoft.AspNetCore.Builder
             return app;
         }
 
-        public static bool KeyExistsInConfiguration(IConfiguration config, string key)
+        private static IResult<T> GetResult<T>(Func<HttpContext, IResult<T>> getResultFunc)
         {
-            var section = config.GetSection(key);
-            // 如果 section.Value 为 null，那么我们可以认为这个 key 在 IConfiguration 中不存在。
-            return section.Value != null;
+            return new Result<T>();
         }
 
         private static void PrintConfiguration(IConfiguration configuration, ref int index, StringBuilder result, string parentKey = "")
@@ -163,9 +162,17 @@ namespace Microsoft.AspNetCore.Builder
         }
     }
 
-    public class AConfig
+    public static class A
     {
-        public string Value1 { get; set; }
-        public string Value2 { get; set; }
+        public static IEndpointConventionBuilder MapGet<T>(this IEndpointRouteBuilder endpoints, string pattern, Func<IServiceProvider, IResult<T>> getResultFunc)
+        {
+            return endpoints.MapGet(pattern, async (httpContext) =>
+            {
+                var result = getResultFunc(httpContext.RequestServices);
+                var resultJson = JsonConvert.SerializeObject(result, Global.JsonSerializerSettings);
+                httpContext.Response.ContentType = "text/plain; charset=utf-8";
+                await x.Response.WriteAsync(resultJson);
+            });
+        }
     }
 }
