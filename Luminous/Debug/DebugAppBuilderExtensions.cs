@@ -167,7 +167,7 @@ namespace Microsoft.AspNetCore.Builder
                 var result = getResultFunc(httpContext.RequestServices);
                 var resultJson = JsonConvert.SerializeObject(result, Global.JsonSerializerSettings);
                 httpContext.Response.ContentType = "text/plain; charset=utf-8";
-                await x.Response.WriteAsync(resultJson);
+                await httpContext.Response.WriteAsync(resultJson);
             });
         }
     }
