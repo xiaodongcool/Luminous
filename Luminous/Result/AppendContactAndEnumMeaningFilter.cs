@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using NPOI.SS.Formula.Functions;
 
 
 namespace Luminous
@@ -219,5 +220,26 @@ namespace Luminous
             return propertyInfo;
         }
 
+    }
+
+    public class WrapResponseResultFilter : IResultFilter
+    {
+        public void OnResultExecuting(ResultExecutingContext context)
+        {
+            // This method is executed before the action result is executed.
+        }
+
+        public void OnResultExecuted(ResultExecutedContext context)
+        {
+            if (context.Result is ObjectResult objectResult && objectResult.Value != null)
+            {
+                // Wrap the response data in ResponseResult<T> class
+                var wrappedResult = new Result<object>(ResultStatus.Success, objectResult.Value, "");
+
+              
+
+                context.Result = null;
+            }
+        }
     }
 }
