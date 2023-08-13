@@ -8,7 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         ///     设置接口响应 json 的序列化配置
         /// </summary>
-        public static void AddJsonSerializer(this IServiceCollection services, Action<SerializerOptions> configure = null)
+        public static void AddJsonSerializer(this IServiceCollection services, Action<SerializerOptions>? configure = null)
         {
             services.AddControllers()
                 .AddNewtonsoftJson(options =>

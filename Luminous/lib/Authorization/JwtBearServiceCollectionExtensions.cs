@@ -32,7 +32,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.TryAddSingleton(jwtBearOptions);
             services.TryAddTransient<IJwtBear, JwtBear>();
-            services.AddHttpContextSuperman();
+            services.AddLuminousHttpContexter();
             services.TryAddScoped<IUserPrincipal, UserPrincipal>();
         }
 

@@ -5,7 +5,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class FullRedisDistributedCacheServiceCollectionExtensions
     {
-        public static void AddFullRedis(this IServiceCollection services, RedisOptions options = null)
+        public static void AddLuminousRedis(this IServiceCollection services, RedisOptions options = null)
         {
             options ??= CONFIGS.Redis;
 

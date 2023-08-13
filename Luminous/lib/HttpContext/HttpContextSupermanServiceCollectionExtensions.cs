@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         ///     添加全局模型验证失败处理
         /// </summary>
-        public static void AddHttpContextSuperman(this IServiceCollection services)
+        public static void AddLuminousHttpContexter(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
             services.TryAddTransient<IHttpContexter, HttpContextAccessorSuper>();

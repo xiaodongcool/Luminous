@@ -4,7 +4,7 @@
     {
         public static void AddAssignment(this IServiceCollection services)
         {
-            services.AddHttpContextSuperman();
+            services.AddLuminousHttpContexter();
             services.AddScoped<IPagingAssignment, PagingAssignment>();
             services.AddScoped<IQueryAssignment, QueryAssignment>();
             services.AddSingleton(new PagingAssignmentOptions());

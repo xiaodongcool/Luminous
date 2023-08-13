@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         ///     添加阿波罗配置中心
         /// </summary>
-        public static IConfiguration AddConfiguration(this WebApplicationBuilder builder)
+        public static IConfiguration AddLuminousConfiguration(this WebApplicationBuilder builder)
         {
             try
             {
