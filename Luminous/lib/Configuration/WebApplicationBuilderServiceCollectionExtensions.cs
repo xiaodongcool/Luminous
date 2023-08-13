@@ -21,7 +21,6 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             var configuration = (builder.Configuration as IConfigurationBuilder).Build();
-            CONFIGURATION.ConfigurationCenter = configuration;
             return configuration;
         }
     }

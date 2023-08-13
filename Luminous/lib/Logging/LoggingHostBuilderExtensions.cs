@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Microsoft.Extensions.Hosting
+﻿namespace Microsoft.Extensions.Hosting
 {
     public static class LoggingHostBuilderExtensions
     {
@@ -9,19 +6,18 @@ namespace Microsoft.Extensions.Hosting
 
         public static IHostBuilder AddLuminousLogging(this WebApplicationBuilder webApplication, LoggingOptions? options = null)
         {
-            return LoggingFramework.Configure(webApplication.Host, GetLoggingOptions(webApplication.Configuration, options));
+            return LoggingFramework.Configure(webApplication.Host, GetLoggingOptions(options));
         }
 
         public static IHostBuilder AddLuminousLogging(this IHostBuilder hostBuilder, LoggingOptions? options = null)
         {
-            var configuration = hostBuilder.Build().Services.GetRequiredService<IConfiguration>();
-
-            return LoggingFramework.Configure(hostBuilder, GetLoggingOptions(configuration, options));
+            return LoggingFramework.Configure(hostBuilder, GetLoggingOptions(options));
         }
 
-        private static LoggingOptions GetLoggingOptions(IConfiguration configuration, LoggingOptions? options)
+        private static LoggingOptions? GetLoggingOptions(LoggingOptions? options)
         {
-            return options ?? configuration.GetSection("Luminous:Log").Get<LoggingOptions>() ?? CONFIGS.Log;
+            var a = options ?? Global.GetConfig<LoggingOptions>("Luminous:Log");
+            return options ?? Global.GetConfig<LoggingOptions>("Luminous:Log");
         }
     }
 }

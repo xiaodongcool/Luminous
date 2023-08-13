@@ -37,7 +37,7 @@ namespace Example.WebApi.Controllers
             var apollo = _configuration.GetValue<bool>("Luminous:_apollo_");
             var appsettings = _configuration.GetValue<bool>("Luminous:_appsettings_");
             var preferential = _configuration.GetValue<string>("Luminous:_source_");
-            var internalConfiguration = CONFIGURATION.Get("Luminous:_source_");
+            var internalConfiguration = Global.GetConfig("Luminous:_source_");
 
             var result = new { redis, apollo, appsettings, preferential, internalConfiguration };
 

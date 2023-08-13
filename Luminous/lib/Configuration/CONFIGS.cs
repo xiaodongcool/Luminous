@@ -7,8 +7,8 @@ namespace Luminous
     /// </summary>
     internal static class CONFIGS
     {
-        internal static LoggingOptions Log => CONFIGURATION.Get<LoggingOptions>("Luminous:Log");
-        internal static JwtBearOptions Jwtbear => CONFIGURATION.Get<JwtBearOptions>("jwtBear");
-        internal static RedisOptions Redis => CONFIGURATION.Get<RedisOptions>("Luminous:Redis");
+        internal static LoggingOptions? Log => Global.GetConfig<LoggingOptions>("Luminous:Log");
+        internal static JwtBearOptions? Jwtbear => Global.GetConfig<JwtBearOptions>("jwtBear");
+        internal static RedisOptions? Redis => Global.GetConfig<RedisOptions>("Luminous:Redis");
     }
 }
