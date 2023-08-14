@@ -9,8 +9,9 @@
         {
             services.AddControllers(mvc =>
             {
-                mvc.Filters.TryAdd<AppendContactAndEnumMeaningFilter>();
+                //mvc.Filters.TryAdd<AppendContactAndEnumMeaningFilter>();
                 mvc.Filters.TryAdd<ModelBindFailFilter>();
+                mvc.Filters.TryAdd<WrapResponseResultFilter>();
             })
             .ConfigureApiBehaviorOptions(options =>
             {

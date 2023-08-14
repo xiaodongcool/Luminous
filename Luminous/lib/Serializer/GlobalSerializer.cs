@@ -39,6 +39,7 @@ namespace Luminous
             }
             else
             {
+                var a = configuration.GetSection(key);
                 return configuration.GetSection(key).Get<T>();
             }
         }

@@ -226,20 +226,14 @@ namespace Luminous
     {
         public void OnResultExecuting(ResultExecutingContext context)
         {
-            // This method is executed before the action result is executed.
+            if (context.Result is ObjectResult objectResult)
+            {
+                objectResult.Value = new Result<object>(ResultStatus.Success, objectResult.Value, "WrapResponseResultFilter");
+            }
         }
 
         public void OnResultExecuted(ResultExecutedContext context)
         {
-            if (context.Result is ObjectResult objectResult && objectResult.Value != null)
-            {
-                // Wrap the response data in ResponseResult<T> class
-                var wrappedResult = new Result<object>(ResultStatus.Success, objectResult.Value, "");
-
-              
-
-                context.Result = null;
-            }
         }
     }
 }
