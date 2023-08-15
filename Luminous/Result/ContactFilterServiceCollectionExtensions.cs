@@ -10,8 +10,8 @@
             services.AddControllers(mvc =>
             {
                 mvc.Filters.TryAdd<ModelBindFailFilter>();
-                mvc.Filters.TryAdd<UnifyResultFilter>();
                 mvc.Filters.TryAdd<DataStructureOptimizeResultFilter>();
+                mvc.Filters.TryAdd<UnifyResultFilter>();
             })
             .ConfigureApiBehaviorOptions(options =>
             {

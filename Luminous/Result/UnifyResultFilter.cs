@@ -36,7 +36,7 @@ namespace Luminous
                     {
                         Debug.Assert(objectResult.DeclaredType != null);
 
-                        result = DynamicResultActivator.Create(statusCode, payload, objectResult.DeclaredType, message);
+                        result = DynamicResultActivator.CreateResult(statusCode, payload, objectResult.DeclaredType, message);
                     }
 
                     context.Result = new ObjectResult(result);

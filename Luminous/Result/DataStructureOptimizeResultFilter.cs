@@ -28,13 +28,7 @@ namespace Luminous
             {
                 if (objectResult.Value != null)
                 {
-                    var property = objectResult.Value.GetType().GetProperty(nameof(Result<int>.Payload));
-
-                    Debug.Assert(property != null);
-
-                    var payloadType = property.PropertyType;
-
-                    var result = AppendEnumMeaningIfEnableConfiguration(objectResult.Value, payloadType);
+                    var result = AppendEnumMeaningIfEnableConfiguration(objectResult.Value, objectResult.DeclaredType);
 
                     objectResult.Value = result;
                 }
@@ -57,7 +51,30 @@ namespace Luminous
 
             RecursivelyAddEnumMeaning(jObject, payloadType);
 
-            return jObject.ToObject<ExpandoObject>() ?? new ExpandoObject();
+            return ConvertJTokenToObject(jObject);
+        }
+
+        object ConvertJTokenToObject(JToken token)
+        {
+            if (token == null)
+            {
+                return null;
+            }
+
+            if (token.Type == JTokenType.Object) // JTokenType.Object
+            {
+                var jObject = (IDictionary<string, object>)token.ToObject(typeof(Dictionary<string, object>));
+                return jObject;
+            }
+            else if (token.Type == JTokenType.Array) // JTokenType.Array
+            {
+                var jArray = (IList<object>)token.ToObject(typeof(List<object>));
+                return jArray;
+            }
+            else
+            {
+                return ((dynamic)token).Value;
+            }
         }
 
         private void RecursivelyAddEnumMeaning(JToken token, Type inputType)
