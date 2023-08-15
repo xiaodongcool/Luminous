@@ -70,6 +70,12 @@ namespace Example.WebApi.Controllers
         }
 
         [HttpGet]
+        public async Task<UserResponse> Get0()
+        {
+            return null;
+        }
+
+        [HttpGet]
         public async Task<UserResponse> Get1()
         {
             return ServiceInfos[0];
