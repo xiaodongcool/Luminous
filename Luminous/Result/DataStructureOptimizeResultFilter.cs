@@ -60,7 +60,7 @@ namespace Luminous
             if (token.Type == JTokenType.Object)
             {
                 //var jObject = (IDictionary<string, object>)token.ToObject(typeof(Dictionary<string, object>));
-                //return jObject;
+                //return jObject; 
 
                 return token;
             }
