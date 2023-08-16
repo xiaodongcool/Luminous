@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.Dynamic;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -28,6 +27,8 @@ namespace Luminous
             {
                 if (objectResult.Value != null)
                 {
+                    Debug.Assert(objectResult.DeclaredType != null);
+
                     var result = AppendEnumMeaningIfEnableConfiguration(objectResult.Value, objectResult.DeclaredType);
 
                     objectResult.Value = result;
@@ -54,21 +55,21 @@ namespace Luminous
             return ConvertJTokenToObject(jObject);
         }
 
-        object ConvertJTokenToObject(JToken token)
+        private object ConvertJTokenToObject(JToken token)
         {
-            if (token == null)
+            if (token.Type == JTokenType.Object)
             {
-                return null;
-            }
+                //var jObject = (IDictionary<string, object>)token.ToObject(typeof(Dictionary<string, object>));
+                //return jObject;
 
-            if (token.Type == JTokenType.Object) // JTokenType.Object
-            {
-                var jObject = (IDictionary<string, object>)token.ToObject(typeof(Dictionary<string, object>));
-                return jObject;
+                return token;
             }
-            else if (token.Type == JTokenType.Array) // JTokenType.Array
+            else if (token.Type == JTokenType.Array)
             {
                 var jArray = (IList<object>)token.ToObject(typeof(List<object>));
+
+                Debug.Assert(jArray != null);
+
                 return jArray;
             }
             else

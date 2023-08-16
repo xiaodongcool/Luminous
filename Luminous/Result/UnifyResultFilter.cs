@@ -20,7 +20,6 @@ namespace Luminous
                     var type = payload.GetType();
 
                     object result;
-                    Type payloadType;
 
                     if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Result<>).GetGenericTypeDefinition())
                     {
@@ -29,8 +28,6 @@ namespace Luminous
                         var property = payload.GetType().GetProperty(nameof(Result<int>.Payload));
 
                         Debug.Assert(property != null);
-
-                        payloadType = property.PropertyType;
                     }
                     else
                     {
@@ -45,14 +42,14 @@ namespace Luminous
                 }
                 else
                 {
-                    var result = new Result<object>(statusCode, payload, message);
+                    var result = new Result(statusCode, null, message);
 
                     context.Result = new JsonResult(result);
                 }
             }
             else if (context.Result is EmptyResult)
             {
-                var result = new Result<object>(statusCode, null, message);
+                var result = new Result(statusCode, null, message);
 
                 context.Result = new JsonResult(result);
             }
