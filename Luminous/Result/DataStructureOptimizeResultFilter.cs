@@ -66,7 +66,11 @@ namespace Luminous
             }
             else if (token.Type == JTokenType.Array)
             {
-                var jArray = (IList<object>)token.ToObject(typeof(List<object>));
+                var obj = token.ToObject(typeof(List<object>));
+
+                Debug.Assert(obj != null);
+
+                var jArray = (IList<object>)obj;
 
                 Debug.Assert(jArray != null);
 
@@ -120,7 +124,7 @@ namespace Luminous
             }
         }
 
-        private string GetEnumMeaning(object enumValue)
+        private static string GetEnumMeaning(object enumValue)
         {
             var value = enumValue.ToString();
 
