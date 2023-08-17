@@ -1,6 +1,7 @@
 ﻿using AspectCore.Configuration;
 using AspectCore.DynamicProxy;
 using AspectCore.Extensions.DependencyInjection;
+using Luminous.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Luminous.DynamicProxy

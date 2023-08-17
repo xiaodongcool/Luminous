@@ -1,5 +1,4 @@
 ﻿using Luminous.Logging.Options;
-using Luminous.Serializer;
 using Microsoft.Extensions.Hosting;
 
 namespace Luminous.Logging

@@ -1,6 +1,6 @@
 ﻿using Com.Ctrip.Framework.Apollo;
 
-namespace Luminous.Serializer
+namespace Luminous
 {
     public static class Global
     {
