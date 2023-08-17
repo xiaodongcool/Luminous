@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace Luminous.Logging.Serilog.Enrichers.Abstraction
+namespace Luminous
 {
     /// <summary>
     ///     自定义额外的日志属性

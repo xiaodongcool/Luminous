@@ -1,7 +1,4 @@
-﻿using Luminous.Logging.Options;
-using Microsoft.AspNetCore.Hosting;
-
-namespace Luminous.Configuration
+﻿namespace Luminous.Configuration
 {
     /// <summary>
     ///     系统配置列表

@@ -1,8 +1,7 @@
-﻿using Luminous.Logging.Options;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Luminous.Logging
+namespace Luminous
 {
     /// <summary>
     ///     第三方日志框架

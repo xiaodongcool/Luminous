@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Luminous.ModelValidation
+namespace Luminous
 {
     public static class FluentValidationExtensions
     {

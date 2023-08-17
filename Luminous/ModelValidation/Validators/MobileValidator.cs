@@ -2,7 +2,7 @@
 using FluentValidation.Validators;
 using System.Text.RegularExpressions;
 
-namespace Luminous.ModelValidation.Validators
+namespace Luminous
 {
     /// <summary>
     ///     手机号码

@@ -1,4 +1,4 @@
-﻿namespace Luminous.Logging.Options
+﻿namespace Luminous
 {
     /// <summary>
     ///     elasticsearch 日志选项

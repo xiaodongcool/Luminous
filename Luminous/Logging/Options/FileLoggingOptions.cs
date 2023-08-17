@@ -1,4 +1,4 @@
-﻿namespace Luminous.Logging.Options
+﻿namespace Luminous
 {
     /// <summary>
     ///     文件日志选项

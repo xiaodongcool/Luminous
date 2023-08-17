@@ -1,7 +1,6 @@
-﻿using Luminous.Logging.Serilog.Enrichers.Abstraction;
-using Serilog.Events;
+﻿using Serilog.Events;
 
-namespace Luminous.Logging.Serilog.Enrichers
+namespace Luminous
 {
     /// <summary>
     ///      账户唯一标识符 (属性名:es_AccountUniqueId)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Luminous.HttpContext
+namespace Luminous
 {
     public static class HttpContexterServiceCollectionExtensions
     {

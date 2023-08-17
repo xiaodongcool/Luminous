@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using System.Text;
 
-namespace Luminous.HttpContext
+namespace Luminous
 {
     public class HttpContexter : HttpContextAccessor, IHttpContexter
     {

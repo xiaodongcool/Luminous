@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Luminous.Exception
+namespace Luminous
 {
     /// <summary>
     ///     抛出一个已知的异常，中断客户端的本次请求，并返回一个提示信息

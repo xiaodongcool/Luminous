@@ -1,7 +1,6 @@
-﻿using Luminous.Logging.Options;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 
-namespace Luminous.Logging
+namespace Luminous
 {
     public static class LoggingHostBuilderExtensions
     {

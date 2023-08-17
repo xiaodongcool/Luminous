@@ -1,7 +1,6 @@
-﻿using Luminous.Logging.Serilog.Enrichers.Abstraction;
-using Serilog.Events;
+﻿using Serilog.Events;
 
-namespace Luminous.Logging.Serilog.Enrichers
+namespace Luminous
 {
     /// <summary>
     ///      用户名

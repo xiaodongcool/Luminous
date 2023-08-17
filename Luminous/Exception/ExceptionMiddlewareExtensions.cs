@@ -1,4 +1,4 @@
-﻿namespace Luminous.Exception
+﻿namespace Luminous
 {
     public static class ExceptionMiddlewareExtensions
     {

@@ -1,4 +1,4 @@
-﻿namespace Luminous.Logging
+﻿namespace Luminous
 {
     /// <summary>
     ///     文件日志日切割隔时间

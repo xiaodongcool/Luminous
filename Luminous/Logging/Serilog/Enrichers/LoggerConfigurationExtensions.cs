@@ -1,7 +1,7 @@
 ﻿using Serilog;
 using Serilog.Configuration;
 
-namespace Luminous.Logging.Serilog.Enrichers
+namespace Luminous
 {
     public static class LoggerConfigurationExtensions2
     {

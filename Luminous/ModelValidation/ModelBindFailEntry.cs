@@ -1,4 +1,4 @@
-﻿namespace Luminous.ModelValidation
+﻿namespace Luminous
 {
     /// <summary>
     ///     模型绑定失败信息

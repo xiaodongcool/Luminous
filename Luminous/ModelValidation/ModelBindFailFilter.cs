@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
 using System.Net;
 
-namespace Luminous.ModelValidation
+namespace Luminous
 {
     /// <summary>
     ///     模型绑定失败处理

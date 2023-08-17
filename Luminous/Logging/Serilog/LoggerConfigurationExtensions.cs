@@ -1,5 +1,4 @@
-﻿using Luminous.Logging.Options;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.MariaDB;
@@ -7,7 +6,7 @@ using Serilog.Sinks.MariaDB.Extensions;
 using Serilog.Sinks.MSSqlServer;
 using System.Data;
 
-namespace Luminous.Logging.Serilog
+namespace Luminous
 {
     internal static class LoggerConfigurationExtensions
     {

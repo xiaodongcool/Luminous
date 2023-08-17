@@ -1,5 +1,4 @@
 ﻿using Luminous.Configuration;
-using Luminous.HttpContext;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection.Extensions;

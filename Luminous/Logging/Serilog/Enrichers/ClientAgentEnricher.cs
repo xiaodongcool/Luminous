@@ -1,7 +1,6 @@
-﻿using Luminous.Logging.Serilog.Enrichers.Abstraction;
-using Serilog.Events;
+﻿using Serilog.Events;
 
-namespace Luminous.Logging.Serilog.Enrichers
+namespace Luminous
 {
     /// <summary>
     ///     客户端代理信息 (属性名:es_ClientAgent)

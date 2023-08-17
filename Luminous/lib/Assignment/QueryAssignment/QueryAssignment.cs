@@ -1,5 +1,4 @@
-﻿using Luminous.HttpContext;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.Extensions.Primitives;
 
 namespace Luminous
 {

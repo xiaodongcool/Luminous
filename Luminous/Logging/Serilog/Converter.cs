@@ -2,7 +2,7 @@
 using Serilog;
 using Serilog.Events;
 
-namespace Luminous.Logging.Serilog
+namespace Luminous
 {
     /// <summary>
     ///     配置转换

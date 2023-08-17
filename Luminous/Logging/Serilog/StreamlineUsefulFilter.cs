@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace Luminous.Logging.Serilog
+namespace Luminous
 {
     /// <summary>
     ///     精简有用的日志记录

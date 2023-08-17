@@ -1,4 +1,4 @@
-﻿using Luminous.HttpContext;
+﻿using Luminous;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Hosting;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text;
 
-namespace Luminous.Exception
+namespace Luminous
 {
     public class ExceptionMiddleware
     {

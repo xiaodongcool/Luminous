@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-
-namespace Luminous.ModelValidation
+namespace Luminous
 {
     /// <summary>
     ///     模型验证基类

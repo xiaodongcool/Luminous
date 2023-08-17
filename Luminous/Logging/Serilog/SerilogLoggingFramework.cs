@@ -1,12 +1,10 @@
-﻿using Luminous.Logging.Options;
-using Luminous.Logging.Serilog.Enrichers;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Events;
 
-namespace Luminous.Logging.Serilog
+namespace Luminous
 {
     /// <summary>
     ///     Serilog

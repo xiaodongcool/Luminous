@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Converters;
 
-namespace Luminous.Logging.Options
+namespace Luminous
 {
     /// <summary>
     ///     日志选项

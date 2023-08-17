@@ -3,7 +3,7 @@ using FluentValidation.AspNetCore;
 using Luminous.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Luminous.ModelValidation
+namespace Luminous
 {
     public static class ModelBindFailFilterServiceCollectionExtensions
     {
