@@ -42,7 +42,7 @@ namespace Microsoft.AspNetCore.Builder
             else
             {
                 var section = configuration.GetSection(key);
-                var objectType = TypeContainer.FindAll().FirstOrDefault(x => x.FullName == type);
+                var objectType = TypeContainer.LoadedTypes.FirstOrDefault(x => x.FullName == type);
 
                 if (section.Value == null)
                 {

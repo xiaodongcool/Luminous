@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.Loader;
 
 namespace Luminous.Reflection
 {
@@ -7,10 +9,79 @@ namespace Luminous.Reflection
     /// </summary>
     public static class TypeContainer
     {
-        /// <summary>
-        ///     获取所有类型
-        /// </summary>
-        public static IList<Type> FindAll() => Assembly.GetEntryAssembly().GetReferencedAssemblies().Select(Assembly.Load).Union(AppDomain.CurrentDomain.GetAssemblies()).Where(x => !x?.FullName?.StartsWith("NPOI.Core") == true).SelectMany(x => x.DefinedTypes).Select(_ => _.AsType()).ToList();
+        static TypeContainer()
+        {
+            var assemblies = GetAssemblies(false);
+
+            LoadedTypes = assemblies.Where(x => !x?.FullName?.StartsWith("NPOI.Core") == true).SelectMany(x => x.DefinedTypes).Select(_ => _.AsType()).ToArray();
+        }
+
+        public static Type[] LoadedTypes { get; }
+        public static Type[] LoadedTypesWithSystemAndMicrosoft { get; }
+
+        private static IEnumerable<Assembly> GetAssemblies(bool withSystemAndMicrosoft)
+        {
+            var result = new HashSet<Assembly>();
+
+            var assembly = Assembly.GetEntryAssembly();
+
+            if (assembly != null)
+            {
+                foreach (var item in assembly.GetReferencedAssemblies())
+                {
+                    if (string.IsNullOrEmpty(item.Name) || item.Name.StartsWith("System.") || item.Name.StartsWith("Microsoft."))
+                    {
+                        continue;
+                    }
+
+                    result.Add(Assembly.Load(item));
+                }
+            }
+
+            foreach (var item in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (string.IsNullOrEmpty(item.FullName) || item.FullName.StartsWith("System.") || item.FullName.StartsWith("Microsoft."))
+                {
+                    continue;
+                }
+
+                result.Add(item);
+            }
+
+            return result;
+        }
+
+        //private static IEnumerable<Assembly> GetAssemblies()
+        //{
+        //    var assembly = Assembly.GetEntryAssembly();
+
+        //    Debug.Assert(assembly != null);
+
+        //    var assemblies = new HashSet<Assembly>();
+        //    var context = AssemblyLoadContext.GetLoadContext(assembly);
+
+        //    Debug.Assert(context != null);
+
+        //    CollectAssembliesAndDependenciesRecursive(assembly, assemblies, context);
+
+        //    return assemblies;
+        //}
+
+        //static void CollectAssembliesAndDependenciesRecursive(Assembly assembly, HashSet<Assembly> assemblies, AssemblyLoadContext context)
+        //{
+        //    if (assemblies.Contains(assembly))
+        //    {
+        //        return;
+        //    }
+
+        //    assemblies.Add(assembly);
+
+        //    foreach (var assemblyName in assembly.GetReferencedAssemblies())
+        //    {
+        //        var loadedAssembly = context.LoadFromAssemblyName(assemblyName);
+        //        CollectAssembliesAndDependenciesRecursive(loadedAssembly, assemblies, context);
+        //    }
+        //}
 
         /// <summary>
         ///     查询 <see cref="T"/> 的所有子类
@@ -28,7 +99,7 @@ namespace Luminous.Reflection
             {
                 var result = new List<Type>();
 
-                foreach (var type in FindAll().Where(type => type != parent && type.IsInterface))
+                foreach (var type in LoadedTypes.Where(type => type != parent && type.IsInterface))
                 {
                     if (IsChildClass(parent, type))
                     {
@@ -40,7 +111,7 @@ namespace Luminous.Reflection
             }
             else
             {
-                return FindAll().Where(type => type != parent && parent.IsAssignableFrom(type) && type.IsInterface).ToList();
+                return LoadedTypes.Where(type => type != parent && parent.IsAssignableFrom(type) && type.IsInterface).ToList();
             }
         }
 
@@ -53,7 +124,7 @@ namespace Luminous.Reflection
             {
                 var result = new List<Type>();
 
-                foreach (var type in FindAll().Where(type => type != parent && type.IsClass && !type.IsAbstract))
+                foreach (var type in LoadedTypes.Where(type => type != parent && type.IsClass && !type.IsAbstract))
                 {
                     if (IsChildClass(parent, type))
                     {
@@ -65,7 +136,7 @@ namespace Luminous.Reflection
             }
             else
             {
-                return FindAll().Where(type => type != parent && parent.IsAssignableFrom(type) && type.IsClass && !type.IsAbstract).ToList();
+                return LoadedTypes.Where(type => type != parent && parent.IsAssignableFrom(type) && type.IsClass && !type.IsAbstract).ToList();
             }
         }
 
@@ -106,7 +177,7 @@ namespace Luminous.Reflection
         {
             var result = new List<Type>();
 
-            foreach (var type in FindAll().Where(_ => _.IsClass && !_.IsAbstract))
+            foreach (var type in LoadedTypes.Where(_ => _.IsClass && !_.IsAbstract))
             {
                 if (type.GetCustomAttributes<T>().Any())
                 {
