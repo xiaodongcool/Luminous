@@ -17,6 +17,33 @@ namespace Luminous
         /// </summary>
         public static IList<Type> FindChildClass<T>() => FindChildClass(typeof(T));
 
+        public static IList<Type> FindChildInterface<T>() => FindChildInterface(typeof(T));
+
+        /// <summary>
+        ///     查询 <see cref="parent"/> 的所有子类
+        /// </summary>
+        public static IList<Type> FindChildInterface(Type parent)
+        {
+            if (parent.IsGenericType)
+            {
+                var result = new List<Type>();
+
+                foreach (var type in FindAll().Where(type => type != parent && type.IsInterface))
+                {
+                    if (IsChildClass(parent, type))
+                    {
+                        result.Add(type);
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return FindAll().Where(type => type != parent && parent.IsAssignableFrom(type) && type.IsInterface).ToList();
+            }
+        }
+
         /// <summary>
         ///     查询 <see cref="parent"/> 的所有子类
         /// </summary>

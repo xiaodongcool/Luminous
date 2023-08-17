@@ -45,6 +45,14 @@ namespace Example.WebApi.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        public async Task Customer()
+        {
+            var service = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface>();
+
+            var r = service.f();
+        }
     }
     public class UserResponse
     {

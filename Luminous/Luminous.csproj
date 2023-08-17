@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -11,7 +11,9 @@
     <InternalsVisibleTo Include="LangM.WebApi.Test" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="AutoMapper" Version="11.0.0" />    
+	<PackageReference Include="AspectCore.Abstractions" Version="2.4.0" />
+    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.4.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="FluentValidation" Version="11.1.0" />
