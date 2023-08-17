@@ -1,21 +1,49 @@
 using AspectCore.DynamicProxy;
 using AspectCore.Extensions.DependencyInjection;
 using Luminous;
+using Luminous.Configuration;
 using Luminous.DynamicProxy;
+using Luminous.Exception;
+using Luminous.Logging;
 
 namespace Example.WebApi
 {
-    public interface IMyInterface { }
+    public interface IMyInterface1 { }
+    public interface IMyInterface2 { }
 
-    public interface ICustomerMyInterface
+    public interface ICustomerMyInterface1 : IMyInterface1
     {
-        int f();
+        int f(int value);
     }
 
-    public class CustomerLuminousInterceptor : LuminousInterceptor
+    public interface ICustomerMyInterface2 : IMyInterface2
     {
+        int f(int value);
+    }
+
+    public class CustomerLuminousInterceptor1 : LuminousInterceptor
+    {
+        public CustomerLuminousInterceptor1()
+        {
+
+        }
+
         public override async Task Invoke(AspectContext context, AspectDelegate next)
         {
+            context.ReturnValue = (int)context.Parameters[0];
+        }
+    }
+
+    public class CustomerLuminousInterceptor2 : LuminousInterceptor
+    {
+        public CustomerLuminousInterceptor2()
+        {
+
+        }
+
+        public override async Task Invoke(AspectContext context, AspectDelegate next)
+        {
+            context.ReturnValue = ((int)context.Parameters[0]) * 2;
         }
     }
 
@@ -25,7 +53,10 @@ namespace Example.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.AddLuminousDynamicProxy<IMyInterface, CustomerLuminousInterceptor>(ServiceLifetime.Transient);
+            builder.AddLuminousDynamicProxyInterface<IMyInterface1, CustomerLuminousInterceptor1>();
+            builder.AddLuminousDynamicProxyInterface<IMyInterface2, CustomerLuminousInterceptor2>();
+
+            builder.Services.ConfigureDynamicProxy();
 
             builder.AddLuminousLogging();
             builder.AddLuminousConfiguration();

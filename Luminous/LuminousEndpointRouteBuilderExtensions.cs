@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Routing;
+﻿using Luminous.Serializer;
+using Microsoft.AspNetCore.Routing;
 
 namespace Microsoft.AspNetCore.Builder
 {

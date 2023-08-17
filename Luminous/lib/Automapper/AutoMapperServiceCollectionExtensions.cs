@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Luminous.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

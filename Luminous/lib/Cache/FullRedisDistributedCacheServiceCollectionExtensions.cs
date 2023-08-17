@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Luminous.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using NewLife.Caching;
 
 namespace Microsoft.Extensions.DependencyInjection

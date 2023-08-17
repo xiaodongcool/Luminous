@@ -1,4 +1,5 @@
 using Luminous;
+using Luminous.Controller;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -47,11 +48,12 @@ namespace Example.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task Customer()
+        public async Task<int> Customer()
         {
-            var service = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface>();
+            var a = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface1>().f(1);
+            var b = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface2>().f(2);
 
-            var r = service.f();
+            return a + b;
         }
     }
     public class UserResponse

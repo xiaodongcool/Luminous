@@ -1,4 +1,5 @@
 ﻿using Luminous;
+using Luminous.Controller;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Example.WebApi.Controllers

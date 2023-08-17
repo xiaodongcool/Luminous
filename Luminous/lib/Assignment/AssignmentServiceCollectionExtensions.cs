@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Extensions.DependencyInjection
+﻿using Luminous.HttpContext;
+
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AssignmentServiceCollectionExtensions
     {

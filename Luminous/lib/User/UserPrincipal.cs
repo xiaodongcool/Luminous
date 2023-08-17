@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Luminous.HttpContext;
 
 namespace Luminous
 {

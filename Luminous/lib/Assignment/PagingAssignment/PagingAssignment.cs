@@ -1,4 +1,6 @@
-﻿namespace Luminous
+﻿using Luminous.HttpContext;
+
+namespace Luminous
 {
     /// <summary>
     ///     分页赋值器
