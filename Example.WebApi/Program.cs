@@ -20,7 +20,7 @@ namespace Example.WebApi
             //  添加必备的一些内置服务
             services.AddRequired();
             //  雪花id
-            services.AddWorkId();
+            services.AddLuminousUniqueId();
             //  token
             //services.AddJwtBearToken();
             //  redis 缓存
@@ -32,7 +32,7 @@ namespace Example.WebApi
             //  模型验证
             services.AddModelValidation();
             //  请求报文响应报文 json 序列化规范
-            services.AddJsonSerializer();
+            services.AddLuminousJsonFormat();
             //  HttpContext
             services.AddLuminousHttpContexter();
             //  注册所有服务和仓储
