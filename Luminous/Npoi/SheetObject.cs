@@ -1,27 +1,26 @@
-﻿using Luminous.Npoi;
+﻿using Luminous;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Luminous.Npoi
+namespace Luminous
 {
     public class SheetObject : ISheetObject
     {
-        private readonly NpoiObject _npoi;
         private readonly ISheet _sheet;
         private readonly RowAccessor _rowAccesser;
         private readonly ColumnAccessor _columnAccesser;
         private const int DEFAULT_COLUMN_WIDTH = 2048;
 
+        private ICellValueReader _convert;
+
         public SheetObject(NpoiObject npoi, ISheet sheet)
         {
-            _npoi = npoi;
+            Npoi = npoi;
             _sheet = sheet;
-
-            _rowAccesser = new RowAccessor(npoi, sheet);
-            _columnAccesser = new ColumnAccessor(npoi, sheet, _rowAccesser);
+            _rowAccesser = new RowAccessor(sheet, this);
+            _columnAccesser = new ColumnAccessor(sheet, _rowAccesser);
         }
 
         public RowAccessor Row => _rowAccesser;
@@ -38,6 +37,7 @@ namespace Luminous.Npoi
         {
             var currentRowIndex = rowIndex;
             var currentColumnIndex = columnIndex;
+
             foreach (var header in headers)
             {
                 var count = GetOccupyColumnCount(header);
@@ -53,12 +53,20 @@ namespace Luminous.Npoi
                     _sheet.SetColumnWidth(currentColumnIndex, FigureUpWidthMultiples(header.Title) * DEFAULT_COLUMN_WIDTH);
                 }
 
-                if (count > 1)
+                header.CrossRowCount = header.CrossRowCount <= 0 ? 1 : header.CrossRowCount;
+
+                if (count > 1 || header.CrossRowCount > 1)
                 {
-                    Merge(currentRowIndex, currentRowIndex, currentColumnIndex, currentColumnIndex + count - 1);
+                    var begRowIndex = currentRowIndex;
+                    var endRowIndex = currentRowIndex + header.CrossRowCount - 1;
+
+                    var begColumnIndex = currentColumnIndex;
+                    var endColumnIndex = currentColumnIndex + count - 1;
+
+                    Merge(begRowIndex, endRowIndex, begColumnIndex, endColumnIndex);
                 }
 
-                RecursivelyAddMutilHeaders(header.Children.ToArray(), currentRowIndex + 1, currentColumnIndex);
+                RecursivelyAddMutilHeaders(header.Children.ToArray(), currentRowIndex + header.CrossRowCount, currentColumnIndex);
 
                 currentColumnIndex += count;
             }
@@ -92,9 +100,29 @@ namespace Luminous.Npoi
         }
 
         public bool SelfAdaptionColumnWidth { get; set; } = true;
-        public int MaxColumnMultiples { get; set; } = 2;
+        public int MaxColumnWidthMultiples { get; set; } = 2;
 
         public string SheetName => _sheet.SheetName;
+
+        public ICellValueReader Reader
+        {
+            get
+            {
+                if (_convert == null)
+                {
+                    _convert = Npoi.Reader;
+                }
+
+                return _convert;
+            }
+            set
+            {
+                _convert = value;
+            }
+        }
+
+        public INpoiObject Npoi { get; }
+        public IDefaultCellStyle DefaultCellStyle { get; set; }
 
         public int GetMaxDataRow()
         {
@@ -161,7 +189,7 @@ namespace Luminous.Npoi
                 cellCharCount = 8.0f;
             }
 
-            return Math.Min(MaxColumnMultiples, (int)Math.Ceiling(content.Length / cellCharCount));
+            return Math.Min(MaxColumnWidthMultiples, (int)Math.Ceiling(content.Length / cellCharCount));
         }
         private int GetOccupyColumnCount(MutilHeader header)
         {

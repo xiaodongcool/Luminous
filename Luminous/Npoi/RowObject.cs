@@ -1,20 +1,19 @@
-﻿using Luminous.Npoi;
+﻿using Luminous;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
 
-namespace Luminous.Npoi
+namespace Luminous
 {
-
     public class RowObject : IRowObject
     {
-        private readonly NpoiObject _npoi;
+        private readonly ISheetObject _sheetObject;
         private readonly IRow _row;
         private readonly int _rowIndex;
         private readonly Dictionary<int, ICellObject> _cells = new Dictionary<int, ICellObject>();
 
-        public RowObject(NpoiObject npoi, IRow row, int rowIndex)
+        public RowObject(ISheetObject sheetObject, IRow row, int rowIndex)
         {
-            _npoi = npoi;
+            _sheetObject = sheetObject;
             _row = row;
             _rowIndex = rowIndex;
         }
@@ -35,7 +34,7 @@ namespace Luminous.Npoi
                     cell = _row.CreateCell(columnIndex);
                 }
 
-                cellBuilder = new CellObject(_npoi, cell);
+                cellBuilder = new CellObject(_sheetObject, cell);
 
                 _cells[columnIndex] = cellBuilder;
 

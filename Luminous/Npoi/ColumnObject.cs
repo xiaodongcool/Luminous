@@ -1,21 +1,21 @@
-﻿using Luminous.Npoi;
+﻿using Luminous;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
 
-namespace Luminous.Npoi
+namespace Luminous
 {
 
     public class ColumnObject : IColumnObject
     {
-        private readonly NpoiObject _npoi;
+        private readonly ISheet _sheet;
         private readonly int _columnIndex;
         private readonly RowAccessor _rowAccesser;
         private readonly Dictionary<int, ICellObject> _cells = new Dictionary<int, ICellObject>();
         private readonly Dictionary<int, IRow> _rows = new Dictionary<int, IRow>();
 
-        public ColumnObject(NpoiObject npoi, int columnIndex, RowAccessor rowAccesser)
+        public ColumnObject(ISheet sheet, int columnIndex, RowAccessor rowAccesser)
         {
-            _npoi = npoi;
+            _sheet = sheet;
             _columnIndex = columnIndex;
             _rowAccesser = rowAccesser;
         }

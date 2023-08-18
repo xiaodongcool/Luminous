@@ -1,4 +1,4 @@
-﻿namespace Luminous.Npoi
+﻿namespace Luminous
 {
     public interface IColumnObject
     {

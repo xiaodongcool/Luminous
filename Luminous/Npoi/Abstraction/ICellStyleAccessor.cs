@@ -1,11 +1,11 @@
 ﻿using NPOI.SS.UserModel;
 
-namespace Luminous.Npoi
+namespace Luminous
 {
     public interface ICellStyleAccessor
     {
         ICellStyle Style { get; set; }
-        bool HasStyle { get; set; }
+        bool HasStyle { get; }
         short Color { get; set; }
         bool IsBold { get; set; }
         bool IsItalic { get; set; }

@@ -1,17 +1,19 @@
-﻿using Luminous.Npoi;
+﻿using Luminous;
 using NPOI.SS.UserModel;
 using System;
 
-namespace Luminous.Npoi
+namespace Luminous
 {
     public class CellObject : ICellObject
     {
-        private readonly NpoiObject _npoi;
+        private readonly INpoiObject _npoiObject;
+        private readonly ISheetObject _sheetObject;
         private readonly ICell _cell;
 
-        public CellObject(NpoiObject npoi, ICell cell)
+        public CellObject(ISheetObject sheetObject, ICell cell)
         {
-            _npoi = npoi;
+            _sheetObject = sheetObject;
+            _npoiObject = sheetObject.Npoi;
             _cell = cell;
         }
 
@@ -19,7 +21,7 @@ namespace Luminous.Npoi
         {
             get
             {
-                return ToString();
+                return _sheetObject.Reader.String(_cell.RowIndex, _cell.ColumnIndex, _cell.ToString());
             }
             set
             {
@@ -31,7 +33,7 @@ namespace Luminous.Npoi
         {
             get
             {
-                return Convert.ToByte(Value);
+                return _sheetObject.Reader.Byte(_cell.RowIndex, _cell.ColumnIndex, Value);
             }
             set
             {
@@ -46,11 +48,11 @@ namespace Luminous.Npoi
             }
         }
 
-        public int? IntValue
+        public int? Int32Value
         {
             get
             {
-                return Convert.ToInt32(Value);
+                return _sheetObject.Reader.Int32(_cell.RowIndex, _cell.ColumnIndex, Value);
             }
             set
             {
@@ -65,11 +67,11 @@ namespace Luminous.Npoi
             }
         }
 
-        public long? LongValue
+        public long? Int64Value
         {
             get
             {
-                return Convert.ToInt64(Value);
+                return _sheetObject.Reader.Int64(_cell.RowIndex, _cell.ColumnIndex, Value);
             }
             set
             {
@@ -88,7 +90,7 @@ namespace Luminous.Npoi
         {
             get
             {
-                return Convert.ToDouble(Value);
+                return _sheetObject.Reader.Double(_cell.RowIndex, _cell.ColumnIndex, Value);
             }
             set
             {
@@ -103,11 +105,11 @@ namespace Luminous.Npoi
             }
         }
 
-        public float? FloatValue
+        public float? SingleValue
         {
             get
             {
-                return Convert.ToSingle(Value);
+                return _sheetObject.Reader.Single(_cell.RowIndex, _cell.ColumnIndex, Value);
             }
             set
             {
@@ -126,7 +128,7 @@ namespace Luminous.Npoi
         {
             get
             {
-                return Convert.ToDecimal(Value);
+                return _sheetObject.Reader.Decimal(_cell.RowIndex, _cell.ColumnIndex, Value);
             }
             set
             {
@@ -141,11 +143,11 @@ namespace Luminous.Npoi
             }
         }
 
-        public bool? BoolValue
+        public bool? BooleanValue
         {
             get
             {
-                return Convert.ToBoolean(Value);
+                return _sheetObject.Reader.Boolean(_cell.RowIndex, _cell.ColumnIndex, Value);
             }
             set
             {
@@ -160,15 +162,22 @@ namespace Luminous.Npoi
             }
         }
 
-        public IRichTextString RichStringCellValue
+        public DateTime? DateTimeValue
         {
             get
             {
-                return _cell.RichStringCellValue;
+                return _sheetObject.Reader.DateTime(_cell.RowIndex, _cell.ColumnIndex, Value);
             }
             set
             {
-                _cell.SetCellValue(value);
+                if (value.HasValue)
+                {
+                    _cell.SetCellValue(value.Value);
+                }
+                else
+                {
+                    _cell.SetCellValue(string.Empty);
+                }
             }
         }
 
@@ -180,11 +189,13 @@ namespace Luminous.Npoi
             }
             set
             {
+                HasStyle = true;
+
                 _cell.CellStyle = value;
             }
         }
 
-        public bool HasStyle { get; set; }
+        public bool HasStyle { get; private set; }
 
         public short Color
         {
@@ -194,7 +205,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateFontStyle(x =>
+                SetFontStyle(x =>
                 {
                     x.Color = value;
                 });
@@ -209,7 +220,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateFontStyle(x =>
+                SetFontStyle(x =>
                 {
                     x.IsBold = value;
                 });
@@ -224,7 +235,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateFontStyle(x =>
+                SetFontStyle(x =>
                 {
                     x.IsItalic = value;
                 });
@@ -239,7 +250,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateFontStyle(x =>
+                SetFontStyle(x =>
                 {
                     x.IsStrikeout = value;
                 });
@@ -254,7 +265,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateFontStyle(x =>
+                SetFontStyle(x =>
                 {
                     x.Underline = value;
                 });
@@ -269,7 +280,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateFontStyle(x =>
+                SetFontStyle(x =>
                 {
                     x.FontHeightInPoints = value;
                 });
@@ -284,7 +295,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateFontStyle(x =>
+                SetFontStyle(x =>
                 {
                     x.FontName = value;
                 });
@@ -299,7 +310,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateStyle(x =>
+                SetStyle(x =>
                 {
                     x.FillForegroundColor = value;
                     x.FillPattern = FillPattern.SolidForeground;
@@ -311,7 +322,7 @@ namespace Luminous.Npoi
         {
             set
             {
-                UpdateStyle(x =>
+                SetStyle(x =>
                 {
                     x.BorderLeft = value;
                     x.BorderRight = value;
@@ -325,7 +336,7 @@ namespace Luminous.Npoi
         {
             set
             {
-                UpdateStyle(x =>
+                SetStyle(x =>
                 {
                     x.LeftBorderColor = value;
                     x.RightBorderColor = value;
@@ -344,7 +355,7 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateStyle(x => { x.Alignment = value; });
+                SetStyle(x => { x.Alignment = value; });
             }
         }
 
@@ -356,45 +367,42 @@ namespace Luminous.Npoi
             }
             set
             {
-                UpdateStyle(x => { x.VerticalAlignment = value; });
+                SetStyle(x => { x.VerticalAlignment = value; });
             }
         }
 
-        private IFont Font => Style.GetFont(_npoi.Book);
+        public IFont Font => _npoiObject.GetFont(Style);
 
-        private void UpdateFontStyle(Action<IFont> updateFunc)
+        public void SetFontStyle(Action<IFont> setFontFunc)
         {
-            var style = _npoi.CreateDefaultStyle();
-            style.CloneStyleFrom(Style);
-            var font = _npoi.Book.CreateFont();
+            var newStyle = _npoiObject.CreateDefaultStyle(_sheetObject.DefaultCellStyle);
+            newStyle.CloneStyleFrom(Style);
 
-            font.FontName = FontName;
-            font.FontHeightInPoints = FontHeightInPoints;
-            font.IsBold = IsBold;
-            font.Color = Color;
-            font.IsItalic = IsItalic;
-            font.IsStrikeout = IsStrikeout;
-            font.Underline = Underline;
+            var newFont = _npoiObject.CreateFont();
 
-            if (updateFunc != null)
-            {
-                HasStyle = true;
+            var previousFont = Font;
 
-                updateFunc(font);
-            }
+            newFont.FontName = previousFont.FontName;
+            newFont.FontHeightInPoints = previousFont.FontHeightInPoints;
+            newFont.IsBold = previousFont.IsBold;
+            newFont.Color = previousFont.Color;
+            newFont.IsItalic = previousFont.IsItalic;
+            newFont.IsStrikeout = previousFont.IsStrikeout;
+            newFont.Underline = previousFont.Underline;
 
-            style.SetFont(font);
-            Style = style;
+            setFontFunc(newFont);
+
+            newStyle.SetFont(newFont);
+            Style = newStyle;
+
+            HasStyle = true;
         }
 
-        private void UpdateStyle(Action<ICellStyle> updateFunc)
+        public void SetStyle(Action<ICellStyle> setStyleFunc)
         {
-            if (updateFunc != null)
-            {
-                HasStyle = true;
+            setStyleFunc(Style);
 
-                updateFunc(Style);
-            }
+            HasStyle = true;
         }
 
         public override string ToString()

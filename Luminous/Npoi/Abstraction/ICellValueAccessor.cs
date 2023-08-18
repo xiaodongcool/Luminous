@@ -1,14 +1,17 @@
-﻿namespace Luminous.Npoi
+﻿using System;
+
+namespace Luminous
 {
     public interface ICellValueAccessor
     {
         string Value { get; set; }
         byte? ByteValue { get; set; }
-        int? IntValue { get; set; }
-        long? LongValue { get; set; }
+        int? Int32Value { get; set; }
+        long? Int64Value { get; set; }
         double? DoubleValue { get; set; }
-        float? FloatValue { get; set; }
+        float? SingleValue { get; set; }
         decimal? DecimalValue { get; set; }
-        bool? BoolValue { get; set; }
+        bool? BooleanValue { get; set; }
+        DateTime? DateTimeValue { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Luminous;
+using Newtonsoft.Json;
 using NPOI.OpenXmlFormats.Spreadsheet;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
@@ -9,21 +10,38 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Luminous.Npoi
+namespace Luminous
 {
     public class NpoiObject : INpoiObject
     {
         private readonly XSSFWorkbook _workBook;
-        private readonly Dictionary<string, ISheetObject> _sheets = new Dictionary<string, ISheetObject>();
+        private readonly Dictionary<string, ISheetObject> _sheetObjects = new Dictionary<string, ISheetObject>();
 
-        public NpoiObject()
+        private NpoiObject(Stream stream, ICellValueReader cellValueReader, IDefaultCellStyle defaultCellStyle)
         {
-            _workBook = new XSSFWorkbook();
+            if (stream == null)
+            {
+                _workBook = new XSSFWorkbook();
+            }
+            else
+            {
+                _workBook = new XSSFWorkbook(stream);
+            }
+
+            Reader = cellValueReader ?? new DefaultCellValueReader();
+            DefaultCellStyle = defaultCellStyle ?? new DefaultCellStyle();
         }
 
-        public NpoiObject(Stream stream)
+        public ICellValueReader Reader { get; set; }
+
+        public IDefaultCellStyle DefaultCellStyle { get; set; }
+
+        public ISheetObject CreateSheet()
         {
-            _workBook = new XSSFWorkbook(stream);
+            var sheet = _workBook.CreateSheet();
+            var sheetBuilder = new SheetObject(this, sheet);
+            _sheetObjects.Add(sheet.SheetName, sheetBuilder);
+            return sheetBuilder;
         }
 
         public ISheetObject GetSheet(int sheetIndex)
@@ -35,23 +53,15 @@ namespace Luminous.Npoi
                 throw new ArgumentOutOfRangeException(nameof(sheetIndex));
             }
 
-            if (_sheets.TryGetValue(sheet.SheetName, out var sheetBuilder))
+            if (_sheetObjects.TryGetValue(sheet.SheetName, out var sheetBuilder))
             {
                 return sheetBuilder;
             }
 
             sheetBuilder = new SheetObject(this, sheet);
 
-            _sheets[sheet.SheetName] = sheetBuilder;
+            _sheetObjects[sheet.SheetName] = sheetBuilder;
 
-            return sheetBuilder;
-        }
-
-        public ISheetObject CreateSheet()
-        {
-            var sheet = _workBook.CreateSheet();
-            var sheetBuilder = new SheetObject(this, sheet);
-            _sheets.Add(sheet.SheetName, sheetBuilder);
             return sheetBuilder;
         }
 
@@ -62,7 +72,7 @@ namespace Luminous.Npoi
                 throw new ArgumentNullException(nameof(sheetName));
             }
 
-            if (_sheets.TryGetValue(sheetName, out var sheetBuilder))
+            if (_sheetObjects.TryGetValue(sheetName, out var sheetBuilder))
             {
                 return sheetBuilder;
             }
@@ -81,9 +91,48 @@ namespace Luminous.Npoi
 
             sheetBuilder = new SheetObject(this, sheet);
 
-            _sheets[sheetName] = sheetBuilder;
+            _sheetObjects[sheetName] = sheetBuilder;
 
             return sheetBuilder;
+        }
+
+        public ICellStyle CreateDefaultStyle(IDefaultCellStyle? defaultCellStyle = null)
+        {
+            var newStyle = _workBook.CreateCellStyle();
+
+            (defaultCellStyle ?? DefaultCellStyle).SetDefaultCellStyle(newStyle);
+
+            return newStyle;
+        }
+
+        public IFont CreateFont()
+        {
+            return _workBook.CreateFont();
+        }
+
+        public IFont GetFont(ICellStyle style)
+        {
+            return style.GetFont(_workBook);
+        }
+
+        public void TraversalAllCellsSetDefaultStyle()
+        {
+            foreach (var (_, sheet) in _sheetObjects)
+            {
+                for (var i = 0; i <= sheet.GetMaxDataRow(); i++)
+                {
+                    for (int j = 0; j <= sheet.GetMaxDataColumn(); j++)
+                    {
+                        var cell = sheet[i][j];
+                        var code = cell.GetHashCode();
+
+                        if (!sheet[i][j].HasStyle)
+                        {
+                            sheet[i][j].Style = CreateDefaultStyle(sheet.DefaultCellStyle);
+                        }
+                    }
+                }
+            }
         }
 
         public void Save(string physicalFilePath)
@@ -95,7 +144,7 @@ namespace Luminous.Npoi
         {
             if (applyStyleToMergedCells)
             {
-                foreach (var (_, sheet) in _sheets)
+                foreach (var (_, sheet) in _sheetObjects)
                 {
                     sheet.ApplyStyleToMergedCells();
                 }
@@ -103,51 +152,21 @@ namespace Luminous.Npoi
 
             if (setDefaultCellStyle)
             {
-                SetDefaultCellStyle();
+                TraversalAllCellsSetDefaultStyle();
             }
 
             using var ms = new FileStream(physicalFilePath, FileMode.CreateNew);
             _workBook.Write(ms);
         }
 
-        /// <summary>
-        ///     会覆盖原有样式，请先执行该方法，再对需要特殊样式单元格做修改
-        /// </summary>
-        public void SetDefaultCellStyle()
+        public static INpoiObject Load(Stream stream, ICellValueReader? convert = null, IDefaultCellStyle? defaultCellStyle = null)
         {
-            foreach (var (_, sheet) in _sheets)
-            {
-                for (var i = 0; i <= sheet.GetMaxDataRow(); i++)
-                {
-                    for (int j = 0; j <= sheet.GetMaxDataColumn(); j++)
-                    {
-                        var cell = sheet[i][j];
-                        var code = cell.GetHashCode();
-
-                        if (!sheet[i][j].HasStyle)
-                        {
-                            sheet[i][j].Style = CreateDefaultStyle();
-                        }
-                    }
-                }
-            }
+            return new NpoiObject(stream, convert, defaultCellStyle);
         }
 
-        public XSSFWorkbook Book => _workBook;
-
-        public ICellStyle CreateDefaultStyle()
+        public static INpoiObject Create(ICellValueReader? convert = null, IDefaultCellStyle? defaultCellStyle = null)
         {
-            var newStyle = _workBook.CreateCellStyle();
-
-            newStyle.WrapText = true;
-            newStyle.BorderBottom = BorderStyle.Thin;
-            newStyle.BorderTop = BorderStyle.Thin;
-            newStyle.BorderRight = BorderStyle.Thin;
-            newStyle.BorderLeft = BorderStyle.Thin;
-            newStyle.Alignment = HorizontalAlignment.Center;
-            newStyle.VerticalAlignment = VerticalAlignment.Center;
-
-            return newStyle;
+            return new NpoiObject(null, convert, defaultCellStyle);
         }
     }
 }

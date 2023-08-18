@@ -1,19 +1,17 @@
-﻿using Luminous.Npoi;
+﻿using Luminous;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
 
-namespace Luminous.Npoi
+namespace Luminous
 {
     public class ColumnAccessor
     {
-        private readonly NpoiObject _npoi;
         private readonly ISheet _sheet;
         private readonly RowAccessor _rowAccesser;
         private readonly Dictionary<int, IColumnObject> _rows = new Dictionary<int, IColumnObject>();
 
-        public ColumnAccessor(NpoiObject npoi, ISheet sheet, RowAccessor rowAccesser)
+        public ColumnAccessor(ISheet sheet, RowAccessor rowAccesser)
         {
-            _npoi = npoi;
             _sheet = sheet;
             _rowAccesser = rowAccesser;
         }
@@ -27,7 +25,7 @@ namespace Luminous.Npoi
                     return columnBuilder;
                 }
 
-                columnBuilder = new ColumnObject(_npoi, columnIndex, _rowAccesser);
+                columnBuilder = new ColumnObject(_sheet, columnIndex, _rowAccesser);
 
                 _rows[columnIndex] = columnBuilder;
 

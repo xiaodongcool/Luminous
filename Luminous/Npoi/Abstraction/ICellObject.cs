@@ -1,4 +1,6 @@
-﻿namespace Luminous.Npoi
+﻿namespace Luminous
 {
-    public interface ICellObject : ICellValueAccessor, ICellStyleAccessor { }
+    public interface ICellObject : ICellValueAccessor, ICellStyleAccessor
+    {
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Luminous.Npoi
+namespace Luminous
 {
     /// <summary>
     ///     构建多级表头
@@ -42,6 +42,11 @@ namespace Luminous.Npoi
         ///     列宽倍数
         /// </summary>
         public double WidthMultiples { get; set; }
+
+        /// <summary>
+        ///     占用几行
+        /// </summary>
+        public int CrossRowCount { get; set; }
 
         /// <summary>
         ///     下级表头
