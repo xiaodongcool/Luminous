@@ -12,7 +12,6 @@ namespace Luminous.Reflection
         static TypeContainer()
         {
             var assemblies = GetAssemblies(false);
-
             LoadedTypes = assemblies.Where(x => !x?.FullName?.StartsWith("NPOI.Core") == true).SelectMany(x => x.DefinedTypes).Select(_ => _.AsType()).ToArray();
         }
 
@@ -50,6 +49,54 @@ namespace Luminous.Reflection
 
             return result;
         }
+
+        //public static IEnumerable<Assembly> LoadBinFolderAssemblies(Predicate<string> predicate)
+        //{
+        //    var files = Directory.GetFiles(PathUtil.GetBinPath(), "*.dll");
+
+        //    var assemblies = new HashSet<Assembly>();
+
+        //    foreach (string file in files)
+        //    {
+        //        try
+        //        {
+        //            var filename = Path.GetFileName(file);
+
+        //            if (!string.IsNullOrEmpty(filename))
+        //            {
+        //                if (IsSolutionProjectPredicate != null)
+        //                {
+        //                    if (IsSolutionProjectPredicate(filename))
+        //                    {
+        //                        var assembly = Assembly.LoadFrom(file);
+        //                        assemblies.Add(assembly);
+        //                    }
+        //                }
+        //                else
+        //                {
+
+        //                }
+        //            }
+
+        //            if (!IsExIncludeFile(filename) && predicate(filename))
+        //            {
+        //                var assembly = Assembly.LoadFrom(file);
+        //                assemblies.Add(assembly);
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine($"Error loading {file}: {ex.Message}");
+        //        }
+        //    }
+
+        //    return assemblies;
+        //}
+
+
+        private static Predicate<string>? IsSolutionProjectPredicate { get; set; }
+
+        private static List<string> ExIncludeAssemblyPrefixs { get; set; } = new List<string>() { "System.", "Microsoft." };
 
         //private static IEnumerable<Assembly> GetAssemblies()
         //{

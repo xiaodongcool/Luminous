@@ -23,9 +23,9 @@ namespace Luminous.DynamicProxy
             }
 
             var types = TypeContainer.FindChildInterface(interfaceType);
-
             builder.Host.ConfigureServices((context, service) =>
             {
+                var a = context.HostingEnvironment.ContentRootPath;
                 service.ConfigureDynamicProxy(configure =>
                 {
                     configure.Interceptors.AddTyped<TProxy>(Predicates.Implement(interfaceType));
