@@ -5,8 +5,6 @@ using Newtonsoft.Json;
 
 namespace Example.WebApi.Controllers
 {
-    [ApiController]
-    [Route("[controller]/[action]")]
     public class HomeController : ApiController
     {
         private readonly ILogger<HomeController> _logger;
@@ -49,6 +47,14 @@ namespace Example.WebApi.Controllers
 
         [HttpGet]
         public async Task<int> Customer()
+        {
+            var a = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface1>().f(1);
+            var b = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface2>().f(2);
+
+            return a + b;
+        }
+        [HttpGet("Customer3")]
+        public async Task<int> Customer4()
         {
             var a = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface1>().f(1);
             var b = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface2>().f(2);
