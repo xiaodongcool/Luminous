@@ -16,7 +16,7 @@ namespace Luminous
 
         private Assembly[] GetAssembliesInternal()
         {
-            var files = Directory.GetFiles(PathUtil.GetBinPath(), "*.dll");
+            var files = Directory.GetFiles(Util.GetBinPath(), "*.dll");
 
             var assemblies = new HashSet<Assembly>();
 

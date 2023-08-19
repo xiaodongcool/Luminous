@@ -1,7 +1,20 @@
-﻿namespace Luminous
+﻿using System.Reflection;
+
+namespace Luminous
 {
-    public static class EmptyUtil
+    public static class Util
     {
+        /// <summary>
+        ///     获取程序运行根目录
+        /// </summary>
+        public static string GetBinPath()
+        {
+            return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        }
+        public static string ParseString(DateTime time)
+        {
+            return time.ToString("yyyy-MM-dd HH:mm:ss");
+        }
         public static bool NotEmpty<T>(IEnumerable<T> array)
         {
             return !Empty(array);

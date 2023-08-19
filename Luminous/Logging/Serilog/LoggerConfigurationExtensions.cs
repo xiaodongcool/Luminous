@@ -24,7 +24,7 @@ namespace Luminous
             var logggingLevel = Converter.Level(level);
             var interval = Converter.Interval(options.Interval);
 
-            configuration.WriteTo.File(Path.Combine(PathUtil.GetBinPath(), "Luminous.Log", options.File), rollingInterval: interval, restrictedToMinimumLevel: logggingLevel);
+            configuration.WriteTo.File(Path.Combine(Util.GetBinPath(), "Luminous.Log", options.File), rollingInterval: interval, restrictedToMinimumLevel: logggingLevel);
 
             return configuration;
         }

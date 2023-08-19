@@ -12,5 +12,4 @@ global using Microsoft.AspNetCore.Mvc;
 global using System.IO;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Configuration;
-global using static Luminous.ParseUtil;
-global using static Luminous.EmptyUtil;
+global using static Luminous.Util;
