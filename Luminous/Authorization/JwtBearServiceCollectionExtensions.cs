@@ -14,7 +14,7 @@ namespace Luminous
         /// </summary>
         public static void AddJwtBearToken(this IServiceCollection services, JwtBearOptions jwtBearOptions = null)
         {
-            ArgumentChecker.ThrowIfNull(services, nameof(services));
+            ArgumentGuard.CheckForNull(services, nameof(services));
 
             jwtBearOptions ??= LuminousConfiguration.Jwtbear;
 
@@ -38,9 +38,9 @@ namespace Luminous
 
         private static void ConfigureJwtBearerAuthentication(AuthenticationBuilder builder, TokenOptions tokenOptions, string scheme)
         {
-            ArgumentChecker.ThrowIfNull(builder, nameof(builder));
-            ArgumentChecker.ThrowIfNull(tokenOptions, nameof(tokenOptions));
-            ArgumentChecker.ThrowIfNull(tokenOptions.SecurityKey, nameof(tokenOptions.SecurityKey));
+            ArgumentGuard.CheckForNull(builder, nameof(builder));
+            ArgumentGuard.CheckForNull(tokenOptions, nameof(tokenOptions));
+            ArgumentGuard.CheckForNull(tokenOptions.SecurityKey, nameof(tokenOptions.SecurityKey));
 
             tokenOptions.Issuer = "dotnet";
             tokenOptions.Audience = "dotnet";

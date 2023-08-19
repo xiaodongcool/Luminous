@@ -10,7 +10,7 @@ namespace Luminous
         /// </summary>
         public static LoggerConfiguration WithClientAgent(this LoggerEnrichmentConfiguration enrichmentConfiguration)
         {
-            ArgumentChecker.ThrowIfNull(enrichmentConfiguration, nameof(enrichmentConfiguration));
+            ArgumentGuard.CheckForNull(enrichmentConfiguration, nameof(enrichmentConfiguration));
             return enrichmentConfiguration.With<ClientAgentEnricher>();
         }
 
@@ -19,7 +19,7 @@ namespace Luminous
         /// </summary>
         public static LoggerConfiguration WithQueryString(this LoggerEnrichmentConfiguration enrichmentConfiguration)
         {
-            ArgumentChecker.ThrowIfNull(enrichmentConfiguration, nameof(enrichmentConfiguration));
+            ArgumentGuard.CheckForNull(enrichmentConfiguration, nameof(enrichmentConfiguration));
             return enrichmentConfiguration.With<QueryStringEnricher>();
         }
 
@@ -28,7 +28,7 @@ namespace Luminous
         /// </summary>
         public static LoggerConfiguration WithAccountUniqueId(this LoggerEnrichmentConfiguration enrichmentConfiguration)
         {
-            ArgumentChecker.ThrowIfNull(enrichmentConfiguration, nameof(enrichmentConfiguration));
+            ArgumentGuard.CheckForNull(enrichmentConfiguration, nameof(enrichmentConfiguration));
             return enrichmentConfiguration.With<AccountUniqueIdEnricher>();
         }
 
@@ -37,7 +37,7 @@ namespace Luminous
         /// </summary>
         public static LoggerConfiguration WithUserName(this LoggerEnrichmentConfiguration enrichmentConfiguration)
         {
-            ArgumentChecker.ThrowIfNull(enrichmentConfiguration, nameof(enrichmentConfiguration));
+            ArgumentGuard.CheckForNull(enrichmentConfiguration, nameof(enrichmentConfiguration));
             return enrichmentConfiguration.With<UserNameEnricher>();
         }
     }

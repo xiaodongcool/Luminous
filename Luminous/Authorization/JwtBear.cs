@@ -28,7 +28,7 @@ namespace Luminous
         /// <param name="claimContainer">声明</param>
         public virtual string Generate(ClaimContainer claimContainer)
         {
-            ArgumentChecker.ThrowIfNull(claimContainer, nameof(claimContainer));
+            ArgumentGuard.CheckForNull(claimContainer, nameof(claimContainer));
 
             var isRefreshToken = claimContainer.GetClaim(TokenClaimTypeNames.IsRefreshToken)?.Value?.ToLowerInvariant() == "true";
             var parameters = GetParameters(isRefreshToken);
@@ -55,7 +55,7 @@ namespace Luminous
         /// </summary>
         public virtual ClaimContainer Read(string token)
         {
-            ArgumentChecker.ThrowIfNull(token, nameof(token));
+            ArgumentGuard.CheckForNull(token, nameof(token));
 
             return Resolve(token, false);
         }
@@ -65,7 +65,7 @@ namespace Luminous
         /// </summary>
         public virtual ClaimContainer Validate(string token)
         {
-            ArgumentChecker.ThrowIfNull(token, nameof(token));
+            ArgumentGuard.CheckForNull(token, nameof(token));
 
             return Resolve(token, true);
         }

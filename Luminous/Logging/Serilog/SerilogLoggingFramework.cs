@@ -18,8 +18,8 @@ namespace Luminous
         /// <param name="options">日志选项</param>
         public IHostBuilder Configure(IHostBuilder builder, LoggingOptions options)
         {
-            ArgumentChecker.ThrowIfNull(builder, nameof(builder));
-            ArgumentChecker.ThrowIfNull(options, nameof(options));
+            ArgumentGuard.CheckForNull(builder, nameof(builder));
+            ArgumentGuard.CheckForNull(options, nameof(options));
 
             var configuration = CreateConfiguration(options.MinLevel);
 
@@ -54,8 +54,8 @@ namespace Luminous
         /// <param name="options">文件日志选项</param>
         public IHostBuilder Configure(IHostBuilder builder, FileLoggingOptions options, LogLevel level)
         {
-            ArgumentChecker.ThrowIfNull(builder, nameof(builder));
-            ArgumentChecker.ThrowIfNull(options, nameof(options));
+            ArgumentGuard.CheckForNull(builder, nameof(builder));
+            ArgumentGuard.CheckForNull(options, nameof(options));
 
             var configuration = CreateConfiguration(level);
 
@@ -73,8 +73,8 @@ namespace Luminous
         /// <param name="options">mysql 日志选项</param>
         public IHostBuilder Configure(IHostBuilder builder, MySqlLoggingOptions options, LogLevel level)
         {
-            ArgumentChecker.ThrowIfNull(builder, nameof(builder));
-            ArgumentChecker.ThrowIfNull(options, nameof(options));
+            ArgumentGuard.CheckForNull(builder, nameof(builder));
+            ArgumentGuard.CheckForNull(options, nameof(options));
 
             var configuration = CreateConfiguration(level);
 
@@ -92,8 +92,8 @@ namespace Luminous
         /// <param name="options">sqlserver 日志选项</param>
         public IHostBuilder Configure(IHostBuilder builder, SqlServerLoggingOptions options, LogLevel level)
         {
-            ArgumentChecker.ThrowIfNull(builder, nameof(builder));
-            ArgumentChecker.ThrowIfNull(options, nameof(options));
+            ArgumentGuard.CheckForNull(builder, nameof(builder));
+            ArgumentGuard.CheckForNull(options, nameof(options));
 
             var configuration = CreateConfiguration(level);
 
@@ -111,8 +111,8 @@ namespace Luminous
         /// <param name="options">elasticsearch 日志选项</param>
         public IHostBuilder Configure(IHostBuilder builder, ElasticSearchLoggingOptions options, LogLevel level)
         {
-            ArgumentChecker.ThrowIfNull(builder, nameof(builder));
-            ArgumentChecker.ThrowIfNull(options, nameof(options));
+            ArgumentGuard.CheckForNull(builder, nameof(builder));
+            ArgumentGuard.CheckForNull(options, nameof(options));
 
             var configuration = CreateConfiguration(level);
 

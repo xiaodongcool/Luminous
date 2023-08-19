@@ -14,7 +14,7 @@ namespace Luminous
         /// </summary>
         public ClaimContainer(IEnumerable<Claim> claims)
         {
-            ArgumentChecker.ThrowIfNull(claims, nameof(claims));
+            ArgumentGuard.CheckForNull(claims, nameof(claims));
 
             foreach (var claim in claims.GroupBy(_ => _.Type))
             {
@@ -31,7 +31,7 @@ namespace Luminous
         /// <param name="isRefreshToken"> 是否是 refresh token</param>
         public ClaimContainer(string accountUniqueId, string userName = "", string[] roles = null, bool isRefreshToken = false)
         {
-            ArgumentChecker.ThrowIfNull(accountUniqueId, nameof(accountUniqueId));
+            ArgumentGuard.CheckForNull(accountUniqueId, nameof(accountUniqueId));
 
             Set(TokenClaimTypeNames.Id, Guid.NewGuid().ToString("N"));
             Set(TokenClaimTypeNames.AccountUniqueId, accountUniqueId);
@@ -54,7 +54,7 @@ namespace Luminous
         /// </summary>
         public ClaimContainer Set(string type, params string[] values)
         {
-            ArgumentChecker.ThrowIfNull(type, nameof(type));
+            ArgumentGuard.CheckForNull(type, nameof(type));
 
             if (Empty(values))
             {
@@ -71,7 +71,7 @@ namespace Luminous
         /// </summary>
         public Claim GetClaim(string type)
         {
-            ArgumentChecker.ThrowIfNull(type, nameof(type));
+            ArgumentGuard.CheckForNull(type, nameof(type));
 
             if (!_claims.ContainsKey(type))
             {
@@ -87,7 +87,7 @@ namespace Luminous
         /// </summary>
         public Claim[] GetClaims(string type)
         {
-            ArgumentChecker.ThrowIfNull(type, nameof(type));
+            ArgumentGuard.CheckForNull(type, nameof(type));
 
             if (!_claims.ContainsKey(type))
             {
@@ -110,7 +110,7 @@ namespace Luminous
         /// </summary>
         public ClaimContainer Delete(string type)
         {
-            ArgumentChecker.ThrowIfNull(type, nameof(type));
+            ArgumentGuard.CheckForNull(type, nameof(type));
 
             if (_claims.ContainsKey(type))
             {

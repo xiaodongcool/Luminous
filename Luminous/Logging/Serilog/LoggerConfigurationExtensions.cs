@@ -17,9 +17,9 @@ namespace Luminous
         /// <param name="options">文件日志选项</param>
         public static LoggerConfiguration Configure(this LoggerConfiguration configuration, FileLoggingOptions options, LogLevel level)
         {
-            ArgumentChecker.ThrowIfNull(configuration, nameof(configuration));
-            ArgumentChecker.ThrowIfNull(options, nameof(options));
-            ArgumentChecker.ThrowIfNull(options.File, nameof(options.File));
+            ArgumentGuard.CheckForNull(configuration, nameof(configuration));
+            ArgumentGuard.CheckForNull(options, nameof(options));
+            ArgumentGuard.CheckForNull(options.File, nameof(options.File));
 
             var logggingLevel = Converter.Level(level);
             var interval = Converter.Interval(options.Interval);
@@ -36,10 +36,10 @@ namespace Luminous
         /// <param name="options">mysql 日志选项</param>
         public static LoggerConfiguration Configure(this LoggerConfiguration configuration, MySqlLoggingOptions options, LogLevel level)
         {
-            ArgumentChecker.ThrowIfNull(configuration, nameof(configuration));
-            ArgumentChecker.ThrowIfNull(options, nameof(options));
-            ArgumentChecker.ThrowIfNull(options.ConnectionString, nameof(options.ConnectionString));
-            ArgumentChecker.ThrowIfNull(options.Table, nameof(options.Table));
+            ArgumentGuard.CheckForNull(configuration, nameof(configuration));
+            ArgumentGuard.CheckForNull(options, nameof(options));
+            ArgumentGuard.CheckForNull(options.ConnectionString, nameof(options.ConnectionString));
+            ArgumentGuard.CheckForNull(options.Table, nameof(options.Table));
 
             var logggingLevel = Converter.Level(level);
 
@@ -89,10 +89,10 @@ namespace Luminous
         /// <param name="options">sqlserver 日志选项</param>
         public static LoggerConfiguration Configure(this LoggerConfiguration configuration, SqlServerLoggingOptions options, LogLevel level)
         {
-            ArgumentChecker.ThrowIfNull(configuration, nameof(configuration));
-            ArgumentChecker.ThrowIfNull(options, nameof(options));
-            ArgumentChecker.ThrowIfNull(options.ConnectionString, nameof(options.ConnectionString));
-            ArgumentChecker.ThrowIfNull(options.Table, nameof(options.Table));
+            ArgumentGuard.CheckForNull(configuration, nameof(configuration));
+            ArgumentGuard.CheckForNull(options, nameof(options));
+            ArgumentGuard.CheckForNull(options.ConnectionString, nameof(options.ConnectionString));
+            ArgumentGuard.CheckForNull(options.Table, nameof(options.Table));
 
             var logggingLevel = Converter.Level(level);
 
@@ -156,9 +156,9 @@ namespace Luminous
         public static LoggerConfiguration Configure(this LoggerConfiguration configuration, ElasticSearchLoggingOptions options, LogLevel level)
         {
 
-            ArgumentChecker.ThrowIfNull(configuration, nameof(configuration));
-            ArgumentChecker.ThrowIfNull(options, nameof(options.Urls));
-            ArgumentChecker.ThrowIfNull(options.IndexFormat, nameof(options.IndexFormat));
+            ArgumentGuard.CheckForNull(configuration, nameof(configuration));
+            ArgumentGuard.CheckForNull(options, nameof(options.Urls));
+            ArgumentGuard.CheckForNull(options.IndexFormat, nameof(options.IndexFormat));
 
             configuration.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(options.Urls.Select(_ => new Uri(_)))
             {

@@ -29,7 +29,7 @@ namespace Luminous
         /// </summary>
         public static T? GetConfig<T>(string key)
         {
-            ArgumentChecker.ThrowIfNull(key, nameof(key));
+            ArgumentGuard.CheckForNull(key, nameof(key));
 
             var value = configuration[key];
 

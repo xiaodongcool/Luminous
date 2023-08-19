@@ -20,7 +20,7 @@ namespace Luminous
         /// </summary>
         public async Task<string> Get(string url, IDictionary<string, string> header)
         {
-            ArgumentChecker.ThrowIfNull(url, nameof(url));
+            ArgumentGuard.CheckForNull(url, nameof(url));
 
             using var httpClient = _httpClientFactory.CreateClient(_httpClientName);
 
@@ -43,8 +43,8 @@ namespace Luminous
         /// </summary>
         public async Task<string> Post(string url, string body, IDictionary<string, string> header, string contentType)
         {
-            ArgumentChecker.ThrowIfNull(url, nameof(url));
-            ArgumentChecker.ThrowIfNull(contentType, nameof(contentType));
+            ArgumentGuard.CheckForNull(url, nameof(url));
+            ArgumentGuard.CheckForNull(contentType, nameof(contentType));
 
             using var httpClient = _httpClientFactory.CreateClient(_httpClientName);
             using var httpContent = new StringContent(body ?? "");
@@ -70,7 +70,7 @@ namespace Luminous
         /// </summary>
         public void Use(string name)
         {
-            ArgumentChecker.ThrowIfNull(name, nameof(name));
+            ArgumentGuard.CheckForNull(name, nameof(name));
 
             _httpClientName = name;
         }
