@@ -6,16 +6,16 @@ namespace Luminous
     {
         public static void AddLuminous(this WebApplicationBuilder builder)
         {
+            builder.AddLuminousAssemblyMetadata();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<IHttpContexter, HttpContexter>();
-            builder.AddLuminousAssemblyMetadata();
         }
 
         public static void AddLuminous(this WebApplicationBuilder builder, Predicate<string> assemblyNamePredicate)
         {
+            builder.AddLuminousAssemblyMetadata(assemblyNamePredicate);
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<IHttpContexter, HttpContexter>();
-            builder.AddLuminousAssemblyMetadata(assemblyNamePredicate);
         }
     }
 }

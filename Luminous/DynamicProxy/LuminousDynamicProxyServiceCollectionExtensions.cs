@@ -1,8 +1,8 @@
 ﻿using AspectCore.Configuration;
 using AspectCore.DynamicProxy;
 using AspectCore.Extensions.DependencyInjection;
-using Luminous.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace Luminous.DynamicProxy
 {
@@ -22,7 +22,9 @@ namespace Luminous.DynamicProxy
                 throw new ArgumentException(nameof(interfaceType));
             }
 
-            var types = TypeContainer.FindChildInterface(interfaceType);
+            Debug.Assert(Global.Solution != null);
+
+            var types = Global.Solution.GetDerivedInterface(interfaceType);
             builder.Host.ConfigureServices((context, service) =>
             {
                 var a = context.HostingEnvironment.ContentRootPath;

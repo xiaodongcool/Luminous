@@ -39,7 +39,6 @@ namespace Luminous
             }
             else
             {
-                var a = configuration.GetSection(key);
                 return configuration.GetSection(key).Get<T>();
             }
         }
@@ -51,5 +50,7 @@ namespace Luminous
         {
             return configuration[key];
         }
+
+        public static ISolutionAssemblyMetadata? Solution { get; internal set; }
     }
 }

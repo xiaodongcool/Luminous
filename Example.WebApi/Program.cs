@@ -3,9 +3,7 @@ using AspectCore.Extensions.DependencyInjection;
 using Luminous;
 using Luminous.Configuration;
 using Luminous.DynamicProxy;
-using Luminous.Reflection;
 using Luminous.Serializer;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Example.WebApi
 {
@@ -96,7 +94,6 @@ namespace Example.WebApi
             //services.AddAssignment();
             //  AutoMapper
             services.AddLuminousAutoMapper();
-
 
         }
 

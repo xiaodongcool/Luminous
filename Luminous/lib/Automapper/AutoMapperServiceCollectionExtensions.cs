@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Luminous.Reflection;
+using System.Diagnostics;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -7,7 +7,9 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static void AddLuminousAutoMapper(this IServiceCollection services)
         {
-            services.AddAutoMapper(TypeContainer.FindChildClass<Profile>().ToArray());
+            Debug.Assert(Global.Solution != null);
+
+            services.AddAutoMapper(Global.Solution.GetDerivedClass(typeof(Profile)).ToArray());
         }
     }
 }

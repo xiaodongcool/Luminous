@@ -1,5 +1,4 @@
-﻿using Luminous.Reflection;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Text;
@@ -23,6 +22,7 @@ namespace Microsoft.AspNetCore.Builder
         public static Task<string> GetConfigQuery(HttpRequest request, IServiceProvider service)
         {
             var configuration = service.GetRequiredService<IConfiguration>();
+            var solution = service.GetRequiredService<ISolutionAssemblyMetadata>();
 
             var key = request.Query["key"].ToString();
             var source = request.Query["source"].ToString().ToLower();
@@ -42,7 +42,7 @@ namespace Microsoft.AspNetCore.Builder
             else
             {
                 var section = configuration.GetSection(key);
-                var objectType = TypeContainer.LoadedTypes.FirstOrDefault(x => x.FullName == type);
+                var objectType = solution.GetTypes().FirstOrDefault(x => x.FullName == type);
 
                 if (section.Value == null)
                 {

@@ -12,7 +12,9 @@ namespace Luminous
                 //var projectName = GetLastDirectoryName(path);
                 //var solution = GetSolutionName(projectName);
 
-                services.AddSingleton<ISolutionAssemblyMetadata>(serviceProvider => new SolutionAssemblyMetadata(null));
+                Global.Solution = new SolutionAssemblyMetadata(null);
+
+                services.AddSingleton(Global.Solution);
             });
         }
 
@@ -25,7 +27,9 @@ namespace Luminous
 
             builder.Host.ConfigureServices((context, services) =>
             {
-                services.AddSingleton<ISolutionAssemblyMetadata>(serviceProvider => new SolutionAssemblyMetadata(assemblyNamePredicate));
+                Global.Solution = new SolutionAssemblyMetadata(assemblyNamePredicate);
+
+                services.AddSingleton(Global.Solution);
             });
         }
 

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
-using Luminous.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace Luminous
 {
@@ -14,7 +14,9 @@ namespace Luminous
         {
             services.AddControllers().AddFluentValidation(fluent =>
             {
-                foreach (var validator in TypeContainer.FindChildClass(typeof(AbstractValidator<>)))
+                Debug.Assert(Global.Solution != null);
+
+                foreach (var validator in Global.Solution.GetDerivedClass(typeof(AbstractValidator<>)))
                 {
                     fluent.RegisterValidatorsFromAssemblyContaining(validator);
                 }

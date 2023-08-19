@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Luminous.Enumeration;
-using Luminous.Reflection;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace Luminous.Mapper
@@ -16,7 +16,9 @@ namespace Luminous.Mapper
         {
             BuildCache();
 
-            foreach (var type in TypeContainer.FindAllTag<MapFromAttribute>())
+            Debug.Assert(Global.Solution != null);
+
+            foreach (var type in Global.Solution.GetTypesWithAttribute(typeof(MapFromAttribute)))
             {
                 var maps = type.GetCustomAttributes<MapFromAttribute>();
 
@@ -38,7 +40,7 @@ namespace Luminous.Mapper
                 }
             }
 
-            foreach (var type in TypeContainer.FindAllTag<MapToAttribute>())
+            foreach (var type in Global.Solution.GetTypesWithAttribute(typeof(MapToAttribute)))
             {
                 var maps = type.GetCustomAttributes<MapToAttribute>();
 
@@ -51,9 +53,11 @@ namespace Luminous.Mapper
 
         private static void BuildCache()
         {
+            Debug.Assert(Global.Solution != null);
+
             var reflection = ServiceLocator.GetService<IRelection>();
 
-            foreach (var type in TypeContainer.FindAllTag<MapFromAttribute>())
+            foreach (var type in Global.Solution.GetTypesWithAttribute(typeof(MapFromAttribute)))
             {
                 var maps = type.GetCustomAttributes<MapFromAttribute>();
 
