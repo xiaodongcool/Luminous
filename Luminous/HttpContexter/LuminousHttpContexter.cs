@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Luminous
 {
-    public class HttpContexter : HttpContextAccessor, IHttpContexter
+    public class LuminousHttpContexter : HttpContextAccessor, ILuminousHttpContexter
     {
-        private readonly ILogger<HttpContexter> _logger;
+        private readonly ILogger<LuminousHttpContexter> _logger;
 
-        public HttpContexter(ILogger<HttpContexter> logger)
+        public LuminousHttpContexter(ILogger<LuminousHttpContexter> logger)
         {
             _logger = logger;
         }

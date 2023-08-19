@@ -1,11 +1,8 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Luminous
+﻿namespace Luminous
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class ApiController : ControllerBase
+    public class LuminousController : ControllerBase
     {
         private IServiceProvider _serviceProvider;
         private IUserPrincipal _user;
@@ -20,7 +17,7 @@ namespace Luminous
         /// </summary>
         //protected new IUserPrincipal User => _user ??= ServiceProvider.GetService<IUserPrincipal>();
 
-        public ApiController() { }
+        public LuminousController() { }
 
         protected void SetResultStatus(ResultStatus statusCode)
         {

@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Luminous
 {
     [NonAspect]
-    public class DependencyServiceProviderFactory : IServiceProviderFactory<IServiceContext>
+    public class AspectCoreDependencyServiceProviderFactory : IServiceProviderFactory<IServiceContext>
     {
         public IServiceContext CreateBuilder(IServiceCollection services)
         {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Example.WebApi.Controllers
 {
-    public class HomeController : ApiController
+    public class HomeController : LuminousController
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRedis _redis;

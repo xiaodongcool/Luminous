@@ -4,11 +4,11 @@ namespace Luminous
 {
     public class UserPrincipal : IUserPrincipal
     {
-        private readonly IHttpContexter _httpContextAccessor;
+        private readonly ILuminousHttpContexter _httpContextAccessor;
         private string _accountUniqueId;
         private string[] _roles;
 
-        public UserPrincipal(IHttpContexter httpContextAccessor)
+        public UserPrincipal(ILuminousHttpContexter httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }

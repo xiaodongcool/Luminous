@@ -5,7 +5,7 @@ namespace Luminous
     /// <summary>
     ///     对 HttpContext 的常见操作
     /// </summary>
-    public interface IHttpContexter : IHttpContextAccessor
+    public interface ILuminousHttpContexter : IHttpContextAccessor
     {
         /// <summary>
         ///     获取请求报文

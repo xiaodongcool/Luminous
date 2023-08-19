@@ -12,8 +12,6 @@ namespace Example.WebApi
 
             builder.AddLuminous();
 
-            builder.Services.ConfigureDynamicProxy();
-
             builder.AddLuminousLogging();
             builder.AddLuminousConfiguration();
 

@@ -11,7 +11,7 @@ namespace Luminous
         public static void AddLuminousHttpContexter(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            services.TryAddTransient<IHttpContexter, HttpContexter>();
+            services.TryAddTransient<ILuminousHttpContexter, LuminousHttpContexter>();
         }
     }
 }

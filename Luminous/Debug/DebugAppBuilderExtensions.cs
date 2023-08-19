@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Text;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Luminous
 {
     public static class DebugAppBuilderExtensions
     {

@@ -11,11 +11,6 @@ namespace Luminous
 
         public int Order { get; set; }
 
-        public LuminousInterceptor()
-        {
-            Console.WriteLine(GetHashCode());
-        }
-
         public abstract Task Invoke(AspectContext context, AspectDelegate next);
 
         protected virtual T? GetCustomerAttributeOnMethod<T>(AspectContext context) where T : Attribute

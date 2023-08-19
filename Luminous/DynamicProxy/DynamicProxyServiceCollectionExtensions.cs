@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Luminous
 {
-    public static class LuminousDynamicProxyServiceCollectionExtensions
+    public static class DynamicProxyServiceCollectionExtensions
     {
         public static void AddLuminousDynamicProxyInterface<TInterface, TProxy>(this WebApplicationBuilder builder) where TProxy : LuminousInterceptor
         {
@@ -25,6 +25,7 @@ namespace Luminous
             Debug.Assert(Global.Solution != null);
 
             var types = Global.Solution.GetDerivedInterface(interfaceType);
+
             builder.Host.ConfigureServices((context, service) =>
             {
                 var a = context.HostingEnvironment.ContentRootPath;
@@ -40,7 +41,7 @@ namespace Luminous
                         return factory.GetRequiredService<IProxyGenerator>().CreateInterfaceProxy(type);
                     }, serviceLifetime));
                 }
-            }).UseServiceProviderFactory(new DependencyServiceProviderFactory());
+            }).UseServiceProviderFactory(new AspectCoreDependencyServiceProviderFactory());
         }
     }
 }

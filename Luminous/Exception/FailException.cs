@@ -47,15 +47,4 @@ namespace Luminous
             Exception = exception;
         }
     }
-
-    public class ParameterErrorException : FailException
-    {
-        public ParameterErrorException(string resultMessage) : base(ResultStatus.ParameterError, resultMessage, null, false) { }
-        public ParameterErrorException(string resultMessage, bool logOnGlobalException) : base(ResultStatus.ParameterError, resultMessage, null, logOnGlobalException) { }
-    }
-
-    public class NotFoundException : Exception
-    {
-
-    }
 }

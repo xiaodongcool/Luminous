@@ -11,12 +11,12 @@ namespace Luminous
     public class TokenEvents : JwtBearerEvents
     {
         private ILogger<TokenEvents> _logger = null!;
-        private IHttpContexter _httpContexter = null!;
+        private ILuminousHttpContexter _httpContexter = null!;
 
         private void Initialization(HttpContext httpContext)
         {
             _logger = httpContext.RequestServices.GetRequiredService<ILogger<TokenEvents>>();
-            _httpContexter = httpContext.RequestServices.GetRequiredService<IHttpContexter>();
+            _httpContexter = httpContext.RequestServices.GetRequiredService<ILuminousHttpContexter>();
         }
 
         /// <summary>

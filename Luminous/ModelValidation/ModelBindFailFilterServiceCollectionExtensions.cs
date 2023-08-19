@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Luminous
 {
-    public static class ModelBindFailFilterServiceCollectionExtensions
+    public static class ModelValidationServiceCollectionExtensions
     {
         /// <summary>
         ///     添加全局模型验证失败处理

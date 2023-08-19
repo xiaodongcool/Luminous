@@ -2,11 +2,8 @@
 
 namespace Luminous
 {
-    public static class WebApplicationBuilderServiceCollectionExtensions
+    public static class ConfigurationHostBuilderExtensions
     {
-        /// <summary>
-        ///     添加阿波罗配置中心
-        /// </summary>
         public static IConfiguration AddLuminousConfiguration(this WebApplicationBuilder builder)
         {
             try

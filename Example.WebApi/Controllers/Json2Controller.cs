@@ -5,7 +5,7 @@ namespace Example.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class Json2Controller : ApiController
+    public class Json2Controller : LuminousController
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserResponse[] ServiceInfos = new[]

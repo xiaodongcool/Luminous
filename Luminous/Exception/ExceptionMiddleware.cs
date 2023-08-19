@@ -1,5 +1,4 @@
-﻿using Luminous;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,20 +7,20 @@ using System.Text;
 
 namespace Luminous
 {
-    public class ExceptionMiddleware
+    public class LuminousExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
+        private readonly ILogger<LuminousExceptionMiddleware> _logger;
         private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContexter _httpContexter;
+        private readonly ILuminousHttpContexter _httpContexter;
 
-        public ExceptionMiddleware(
+        public LuminousExceptionMiddleware(
             RequestDelegate next,
-            ILogger<ExceptionMiddleware> logger,
+            ILogger<LuminousExceptionMiddleware> logger,
             IWebHostEnvironment env,
             IConfiguration configuration,
-            IHttpContexter httpContexter)
+            ILuminousHttpContexter httpContexter)
         {
             _next = next;
             _logger = logger;
