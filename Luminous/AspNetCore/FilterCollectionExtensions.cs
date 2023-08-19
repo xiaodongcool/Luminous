@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Microsoft.AspNetCore.Mvc
+namespace Luminous
 {
     public static class FilterCollectionExtensions
     {
