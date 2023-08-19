@@ -10,7 +10,7 @@ namespace Luminous
         /// <summary>
         ///     添加全局模型验证失败处理
         /// </summary>
-        public static void AddModelValidation(this IServiceCollection services)
+        public static void AddLuminousModelValidation(this IServiceCollection services)
         {
             services.AddControllers().AddFluentValidation(fluent =>
             {
