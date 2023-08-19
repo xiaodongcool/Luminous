@@ -3,6 +3,7 @@ using AspectCore.Extensions.DependencyInjection;
 using Luminous;
 using Luminous.Configuration;
 using Luminous.DynamicProxy;
+using Luminous.Reflection;
 using Luminous.Serializer;
 
 namespace Example.WebApi
@@ -52,6 +53,7 @@ namespace Example.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.AddLuminous();
             builder.AddLuminousDynamicProxyInterface<IMyInterface1, CustomerLuminousInterceptor1>();
             builder.AddLuminousDynamicProxyInterface<IMyInterface2, CustomerLuminousInterceptor2>();
 
