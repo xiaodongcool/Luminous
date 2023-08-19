@@ -4,23 +4,33 @@ namespace Luminous
 {
     public static class LuminousServiceCollectionExtensions
     {
-        public static void AddLuminous(this WebApplicationBuilder builder)
+        public static WebApplicationBuilder AddLuminous(this WebApplicationBuilder builder)
         {
+            //  token
+            //services.AddJwtBearToken();
+            //  注册所有服务和仓储
+            //services.AddApplication();
+            //  数据库连接字符串
+            //services.AddConnectionString<ConnectionStringProvider>();
+            //  添加数据库连接工厂
+            //services.AddSqlSugarUnitOfWork();
+            //services.AddDapperUnitOfWork();
+
+            builder.AddLuminousLogging();
             builder.AddLuminousAssemblyMetadata();
-            builder.AddLuminousCore();
-        }
+            builder.AddLuminousConfiguration();
 
-        public static void AddLuminous(this WebApplicationBuilder builder, Predicate<string> assemblyNamePredicate)
-        {
-            builder.AddLuminousAssemblyMetadata(assemblyNamePredicate);
-            builder.AddLuminousCore();
-        }
+            builder.Services.AddRelection();
+            builder.Services.AddLuminousHttpContexter();
+            builder.Services.AddLuminousUniqueId();
+            builder.Services.AddLuminousRedis();
+            builder.Services.AddLuminousResult();
+            builder.Services.AddLuminousModelValidation();
+            builder.Services.AddLuminousJsonFormat();
+            builder.Services.AddLuminousAutoMapper();
+            builder.Services.AddControllers();
 
-        private static void AddLuminousCore(this WebApplicationBuilder builder)
-        {
-            builder.Services.AddSingleton<IRelection, DefaultRelection>();
-            builder.Services.AddHttpContextAccessor();
-            builder.Services.AddTransient<ILuminousHttpContexter, LuminousHttpContexter>();
+            return builder;
         }
     }
 }

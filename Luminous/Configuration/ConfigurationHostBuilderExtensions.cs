@@ -1,4 +1,5 @@
 ﻿using Com.Ctrip.Framework.Apollo;
+using Serilog;
 
 namespace Luminous
 {
@@ -14,7 +15,7 @@ namespace Luminous
             }
             catch (Exception e)
             {
-                Serilog.Log.Warning(e, "Apollo 阿波罗配置中心初始化失败，配置信息从 appsettings.json 中读取");
+                Log.Warning(e, "Apollo 阿波罗配置中心初始化失败，配置信息从 appsettings.json 中读取");
             }
 
             var configuration = (builder.Configuration as IConfigurationBuilder).Build();

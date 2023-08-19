@@ -5,7 +5,7 @@
         /// <summary>
         ///     捕捉全局异常
         /// </summary>
-        public static void UseCatchGlobalException(this IApplicationBuilder app)
+        public static void UseLuminousGlobalException(this IApplicationBuilder app)
         {
             app.UseMiddleware<LuminousExceptionMiddleware>();
         }

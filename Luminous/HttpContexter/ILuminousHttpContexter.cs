@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
+using NewLife.Caching;
 
 namespace Luminous
 {
