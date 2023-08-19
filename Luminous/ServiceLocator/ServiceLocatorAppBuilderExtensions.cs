@@ -1,6 +1,6 @@
 ﻿namespace Luminous
 {
-    public static class ServiceLocatorExtension
+    public static class ServiceLocatorAppBuilderExtensions
     {
         public static IApplicationBuilder UseLuminousServiceLocator(this WebApplication app)
         {

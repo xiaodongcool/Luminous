@@ -1,6 +1,6 @@
 ﻿namespace Luminous
 {
-    public static class ContactHttpContextExtensions
+    public static class ResultHttpContextExtensions
     {
         public static void SetMessage(this HttpContext httpContext, string message)
         {

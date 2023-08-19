@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection;
 
-public static class LuminousUniqueIdServiceCollectionExtensions
+public static class UniqueIdServiceCollectionExtensions
 {
     /// <summary>
     ///     添加雪花id

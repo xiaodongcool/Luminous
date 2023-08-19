@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Luminous
 {
-    public static class LuminousJsonFormatServiceExtensions
+    public static class JsonFormatServiceCollectionExtensions
     {
         /// <summary>
         ///     设置接口响应 json 的序列化配置
