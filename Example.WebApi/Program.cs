@@ -1,5 +1,3 @@
-using AspectCore.DynamicProxy;
-using AspectCore.Extensions.DependencyInjection;
 using Luminous;
 
 namespace Example.WebApi
@@ -62,7 +60,15 @@ namespace Example.WebApi
             app.UseLuminousDebug();
 
             //  Æô¶¯
-            app.Run();
+            try
+            {
+                app.Run();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
         }
     }
 }

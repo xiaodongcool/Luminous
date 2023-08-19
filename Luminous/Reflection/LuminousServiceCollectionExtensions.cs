@@ -20,7 +20,7 @@ namespace Luminous
         {
             builder.Services.AddSingleton<IRelection, DefaultRelection>();
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<ILuminousHttpContexter, LuminousHttpContexter>();
+            builder.Services.AddTransient<ILuminousHttpContexter, LuminousHttpContexter>();
         }
     }
 }

@@ -33,7 +33,6 @@ namespace Luminous
 
             services.TryAddSingleton(jwtBearOptions);
             services.TryAddTransient<IJwtBear, JwtBear>();
-            services.AddLuminousHttpContexter();
             services.TryAddScoped<IUserPrincipal, UserPrincipal>();
         }
 
