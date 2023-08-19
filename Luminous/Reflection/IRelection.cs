@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Luminous.Reflection
+namespace Luminous
 {
     /// <summary>
     ///     提供反射功能

@@ -1,4 +1,4 @@
-﻿namespace Luminous.Reflection
+﻿namespace Luminous
 {
     public static class LuminousServiceExtensions
     {

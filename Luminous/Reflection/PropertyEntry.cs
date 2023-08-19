@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Luminous.Reflection
+namespace Luminous
 {
     /// <summary>
     ///     属性信息

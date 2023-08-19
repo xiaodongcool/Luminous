@@ -1,4 +1,4 @@
-﻿namespace Luminous.Reflection
+﻿namespace Luminous
 {
     /// <summary>
     ///     宽松的数据类型

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Luminous.Reflection
+namespace Luminous
 {
     public static class SolutionAssemblyMetadataServiceExtension
     {
