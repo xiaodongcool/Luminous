@@ -1,4 +1,4 @@
-﻿namespace Luminous.Serializer
+﻿namespace Luminous
 {
     public enum SerializerNamed
     {

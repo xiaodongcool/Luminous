@@ -1,7 +1,7 @@
 ﻿using AspectCore.DynamicProxy;
 using System.Reflection;
 
-namespace Luminous.DynamicProxy
+namespace Luminous
 {
     public abstract class LuminousInterceptor : IInterceptor
     {

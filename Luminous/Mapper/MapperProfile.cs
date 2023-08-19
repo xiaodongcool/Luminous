@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Luminous.Enumeration;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Luminous.Mapper
+namespace Luminous
 {
     /// <summary>
     ///     对所有标记 <see cref="MapFromAttribute"/> <see cref="MapToAttribute"/> 的模型注册 AutoMapper

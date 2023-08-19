@@ -1,4 +1,4 @@
-﻿namespace Luminous.Mapper
+﻿namespace Luminous
 {
     /// <summary>
     ///     可以将被标记的模型映射为 <see cref="Type"/>

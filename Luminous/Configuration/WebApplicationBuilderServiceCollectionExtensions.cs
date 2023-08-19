@@ -1,6 +1,6 @@
 ﻿using Com.Ctrip.Framework.Apollo;
 
-namespace Luminous.Configuration
+namespace Luminous
 {
     public static class WebApplicationBuilderServiceCollectionExtensions
     {

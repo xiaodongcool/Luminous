@@ -1,4 +1,4 @@
-﻿namespace Luminous.Serializer
+﻿namespace Luminous
 {
     /// <summary>
     ///     json 序列化全局配置

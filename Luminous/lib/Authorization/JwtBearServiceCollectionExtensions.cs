@@ -1,11 +1,11 @@
-﻿using Luminous.Configuration;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Luminous
 {
     public static class JwtBearServiceCollectionExtensions
     {
@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             ArgumentChecker.ThrowIfNull(services, nameof(services));
 
-            jwtBearOptions ??= CONFIGS.Jwtbear;
+            jwtBearOptions ??= LuminousConfiguration.Jwtbear;
 
             var builder = services.AddAuthentication(auth =>
             {

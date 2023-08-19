@@ -1,4 +1,4 @@
-﻿namespace Luminous.Cache
+﻿namespace Luminous
 {
     /// <summary>
     ///     缓存key

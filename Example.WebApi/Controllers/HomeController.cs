@@ -1,5 +1,4 @@
 using Luminous;
-using Luminous.Controller;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -43,23 +42,6 @@ namespace Example.WebApi.Controllers
             _logger.LogInformation($"Home/Index£º{JsonConvert.SerializeObject(result)}");
 
             return result;
-        }
-
-        [HttpGet]
-        public async Task<int> Customer()
-        {
-            var a = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface1>().f(1);
-            var b = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface2>().f(2);
-
-            return a + b;
-        }
-        [HttpGet("Customer3")]
-        public async Task<int> Customer4()
-        {
-            var a = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface1>().f(1);
-            var b = HttpContext.RequestServices.GetRequiredService<ICustomerMyInterface2>().f(2);
-
-            return a + b;
         }
     }
     public class UserResponse

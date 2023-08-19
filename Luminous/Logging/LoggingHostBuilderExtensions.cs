@@ -18,8 +18,7 @@ namespace Luminous
 
         private static LoggingOptions? GetLoggingOptions(LoggingOptions? options)
         {
-            var a = options ?? Global.GetConfig<LoggingOptions>("Luminous:Log");
-            return options ?? Global.GetConfig<LoggingOptions>("Luminous:Log");
+            return options ?? LuminousConfiguration.Log;
         }
     }
 }

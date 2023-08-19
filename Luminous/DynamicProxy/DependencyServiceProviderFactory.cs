@@ -3,7 +3,7 @@ using AspectCore.DynamicProxy;
 using AspectCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Luminous.DynamicProxy
+namespace Luminous
 {
     [NonAspect]
     public class DependencyServiceProviderFactory : IServiceProviderFactory<IServiceContext>

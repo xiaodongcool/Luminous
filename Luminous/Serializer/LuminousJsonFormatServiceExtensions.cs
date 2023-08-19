@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-namespace Luminous.Serializer
+namespace Luminous
 {
     public static class LuminousJsonFormatServiceExtensions
     {

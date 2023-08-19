@@ -1,7 +1,7 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Luminous.Controller
+namespace Luminous
 {
     [ApiController]
     [Route("[controller]/[action]")]

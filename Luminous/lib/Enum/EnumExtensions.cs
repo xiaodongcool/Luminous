@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
-namespace Luminous.Enumeration
+namespace Luminous
 {
     public static class EnumExtensions
     {

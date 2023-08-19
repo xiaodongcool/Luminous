@@ -4,7 +4,7 @@ using AspectCore.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
 
-namespace Luminous.DynamicProxy
+namespace Luminous
 {
     public static class LuminousDynamicProxyServiceCollectionExtensions
     {
