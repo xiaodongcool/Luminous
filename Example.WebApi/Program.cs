@@ -5,6 +5,7 @@ using Luminous.Configuration;
 using Luminous.DynamicProxy;
 using Luminous.Reflection;
 using Luminous.Serializer;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Example.WebApi
 {
@@ -84,8 +85,6 @@ namespace Example.WebApi
             services.AddModelValidation();
             //  请求报文响应报文 json 序列化规范
             services.AddLuminousJsonFormat();
-            //  HttpContext
-            services.AddLuminousHttpContexter();
             //  注册所有服务和仓储
             //services.AddApplication();
             //  数据库连接字符串
@@ -103,6 +102,8 @@ namespace Example.WebApi
 
         static void Configure(WebApplication app)
         {
+            app.UseLuminousServiceLocator();
+
             app.UseCatchGlobalException();
             //  身份认证
             app.UseAuthorization();

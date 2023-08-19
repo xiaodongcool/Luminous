@@ -51,7 +51,7 @@ namespace Luminous.Mapper
 
         private static void BuildCache()
         {
-            var reflection = RequestServices.GetService<IRelection>();
+            var reflection = ServiceLocator.GetService<IRelection>();
 
             foreach (var type in TypeContainer.FindAllTag<MapFromAttribute>())
             {
