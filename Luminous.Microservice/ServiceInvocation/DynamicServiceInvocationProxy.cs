@@ -10,13 +10,13 @@ namespace Luminous
     /// <summary>
     ///     动态服务调用代理
     /// </summary>
-    public class DynamicServiceInvocationProxy : IInterceptor
+    public class DynamicServiceInvocationProxy : LuminousInterceptor
     {
         public bool AllowMultiple { get; set; }
         public bool Inherited { get; set; }
         public int Order { get; set; }
 
-        public async Task Invoke(AspectContext context, AspectDelegate next)
+        public override async Task Invoke(AspectContext context, AspectDelegate next)
         {
             var dynamicHttpInvocation = ServiceLocator.GetService<IDynamicHttpInvocation>();
 

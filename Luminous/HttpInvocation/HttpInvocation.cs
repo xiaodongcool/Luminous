@@ -63,6 +63,8 @@ namespace Luminous
             }
             catch (Exception e)
             {
+                //  TODO: Log
+
 
                 throw;
             }
@@ -103,7 +105,7 @@ namespace Luminous
 
             if (responseModel.Status != ResultStatus.Success)
             {
-                throw new Exception("请求失败");
+                throw new FailException(responseModel.Message);
             }
 
             return responseModel.Payload;

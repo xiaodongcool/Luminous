@@ -53,21 +53,26 @@ namespace Luminous
         /// </summary>
         protected virtual async Task HandleExceptionMessageAsync(HttpContext context, Exception exception)
         {
-            if (exception is not FailException interrupException || interrupException.LogOnGlobalException)
-            {
-                var request = context.Request;
+            var request = context.Request;
 
-                var requestFeature = request.HttpContext.Features.Get<IHttpRequestFeature>();
+            var requestFeature = request.HttpContext.Features.Get<IHttpRequestFeature>();
 
-                var body = await _httpContexter.GetBody();
+            var body = await _httpContexter.GetBody();
 
-                //  日志
-                _logger.LogError(exception, $"GlobalException{Environment.NewLine}URL:{requestFeature?.RawTarget}{Environment.NewLine}HEADER:{Environment.NewLine}{GetHeader(requestFeature.Headers)}{Environment.NewLine}BODY:{body}");
-            }
+            var isBug = exception is not FailException;
+
+            var tag = isBug ? "GlobalException" : "Error";
+
+            //  日志
+            _logger.LogError(exception, $"{tag}{Environment.NewLine}URL:{requestFeature?.RawTarget}{Environment.NewLine}HEADER:{Environment.NewLine}{GetHeader(requestFeature.Headers)}{Environment.NewLine}BODY:{body}");
 
             //  写入 Response
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            if (isBug)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            }
 
             await context.Response.WriteAsync(JsonConvert.SerializeObject(GetResult(exception), Global.JsonSerializerSettings));
         }

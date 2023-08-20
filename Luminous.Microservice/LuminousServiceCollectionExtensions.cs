@@ -20,6 +20,8 @@ namespace Luminous
 
             builder.Services.AddLuminousNacos();
 
+            builder.AddLuminousDynamicProxyInterface<IServiceInvocation, DynamicServiceInvocationProxy>();
+
             return builder;
         }
     }
