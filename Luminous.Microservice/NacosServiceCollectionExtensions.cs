@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Nacos.AspNetCore.V2;
 
-namespace Luminous.Microservice
+namespace Luminous
 {
     public static class NacosServiceCollectionExtensions
     {

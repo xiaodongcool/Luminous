@@ -10,7 +10,7 @@ namespace ServiceA.WebApi
             try
             {
                 WebApplication.CreateBuilder(args)
-                    .AddLuminous()
+                    .AddLuminousMicroservice()
                     .Build()
                     .UseLuminous()
                     .Run();

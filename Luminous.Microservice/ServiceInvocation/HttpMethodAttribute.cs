@@ -1,4 +1,4 @@
-﻿namespace Luminous.Microservice
+﻿namespace Luminous
 {
     /// <summary>
     /// 请求方法基类

@@ -1,6 +1,6 @@
 ﻿using Luminous;
 
-namespace Luminous.Microservice
+namespace Luminous
 {
     /// <summary>
     /// 服务名称选择器

@@ -1,4 +1,4 @@
-﻿namespace Luminous.Microservice
+﻿namespace Luminous
 {
     public class NacosConfig
     {

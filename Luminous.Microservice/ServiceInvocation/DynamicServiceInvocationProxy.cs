@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
 
-namespace Luminous.Microservice
+namespace Luminous
 {
     /// <summary>
     ///     动态服务调用代理

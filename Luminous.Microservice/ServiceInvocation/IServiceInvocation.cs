@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Luminous.Microservice
+namespace Luminous
 {
     /// <summary>
     ///     服务调用接口
