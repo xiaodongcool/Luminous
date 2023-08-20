@@ -11,6 +11,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebAppli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luminous.Microservice", "Luminous.Microservice\Luminous.Microservice.csproj", "{90210AD7-E406-483A-BE43-2905527BF69F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{CE1FD8E8-8101-487A-8A88-C1C928219BC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceA.WebApi", "ServiceA.WebApi\ServiceA.WebApi.csproj", "{AF6ABA22-BDCB-4367-8B09-24444629183F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceB.WebApi", "ServiceB.WebApi\ServiceB.WebApi.csproj", "{90AF904A-881B-4A32-A646-DE16739A3F5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceC.WebApi", "ServiceC.WebApi\ServiceC.WebApi.csproj", "{E3D07623-5E8F-4A61-AF4A-CDF895AA80FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.WebApi", "Authentication.WebApi\Authentication.WebApi.csproj", "{1F537940-0409-4519-B3D3-2174CFFAC40B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.WebApi", "Platform.WebApi\Platform.WebApi.csproj", "{3DD14214-21DA-48F4-BD90-52183C85FE03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +45,36 @@ Global
 		{90210AD7-E406-483A-BE43-2905527BF69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90210AD7-E406-483A-BE43-2905527BF69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90210AD7-E406-483A-BE43-2905527BF69F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF6ABA22-BDCB-4367-8B09-24444629183F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF6ABA22-BDCB-4367-8B09-24444629183F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF6ABA22-BDCB-4367-8B09-24444629183F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF6ABA22-BDCB-4367-8B09-24444629183F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90AF904A-881B-4A32-A646-DE16739A3F5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90AF904A-881B-4A32-A646-DE16739A3F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90AF904A-881B-4A32-A646-DE16739A3F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90AF904A-881B-4A32-A646-DE16739A3F5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3D07623-5E8F-4A61-AF4A-CDF895AA80FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3D07623-5E8F-4A61-AF4A-CDF895AA80FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3D07623-5E8F-4A61-AF4A-CDF895AA80FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3D07623-5E8F-4A61-AF4A-CDF895AA80FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F537940-0409-4519-B3D3-2174CFFAC40B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F537940-0409-4519-B3D3-2174CFFAC40B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F537940-0409-4519-B3D3-2174CFFAC40B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F537940-0409-4519-B3D3-2174CFFAC40B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DD14214-21DA-48F4-BD90-52183C85FE03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DD14214-21DA-48F4-BD90-52183C85FE03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DD14214-21DA-48F4-BD90-52183C85FE03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DD14214-21DA-48F4-BD90-52183C85FE03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF6ABA22-BDCB-4367-8B09-24444629183F} = {CE1FD8E8-8101-487A-8A88-C1C928219BC6}
+		{90AF904A-881B-4A32-A646-DE16739A3F5F} = {CE1FD8E8-8101-487A-8A88-C1C928219BC6}
+		{E3D07623-5E8F-4A61-AF4A-CDF895AA80FE} = {CE1FD8E8-8101-487A-8A88-C1C928219BC6}
+		{1F537940-0409-4519-B3D3-2174CFFAC40B} = {CE1FD8E8-8101-487A-8A88-C1C928219BC6}
+		{3DD14214-21DA-48F4-BD90-52183C85FE03} = {CE1FD8E8-8101-487A-8A88-C1C928219BC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {299BF182-4F8B-4164-BE8D-DEE6968475F8}
