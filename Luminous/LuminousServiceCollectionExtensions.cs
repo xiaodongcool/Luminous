@@ -29,6 +29,7 @@ namespace Luminous
             builder.Services.AddLuminousJsonFormat();
             builder.Services.AddLuminousAutoMapper();
             builder.Services.AddControllers();
+            builder.Services.AddLuminousHttpInvocation();
 
             return builder;
         }

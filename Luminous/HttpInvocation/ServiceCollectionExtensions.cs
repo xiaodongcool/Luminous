@@ -7,7 +7,7 @@ namespace Luminous
         /// <summary>
         ///     添加HTTP调用
         /// </summary>
-        public static void AddHttpInvocation(this IServiceCollection services)
+        public static void AddLuminousHttpInvocation(this IServiceCollection services)
         {
             services.AddHttpClient();
             services.AddSingleton<IHttpInvocation, HttpInvocation>();
